@@ -1,0 +1,30 @@
+---
+layout: post
+title: "使用allowtab插件实现在textarea中输入制表符"
+date: 2013-02-24 16:02
+comments: true
+categories: 
+---
+
+在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀.
+
+于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不支持IE.
+
+最后决定自己写一个(按照tabIndent的思路), 主要是加入对IE的支持. 
+
+开发过程也主要在于和IE斗争, 因为这插件里面一个必须的点就是获取当前光标在文本中的位置, 在支持HTML5的浏览器上可以直接使用selectionStart, selectionEnd来获取, 在IE下则要通过TextRange获取, 代码如下:
+
+    var inpTxtLen = inputBox.value.length; // 先获取所有内容的长度
+    var inpRange = inputBox.createTextRange(); // 建立一个TextRange对象
+    inpRange.moveToBookmark(document.selection.createRange().getBookmark()); // 把新建的TextRange和选中的文本关联起来
+
+    start = -1 * inpRange.moveStart('character', -1 * inpTxtLen); // 向前选择文本总长度个字符, moveStart返回实际移动过的字符数的相反数
+    end = inpTxtLen - inpRange.moveEnd('character', inpTxtLen);  // 类似moveStart, 返回正数, 即selectionEnd后面的字符数量
+
+上面说了实现方式, 完以后使用非常简单:
+
+html:
+    <textarea id="allowtab"></textarea> 
+
+js:
+     $('#allowtab').allowtab();
