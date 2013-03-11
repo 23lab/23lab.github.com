@@ -14,17 +14,32 @@ categories:
 
 开发过程也主要在于和IE斗争, 因为这插件里面一个必须的点就是获取当前光标在文本中的位置, 在支持HTML5的浏览器上可以直接使用selectionStart, selectionEnd来获取, 在IE下则要通过TextRange获取, 代码如下:
 
-    var inpTxtLen = inputBox.value.length; // 先获取所有内容的长度
-    var inpRange = inputBox.createTextRange(); // 建立一个TextRange对象
-    inpRange.moveToBookmark(document.selection.createRange().getBookmark()); // 把新建的TextRange和选中的文本关联起来
+{% codeblock lang:javascript %}
 
-    start = -1 * inpRange.moveStart('character', -1 * inpTxtLen); // 向前选择文本总长度个字符, moveStart返回实际移动过的字符数的相反数
-    end = inpTxtLen - inpRange.moveEnd('character', inpTxtLen);  // 类似moveStart, 返回正数, 即selectionEnd后面的字符数量
+// 先获取所有内容的长度
+var inpTxtLen = inputBox.value.length; 
+// 建立一个TextRange对象
+var inpRange = inputBox.createTextRange(); 
+
+// 把新建的TextRange和选中的文本关联起来
+var bm = document.selection.createRange().getBookmark();
+inpRange.moveToBookmark(bm); 
+
+// 向前选择文本总长度个字符, moveStart返回实际移动过的字符数的相反数
+start = -1 * inpRange.moveStart('character', -1 * inpTxtLen); 
+// 类似moveStart, 返回正数, 即selectionEnd后面的字符数量
+end = inpTxtLen - inpRange.moveEnd('character', inpTxtLen);  
+
+{% endcodeblock %}
+
 
 上面说了实现方式, 完以后使用非常简单:
 
-html:
-    <textarea id="allowtab"></textarea> 
+{% codeblock lang:html %}
+<textarea id="allowtab"></textarea> 
+{% endcodeblock %}
 
-js:
-     $('#allowtab').allowtab();
+
+{% codeblock lang:javascript %}
+$('#allowtab').allowtab();
+{% endcodeblock %}
