@@ -1,0 +1,71 @@
+
+---
+layout: post
+title: "开发Chrome插件实现在Chrome中截取网页"
+date: 2013-03-11 22:39
+comments: true
+categories: 
+---
+
+之前一直在考虑一个在浏览器上实现截屏的问题，搜索了一下了解了些情况。
+
+在初期想到的是如何通过JS把网页变为图片，网上有相应的开源项目，例如https://github.com/niklasvh/html2canvas. 这个组件试了一下在本机上还是有些问题。
+
+除了这个以外，还有一个东西是[PhantomJS](http://phantomjs.org/)
+
+> PhantomJS is a headless WebKit with JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG.
+
+它本生就能用来做[Screen Capture](https://github.com/ariya/phantomjs/wiki/Screen-Capture)
+
+使用phantomjs存在两个问题，一是它需要服务器的支持，而是经我测试中文有问题（我是用它提供的DEMO来测试的，没有自己装环境试），而我们想做的事在浏览器上实现截图，这些方案都和预先想的有所偏离，关于截屏这个问题也就搁置了一段时间。
+
+前几天装了个花瓣的插件，发现它可以网页里面实现截屏，研究了一下他压缩过的代码，注意到了其中使用到了Chrome扩展开发中使用的方法参与截屏（它实际截屏的代码没找到）。
+
+然后又在Chrome扩展开发页面上找到了一个实现页面截屏的实例[screenshot](http://developer.chrome.com/extensions/samples.html)，其中最关键的方法就是captureVisibleTab，captureVisibleTab的用法如下：
+
+``` js
+chrome.tabs.captureVisibleTab(null, function(img) {
+    // callback of captureVisibleTab，img a string start with data://
+    var my_img = new Image(); 
+    my_img.onload = function(){
+        // execute after the img was loaded
+    };
+    my_img.src = img;
+});
+
+``` 
+
+上面的代码中my_img把captureVisibleTab获得的数据作为自己的src，但是captureVisibleTab只能截取当前可见区域的图像。没法完成整页截图，所以我们不得不拼图。我们血要在截取一块可视区域以后滚动滚动条到下一块可视区域再截图，如此反复。于是我使用了如下流程进行操作：
+
+1. 截取第一块
+2. background发送消息到内容页面，通知滚动，滚动完成回调scrollPageDone
+3. 滚动完成调用scrollPageDone，其中调用截屏
+4. 截屏完毕继续滚动，反复
+
+上述流程有一个问题，就是滚动页面是需要时间的，为了解决这个问题，我在scrollPageDone中使用setTimeout 500ms之后再调用截屏函数。现在我们已经顺利的获取了整页的很多小块。是时候把他们拼成完整的页面截图了。我的思路是把这些小块绘制到一块canvas上，然后把canvas.getDataUrl()获取的值设置为img.src，如此图像即可拼装出来。把此图像另存为即可得到截图。下面是拼接图片的一段代码：
+
+
+``` js
+my_img.onload = function() {
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(blockImg, 0, 0, width, height, 0, Capturer.yPos, width, height);
+    Capturer.yPos += Capturer.clientHeight;
+    self.scrollPage(self.tabId, 0, Capturer.clientHeight);
+};
+```
+
+其中的yPos用来记录图像从上到下已经拼接了多长，以便接着上次拼完的地方继续拼接。这里最关键的方法应为：
+
+``` js
+ctx.drawImage(my_img, 0, 0, width, height, 
+    0, Capturer.yPos, width, height);
+``` 
+
+其方法说明为：
+
+``` js
+drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 
+    destX, destY, destWidth, destHeight)
+```
+
+上面所述基本说明了用chrome扩展实现截屏的基本原理，剩下的就是如何滚动，拼接图像如何处理边界块的问题了。我的代码在[https://github.com/erichua23/prj/tree/master/screenshot](https://github.com/erichua23/prj/tree/master/screenshot)
