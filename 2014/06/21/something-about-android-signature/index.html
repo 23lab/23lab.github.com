@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android签名(Signature)漫谈(一) | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
+首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
+其中有一个步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android签名(Signature)漫谈(一)">
+<meta property="og:url" content="http://blog.23lab.com/2014/06/21/something-about-android-signature/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
+首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
+其中有一个步">
+<meta property="og:image" content="http://developer.android.com/images/build.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png">
+<meta property="og:updated_time" content="2015-09-09T14:42:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android签名(Signature)漫谈(一)">
+<meta name="twitter:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
+首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
+其中有一个步">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://img3.douban.com/icon/ul24992232-3.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-something-about-android-signature" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/21/something-about-android-signature/" class="article-date">
+  	<time datetime="2014-06-21T08:02:00.000Z" itemprop="datePublished">2014-06-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android签名(Signature)漫谈(一)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android-Signature/">Android,Signature</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. </p>
+<p>首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:<br><img src="http://developer.android.com/images/build.png" alt="general process for a typical build"></p>
+<p>其中有一个步骤是Jarsigner, 它的输出结果是 signed.apk, 由此可见它应该是签名的过程, jarsigner右边的一项是Debug or Release Keystore, 说明签名可以分为debug和release的. 这是我们看到图的一个猜想, 下面看文档里面怎么说. </p>
+<blockquote>
+<p>Once the .apk is built, it <em>must</em> be signed with either a debug or release key before it can be installed to a device.</p>
+<p>Finally, if the application is being signed in release mode, you must align the .apk with the zipalign tool. Aligning the final .apk decreases memory usage when the application is running on a device.</p>
+</blockquote>
+<p>注意, 文档中提到 “must be signed with a debug or release key”, 这里可能有人会问两个问题: 1. 我不签名会怎么样? 2. 我 ADT 开发Android 项目的时候我没做过签名这一步也没出什么问题呀? </p>
+<h3 id="不签名会怎么样?">不签名会怎么样?</h3><p>针对上面两个问题我们分别来看, 首先第一个问题, 我们尝试去安装一个未签名的应用到 Android 设备上. 在 Eclipse 中找一个项目, 右键=&gt;Android Tools=&gt;Export Unsigned Application Package, 确定导出以后, ADT 弹出如下提示:<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png" alt="image"></p>
+<p>关注一下, 它再次提示我们发布前要签名, 还需要用zipalign优化, 但是我们偏要试一下用一个未签名的包会怎么样. 继续尝试安装刚刚打出来的未签名的包, 结果安装失败.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png" alt="image"></p>
+<p><code>INSTALL_PARSE_FAILED_NO_CERTIFICATES</code> 因为没有证书解析失败从而安装失败, 这就说明了Android 系统本身是不接受没有签名的包的. 此时我们再去翻翻官方文档, 找到<a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank" rel="external">Signing Your Applications</a>, 其中提到: </p>
+<blockquote>
+<p>The Android system requires that all installed applications be digitally signed with a certificate whose private key is held by the application’s developer.</p>
+</blockquote>
+<p><code>signed with a certificate whose private key is held by the application&#39;s developer</code> 这里明确说明了证书是开发者的, 是用开发者的一个证书去给开发者的应用签名, 至此我们可以这样理解, 一个可运行apk文件的package name 用于标识应用, 而签名这个应用的证书则唯一的标识了应用的开发者. 系统只信任确定归属关系的应用. </p>
+<blockquote>
+<p>Android system uses the certificate as a means of identifying the author of an application and establishing trust relationships between applications.</p>
+</blockquote>
+<p>这一句中两个关键点, 一个是用于辨认开发者, 另外一个就是建立应用间的信任关系, 这个主要是用于自定义权限的, 有兴趣的可以直接查看<a href="http://developer.android.com/training/articles/security-tips.html#Permissions" target="_blank" rel="external">Using Permissions</a>. </p>
+<p>到现在我们刚刚的第一个疑问已经解决: Android 系统不允许安装未签名的应用, 因为未签名也就意味着这个应用没有明确的标明开发者是谁, 只有通过在 apk 上签名, 申明了apk 是你的, 系统才会让他运行. </p>
+<h3 id="ADT_开发Android项目的时候没做过签名为什么不出问题?">ADT 开发Android项目的时候没做过签名为什么不出问题?</h3><p>第一个问题清楚以后第二个问题也有眉目了, 既然ADT build 出来的包是可以安装的, 根据第一个问题的结论, 说明ADT 里面肯定有签名的过程. 回想一下上面Apk 构建过程的图, jarsigner 接收的是debug 或者 release 的keystore. 实际上ADT 是使用了默认的debug keystore, 在 ADT 中打开Preferences =&gt; Android =&gt; Build 则可见到ADT 中debug keystore 的配置.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png" alt="image"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/05/how-to-design-better-sdk-interface/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          SDK开发过程的一些问题总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次JNI内存泄露的排查和解决</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="something-about-android-signature" data-title="Android签名(Signature)漫谈(一)" data-url="http://blog.23lab.com/2014/06/21/something-about-android-signature/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

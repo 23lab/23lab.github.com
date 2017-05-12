@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记一次JNI内存泄露的排查和解决 | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： 
+12345678910111213141516171812-08 12:00:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)12-08 12:00:03.844: W/dalvikvm(767): Last 10">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次JNI内存泄露的排查和解决">
+<meta property="og:url" content="http://blog.23lab.com/2013/12/28/jni-memory-leak-local-reference-table-overflow/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： 
+12345678910111213141516171812-08 12:00:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)12-08 12:00:03.844: W/dalvikvm(767): Last 10">
+<meta property="og:image" content="https://f.cloud.github.com/assets/1309744/1826138/0b0b8f36-71eb-11e3-94b7-4dd7d8152dc0.png">
+<meta property="og:updated_time" content="2015-09-09T16:18:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次JNI内存泄露的排查和解决">
+<meta name="twitter:description" content="最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： 
+12345678910111213141516171812-08 12:00:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)12-08 12:00:03.844: W/dalvikvm(767): Last 10">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://img3.douban.com/icon/ul24992232-3.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-jni-memory-leak-local-reference-table-overflow" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/" class="article-date">
+  	<time datetime="2013-12-28T03:28:00.000Z" itemprop="datePublished">2013-12-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      记一次JNI内存泄露的排查和解决
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： </p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): Last 10 entries in JNI local reference table:</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   502: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   503: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   504: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   505: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   506: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   507: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   508: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   509: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   510: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   511: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): JNI local reference table summary (512 entries):</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class<span class="comment">; 236B</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   507 of Ljava/lang/Class<span class="comment">; 284B (1 unique)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class<span class="comment">; 572B</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     2 of Ljava/lang/String<span class="comment">; 28B (2 unique)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of [Ljava/lang/String<span class="comment">; 28B</span></span><br></pre></td></tr></table></figure>
+<p>于是决定研究一下这个ReferenceTable overflow，首先看到需要查询什么是JNI的 Local References，下面是官网解释: </p>
+<blockquote>
+<p>Local References<br>Local references are valid for the duration of a native method call. They are freed automatically after the native method returns. Each local reference costs some amount of Java Virtual Machine resource. Programmers need to make sure that native methods do not excessively allocate local references. Although local references are automatically freed after the native method returns to Java, excessive allocation of local references may cause the VM to run out of memory during the execution of a native method.</p>
+</blockquote>
+<a id="more"></a>
+<p>几个要点：<br>１. Local references在整个Native方法的调用期间有效。</p>
+<ol>
+<li>Local references会消耗JVM的资源</li>
+<li>开发者需要自己释放资源， 不释放会crash</li>
+</ol>
+<p>需要注意的一点， Local references是在一个native方法（对应Java Native方法）调用的整个期间有效的，需要在一个Native方法调用返回以后Local reference才会被自动回收，也就是说，如果是一个native方法里面调用多个其他方法，这些方法里面的Local references也要等到Java Native全都调用返回才会被回收。下面会用一个例子来检验这种情况。</p>
+<p>这里要做的，就是在一个for循环里面定义一个jclass（为什么是jclass下面再说）变量。代码非常简单，对应的Java Native方法名和其中循环的次数相同：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Class:     com_example_jnidemo_MainActivity</span><br><span class="line"> * Method:    localRef500</span><br><span class="line"> * Signature: ()V</span><br><span class="line"> */JNIEXPORT void JNICALL Java_com_example_jnidemo_MainActivity_localRef500(</span><br><span class="line">        JNIEnv * env, jclass) &#123;</span><br><span class="line">    for (int i = 0; i &lt; 500; i++) &#123;</span><br><span class="line">        LOGD("Java_com_example_jnidemo_MainActivity_localRef500 %d", i);</span><br><span class="line">        jclass clz = env-&gt;FindClass("java/lang/String”);</span><br><span class="line">        //                env-&gt;DeleteLocalRef(clz);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line"> * Class:     com_example_jnidemo_MainActivity</span><br><span class="line"> * Method:    localRef512</span><br><span class="line"> * Signature: ()V</span><br><span class="line"> */JNIEXPORT void JNICALL Java_com_example_jnidemo_MainActivity_localRef512(</span><br><span class="line">        JNIEnv * env, jclass) &#123;</span><br><span class="line">    for (int i = 0; i &lt; 512; i++) &#123;</span><br><span class="line">        LOGD("Java_com_example_jnidemo_MainActivity_localRef512 %d", i);</span><br><span class="line">        jclass clz = env-&gt;FindClass("java/lang/String”);</span><br><span class="line">        //                env-&gt;DeleteLocalRef(clz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line"> * Class:     com_example_jnidemo_MainActivity</span><br><span class="line"> * Method:    localRef256</span><br><span class="line"> * Signature: ()V</span><br><span class="line"> */JNIEXPORT void JNICALL Java_com_example_jnidemo_MainActivity_localRef256(JNIEnv * env,</span><br><span class="line">        jclass) &#123;</span><br><span class="line">    for (int i = 0; i &lt; 256; i++) &#123;</span><br><span class="line">        LOGD("Java_com_example_jnidemo_MainActivity_localRef256 %d", i);</span><br><span class="line">        jclass clz = env-&gt;FindClass("java/lang/String”);</span><br><span class="line">        //                env-&gt;DeleteLocalRef(clz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根据文档的描述<br>Java_com_example_jnidemo_MainActivity_localRef500调用以后应该不会溢出至crash  （尝试调用一次）<br>Java_com_example_jnidemo_MainActivity_localRef512调用以后应该不会溢出至crash  （尝试调用一次）<br>Java_com_example_jnidemo_MainActivity_localRef500调用玩以后应该不会溢出至crash （尝试调用N次）</p>
+<p>运行代码以后确认上述预测正确，但是有一个比较奇怪的地方是Java_com_example_jnidemo_MainActivity_localRef512 crash以后抛出的信息是：</p>
+<p><img src="https://f.cloud.github.com/assets/1309744/1826138/0b0b8f36-71eb-11e3-94b7-4dd7d8152dc0.png" alt="image"></p>
+<p>之前我自己的猜想是local reference table里面的512个都应该是class，但实际上第507次定义的时候ReferenceTable就已经满了，看截图中的summary，还有其他的几个reference，猜想应该是这次函数调用过程中在其他地方用到的。</p>
+<p>经过上面的尝试已经清楚了ReferenceTable overflow在什么时候复现，要想避免这种泄露，就需要我们在使用完reference 以后要及时的删除，JNI中有两个删除应用的方法有是DeleteLocalRef和DeleteGlobalRef，分别用于删除Local Reference和Global Reference。上述例子中只要取消DeleteLocalRef的注释，在运行必然不会出现内存泄露了。</p>
+<p>上面的实验告诉我们要及时删除LocalRef，哪些类型需要Delete呢？推荐看一下<a href="http://www.ibm.com/developerworks/cn/java/j-lo-jnileak/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-lo-jnileak/</a> 这篇文章，里面说明LocalRef具体是什么东西。简单说来，所有的jobject都需要调用DeleteLocal(Global)Ref，下面在jni.h中，我们可以看出那些对象继承自_jobject, 他们都是需要被DeleteLocal(Global)Ref的。（jclass is-a jobject，这是上面示例代码使用jclass的原因）</p>
+<p>最后还需要注意的一点是，如果返回值是一个jobject，则在拿到这个返回值使用完以后，同样也要调用DeleteLocalRef删除引用.</p>
+<p>文中的测试代码在： <a href="https://github.com/23lab/AndroidLab/tree/master/JniDemo" target="_blank" rel="external">https://github.com/23lab/AndroidLab/tree/master/JniDemo</a> </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/06/21/something-about-android-signature/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android签名(Signature)漫谈(一)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/11/07/merge-multiple-jar-package-into-one/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">合并多个jar包的两种方法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="jni-memory-leak-local-reference-table-overflow" data-title="记一次JNI内存泄露的排查和解决" data-url="http://blog.23lab.com/2013/12/28/jni-memory-leak-local-reference-table-overflow/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

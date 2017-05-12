@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>从Java的hashCode方法谈起 | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在看Effective Java看到hashCode这个方法，之前写代码几乎没有去关注它，即使是把自定义的对象放到HashMap也没去关注细节。今天看到正好深入研究下。首先hashCode这个方法用来干什么的呢？下面是来之Java官方文档的说明：
+
+Returns a hash code value for the object. This method is supported for th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Java的hashCode方法谈起">
+<meta property="og:url" content="http://blog.23lab.com/2013/10/31/cong-hashcodetan-qi/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="最近在看Effective Java看到hashCode这个方法，之前写代码几乎没有去关注它，即使是把自定义的对象放到HashMap也没去关注细节。今天看到正好深入研究下。首先hashCode这个方法用来干什么的呢？下面是来之Java官方文档的说明：
+
+Returns a hash code value for the object. This method is supported for th">
+<meta property="og:image" content="https://f.cloud.github.com/assets/1309744/1447021/de4d7f06-4240-11e3-9761-a729eb29151c.jpeg">
+<meta property="og:image" content="https://f.cloud.github.com/assets/1309744/1447025/e6e348ee-4240-11e3-80d6-8c7114a86b94.jpeg">
+<meta property="og:image" content="https://f.cloud.github.com/assets/1309744/1447026/ec740276-4240-11e3-86f5-67035eb32ed5.jpeg">
+<meta property="og:image" content="https://f.cloud.github.com/assets/1309744/1447028/f12d07ae-4240-11e3-8a40-da4a49adb62d.jpeg">
+<meta property="og:updated_time" content="2015-09-09T14:42:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从Java的hashCode方法谈起">
+<meta name="twitter:description" content="最近在看Effective Java看到hashCode这个方法，之前写代码几乎没有去关注它，即使是把自定义的对象放到HashMap也没去关注细节。今天看到正好深入研究下。首先hashCode这个方法用来干什么的呢？下面是来之Java官方文档的说明：
+
+Returns a hash code value for the object. This method is supported for th">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://img3.douban.com/icon/ul24992232-3.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-cong-hashcodetan-qi" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/10/31/cong-hashcodetan-qi/" class="article-date">
+  	<time datetime="2013-10-31T15:30:00.000Z" itemprop="datePublished">2013-10-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      从Java的hashCode方法谈起
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Java-Android/">Java, Android</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在看Effective Java看到hashCode这个方法，之前写代码几乎没有去关注它，即使是把自定义的对象放到HashMap也没去关注细节。今天看到正好深入研究下。首先hashCode这个方法用来干什么的呢？下面是来之Java官方文档的说明：</p>
+<blockquote>
+<p>Returns a hash code value for the object. This method is supported for the benefit of hash tables such as those provided by HashMap.</p>
+<p>The general contract of hashCode is:</p>
+<ul>
+<li>Whenever it is invoked on the same object more than once during an execution of a Java application, the hashCode method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.</li>
+<li>If two objects are equal according to the equals(Object) method, then calling the hashCode method on each of the two objects must produce the same integer result.</li>
+<li>It is not required that if two objects are unequal according to the equals(java.lang.Object) method, then calling the hashCode method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</li>
+</ul>
+<p>As much as is reasonably practical, the hashCode method defined by class Object does return distinct integers for distinct objects. (This is typically implemented by converting the internal address of the object into an integer, but this implementation technique is not required by the JavaTM programming language.)</p>
+</blockquote>
+<a id="more"></a>
+<p>几个关键点， 首先， 实现这个方法是为了他们在hash表中做key时有更好的性能，例如HashMap，其次实现它又三个约束</p>
+<ol>
+<li>在应用程序执行区间，同样的对象在equals方法用到的属性没有变化时，多次调用的hashCode的返回值必须一样，同一个应用程序多次执行，每次返回的hashCode不一定要一样。</li>
+<li>两个用equals比较相同的对象需要返回相等的hashCode</li>
+<li>两个调用equals返回false的对象， 并不要求他们的hashCode返回值不同</li>
+</ol>
+<p>另外， hashCode是在Object中实现的（是个native方法），默认的实现是将对象的内部地址转成int返回（多次运行反悔的值不一样是允许的）。</p>
+<p>上面文档中说了这个hashCode会在HashMap中使用，那我就来用HashMap做个实验，首先让一个类的hashCode实现返回不同的值。看看把两个对象放到HashMap中以后的存放位置。然后将hashCode改为返回固定的值。再次查看hashMap中对象的存放<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">     public static void main(String[] argv) &#123;</span><br><span class="line">          HashMap&lt;HashCodeElement, String&gt; map = new HashMap&lt;HashCodeElement, String&gt;();</span><br><span class="line">          map.put(new HashCodeElement(1), "");</span><br><span class="line">          map.put(new HashCodeElement(2), "”);  // 此处断点</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public class HashCodeElement &#123;</span><br><span class="line">     public int val;</span><br><span class="line">     public HashCodeElement(int val) &#123;</span><br><span class="line">          this.val = val;</span><br><span class="line">     &#125;</span><br><span class="line">     @Override</span><br><span class="line">     public int hashCode() &#123; // 根据属性值返回不同的hashCode，这个hashCode并不满足上述的三个约束</span><br><span class="line">          return val;  </span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>debug以后可以看到map变量中数据的分布如下，两个对象散列在了不同的位置：</p>
+<p><img src="https://f.cloud.github.com/assets/1309744/1447021/de4d7f06-4240-11e3-9761-a729eb29151c.jpeg" alt="1db998dbea7b78ca634c338db9bdd5bb"></p>
+<p>第二种情况，这个类的所有对象hashCode返回同样的值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashCodeElement</span> </span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">int</span> val;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="title">HashCodeElement</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">this</span>.val = val;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="annotation">@Override</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123; </span><br><span class="line">          <span class="keyword">return</span> <span class="number">1</span>;          <span class="comment">// 全都返回1</span></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样调试以后的结果如下图，很显然，因为hashCode相同，在hash的时候出现了冲突，HashMap中使用了拉链法解决冲突，也就出现了下图的结果。</p>
+<p><img src="https://f.cloud.github.com/assets/1309744/1447025/e6e348ee-4240-11e3-80d6-8c7114a86b94.jpeg" alt="5b451edbf2927dbd87d4c29e879f892f"></p>
+<p>从上图中可以看出，自己重写hashCode最坏的情况就是所有对象返回同样hashCode，然后使用HashMap（其他hash的集合也一样）变成链表。</p>
+<p>之前是用HashMap一直没关注key的hashCode这个方法主要是因为基本上都是用String做key，所以顺便看一下String的hashCode实现。打开源码可以看到String的hashCode方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> hash = hashCode;</span><br><span class="line">    <span class="keyword">if</span> (hash == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> end = count + offset;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">char</span>[] chars = value;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = offset; i &lt; end; ++i) &#123;</span><br><span class="line">            hash = <span class="number">31</span>*hash + chars[i];</span><br><span class="line">        &#125;</span><br><span class="line">        hashCode = hash;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里的逻辑很简单，offset默认为0（在有substring时候offset会变化）。这里的hash算法为什么要这样实现改日在研究，不过字符串比较常用的hash算法就是这种，但是为什么31呢？先不纠结与此，继续看一下HashMap中调用hashCode的地方。</p>
+<p>下面是HashMap的put方法，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span> <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> putValueForNullKey(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> hash = secondaryHash(key.hashCode());</span><br><span class="line">    HashMapEntry&lt;K, V&gt;[] tab = table;</span><br><span class="line">    <span class="keyword">int</span> index = hash &amp; (tab.length - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span> (HashMapEntry&lt;K, V&gt; e = tab[index]; e != <span class="keyword">null</span>; e = e.next) &#123;</span><br><span class="line">        <span class="keyword">if</span> (e.hash == hash &amp;&amp; key.equals(e.key)) &#123;</span><br><span class="line">            preModify(e);</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            e.value = value;</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// No entry for (non-null) key is present; create one</span></span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (size++ &gt; threshold) &#123;</span><br><span class="line">        tab = doubleCapacity();</span><br><span class="line">        index = hash &amp; (tab.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    addNewEntry(key, value, hash, index);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">secondaryHash</span><span class="params">(<span class="keyword">int</span> h)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Doug Lea's supplemental hash function</span></span><br><span class="line">    h ^= (h &gt;&gt;&gt; <span class="number">20</span>) ^ (h &gt;&gt;&gt; <span class="number">12</span>);</span><br><span class="line">    <span class="keyword">return</span> h ^ (h &gt;&gt;&gt; <span class="number">7</span>) ^ (h &gt;&gt;&gt; <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>HashMap中拿到key对象本身的hashCode值以后，又对其做了secondaryHash，至于为什么要做这一次secondaryHash，这里有个讨论<a href="http://stackoverflow.com/questions/2538092/why-does-a-hashmap-rehash-the-hashcode-supplied-by-the-key-object。" target="_blank" rel="external">http://stackoverflow.com/questions/2538092/why-does-a-hashmap-rehash-the-hashcode-supplied-by-the-key-object。</a> 其实关键在于<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> index = hash &amp; (tab.length - <span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>普通开发者写出来的hashCode的返回值key可能太大，不适合直接当做key使用，需要将他们映射到哈希表中，所以需要做上面这行代码的与运算，但是我们的hashCode返回值可能低位不够随机，所以需要secondaryHash一次。</p>
+<p>最后，其实eclipse是有自动实现hashCode和equals方法的功能的。</p>
+<p><img src="https://f.cloud.github.com/assets/1309744/1447026/ec740276-4240-11e3-86f5-67035eb32ed5.jpeg" alt="04e70687d67efb6f83fd1058855c7ef9"></p>
+<p><img src="https://f.cloud.github.com/assets/1309744/1447028/f12d07ae-4240-11e3-8a40-da4a49adb62d.jpeg" alt="50a033430930ff5d39163ab118e550c1"></p>
+<p>下面是Eclipse生成的hashCode和equals方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="keyword">this</span> == obj)</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">     <span class="keyword">if</span> (obj == <span class="keyword">null</span>)</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">if</span> (getClass() != obj.getClass())</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     HashCodeElement other = (HashCodeElement) obj;</span><br><span class="line">     <span class="keyword">if</span> (str == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (other.str != <span class="keyword">null</span>)</span><br><span class="line">               <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!str.equals(other.str))</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">if</span> (val != other.val)</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="annotation">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">final</span> <span class="keyword">int</span> prime = <span class="number">31</span>;</span><br><span class="line">     <span class="keyword">int</span> result = <span class="number">1</span>;</span><br><span class="line">     result = prime * result + ((str == <span class="keyword">null</span>) ? <span class="number">0</span> : str.hashCode());</span><br><span class="line">     result = prime * result + val;</span><br><span class="line">     <span class="keyword">return</span> result;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Eclipse生成的这个hashCode方法也是Effective Java中推荐的一种hashCode实现方式。有兴趣的可以写一个包含各种类型属性的类，用eclipse生成一个hashCode方法看看。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/11/07/merge-multiple-jar-package-into-one/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          合并多个jar包的两种方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/10/25/rang-androidde-loggeng-hao-yong-,dong-tai-tag/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">让Android的Log更好用(动态TAG)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="cong-hashcodetan-qi" data-title="从Java的hashCode方法谈起" data-url="http://blog.23lab.com/2013/10/31/cong-hashcodetan-qi/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

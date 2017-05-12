@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AngularJS 无限Digest循环导致的错误(infdig) | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在开发Angular项目过程中遇到一个问题, 日期相关, 核心错误点在于我把一个日期对象挂到$scope 上, view 里面两个地方分别用到了当天和后一天, 大概的示例代码如下: 
+12345678910111213141516171819// test.ctrl.jsvar app = angular.module(&apos;ericTestApp&apos;, [&apos;ngRoute&apos;]).config([&apos;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS 无限Digest循环导致的错误(infdig)">
+<meta property="og:url" content="http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="最近在开发Angular项目过程中遇到一个问题, 日期相关, 核心错误点在于我把一个日期对象挂到$scope 上, view 里面两个地方分别用到了当天和后一天, 大概的示例代码如下: 
+12345678910111213141516171819// test.ctrl.jsvar app = angular.module(&apos;ericTestApp&apos;, [&apos;ngRoute&apos;]).config([&apos;">
+<meta property="og:image" content="http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/demo-result.png">
+<meta property="og:updated_time" content="2017-05-12T05:25:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS 无限Digest循环导致的错误(infdig)">
+<meta name="twitter:description" content="最近在开发Angular项目过程中遇到一个问题, 日期相关, 核心错误点在于我把一个日期对象挂到$scope 上, view 里面两个地方分别用到了当天和后一天, 大概的示例代码如下: 
+12345678910111213141516171819// test.ctrl.jsvar app = angular.module(&apos;ericTestApp&apos;, [&apos;ngRoute&apos;]).config([&apos;">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://img3.douban.com/icon/ul24992232-3.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-angular-infdig-Infinite-digest-loop" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/12/angular-infdig-Infinite-digest-loop/" class="article-date">
+  	<time datetime="2016-11-11T17:37:43.000Z" itemprop="datePublished">2016-11-12</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS 无限Digest循环导致的错误(infdig)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Angular/">Angular</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在开发Angular项目过程中遇到一个问题, 日期相关, 核心错误点在于我把一个日期对象挂到$scope 上, view 里面两个地方分别用到了当天和后一天, 大概的示例代码如下: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.ctrl.js</span></span><br><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'ericTestApp'</span>, [<span class="string">'ngRoute'</span>]).config([<span class="string">'$routeProvider'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$routeProvider</span>) </span>&#123;</span><br><span class="line">  $routeProvider.when(<span class="string">'/bad'</span>, &#123;</span><br><span class="line">    controller: <span class="string">'BadCtrl'</span>, </span><br><span class="line">    template: <span class="string">'&lt;div&gt;today: &#123;&#123;today | date :"yyyy-MM-dd HH:mm:ss"&#125;&#125;&lt;/div&gt;&lt;div&gt;today: &#123;&#123;tomorrow() | date :"yyyy-MM-dd HH:mm:ss"&#125;&#125;&lt;/div&gt;'</span></span><br><span class="line">  &#125;).otherwise(&#123;</span><br><span class="line">    redirectTo: <span class="string">'/bad'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;]);</span><br><span class="line"></span><br><span class="line">app.controller(<span class="string">'BadCtrl'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  $scope.tomorrow = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'tomorrow called '</span> + $scope.today);</span><br><span class="line">    <span class="keyword">var</span> tmr = $scope.today;</span><br><span class="line">    tmr = tmr.setDate(tmr.getDate() + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> tmr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<p>上面的代码运行起来会抛出 <code>Error: $rootScope:infdig
+Infinite $digest Loop</code> 的错误信息, 这问题涉及到两个点, 一是对象引用;  二是Angular 的$digest 循环和它的脏值检测. </p>
+<a id="more"></a>
+<p>我们重点来了解一下Angular 的$digest 循环, Angular 最突破性的特性就是他的双向绑定, 开始使用的时候确实会觉得非常爽, 但是他是如何来保证数据的同步更新的呢? 实际上使用了一个比较暴力的方式, 也就是每个view 中的expression去连续执行N遍, 如果所有的表达式值两次都一样, 那说明已经稳定(最后两次计算的值相等)了, 此时结束循环. 如果中间检测到某表达式的值两次计算有差异, 那就继续再都循环一次, 直到所有view 中表达式的值稳定. 那么问题来了, 如果一直不会稳定呢? 目前Angular 的处理是循环超过10次就报错. </p>
+<p>看到这里, 应该很多人已经看出上面代码的问题了, 在tomorrow 函数中, 拿到了today 的引用加了一天以后重新赋给它, 这样导致每次循环在计算tomorow() 的值的时候, today 被改变了, 下次循环, 因为today被上次改了, tomorrow() 的返回值也随之改变, 所以会触发下次循环, 如此循环下去达到了Angular 容忍的 digest 循环最大次数(Angular 中称为digestTTL)而抛出错误.</p>
+<p>上面说的问题我们可以用几个Demo 验证一下增强理解, Demo 代码见 <a href="http://jsbin.com/coxeru/edit?html,js,console,output" target="_blank" rel="external">http://jsbin.com/coxeru/edit?html,js,console,output</a>: </p>
+<p><strong>抛出infdig error</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 绑定到view 的 scope 方法里面修改另一个scope 的值, 会造成无限循环.</span></span><br><span class="line">app.controller(<span class="string">'BadCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  $scope.tomorrow = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'tomorrow called '</span> + $scope.today);</span><br><span class="line">    <span class="keyword">var</span> tmr = $scope.today;</span><br><span class="line">    tmr = tmr.setDate(tmr.getDate() + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> tmr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>正确的做法, 绑定到$scope 的函数不去改变另外一个$ scope 的值</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正常运行</span></span><br><span class="line">app.controller(<span class="string">'GoodCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  $scope.tomorrow = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'tomorrow called'</span> + $scope.today);</span><br><span class="line">    <span class="keyword">var</span> tmrInMs = $scope.today.getTime();</span><br><span class="line">    tmr = <span class="keyword">new</span> <span class="built_in">Date</span>(tmrInMs + (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>));</span><br><span class="line">    <span class="keyword">return</span> tmr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="string">``</span><span class="string">` </span><br><span class="line">当然, Angular 的官网文档中也说明了几种常见导致无限digest 循环的错误, 在开发过程中也需要注意.</span><br><span class="line"></span><br><span class="line">&#123;% asset_img angular-doc-infdig.png %&#125;</span><br><span class="line"></span><br><span class="line">最后我们用一个Demo 演示了设置digstTTL的作用, 也方便进一步理解digest 循环</span><br><span class="line"></span><br><span class="line">`</span><span class="string">``</span> js</span><br><span class="line"><span class="keyword">var</span> digestTTL = <span class="number">3</span>; <span class="comment">// 手动设置digestTTL</span></span><br><span class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'ericTestApp'</span>, [<span class="string">'ngRoute'</span>]).config([<span class="string">'$routeProvider'</span>, <span class="string">'$rootScopeProvider'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$routeProvider, $rootScopeProvider</span>) </span>&#123;</span><br><span class="line">  $routeProvider.when(<span class="string">'/deepTest'</span>, &#123;</span><br><span class="line">    controller: <span class="string">'DeepTestCtrl'</span>, </span><br><span class="line">    template: <span class="string">'&lt;div&gt;today: &#123;&#123;today | date :"yyyy-MM-dd HH:mm:ss"&#125;&#125;&lt;/div&gt;&lt;div&gt;today: &#123;&#123;tomorrow() | date :"yyyy-MM-dd HH:mm:ss"&#125;&#125;&lt;/div&gt;'</span></span><br><span class="line">  &#125;).otherwise(&#123;</span><br><span class="line">    redirectTo: <span class="string">'/deepTest'</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 手动设置digestTTL</span></span><br><span class="line">  $rootScopeProvider.digestTtl(digestTTL);</span><br><span class="line">&#125;]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用于测试Angular Digest的次数 </span></span><br><span class="line"><span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line">app.controller(<span class="string">'DeepTestCtrl'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.today = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  $scope.tomorrow = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> tmrInMs = $scope.today.getTime();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"digest "</span> + n++);</span><br><span class="line">    tmr = <span class="keyword">new</span> <span class="built_in">Date</span>(tmrInMs + (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>) * n);</span><br><span class="line">    <span class="keyword">return</span> tmr;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<img src="/2016/11/12/angular-infdig-Infinite-digest-loop/demo-result.png" alt="demo-result.png" title="">
+<p>我们看到返回结果打印4条日志, 且第4条的时候因为返回的值还未稳定, 直接抛出了错误.  这也验证了我们上面的说法. 因此在开发过程中改变$scope 上挂的东西的时候需要谨慎, 因为你不知道你写的这个方法什么时候被别人放到view 上去, 或者watch 起来. 当然理解了此错误的产生原因以后即使遇到也应该不难解决了.</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/31/Android-Things-Try-adb-error/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android Things 尝鲜及免坑指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/09/nginx-Reverse-Proxy/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">配置NGINX反向代理到Node Server</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="angular-infdig-Infinite-digest-loop" data-title="AngularJS 无限Digest循环导致的错误(infdig)" data-url="http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

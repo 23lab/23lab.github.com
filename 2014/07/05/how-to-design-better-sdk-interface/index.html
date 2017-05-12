@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SDK开发过程的一些问题总结 | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="过去的一年多时间里都在做SDK, 这一年从Web开发转到Android开发也算是成功的转型了, 被坑了很多次, 也坑了很多人很多次, 在各种互坑的过程中学到了些东西. 写在这里也算是对过去一年坑别人的一次反省(阿弥陀佛~~). 
+SDK有一个很大的特点, 它的用户是程序猿(这是我大学时代梦寐以求的呢); 而App的用户则通常是普通用户. 我们知道, 有的程序猿很懒, 有的程序猿又喜欢追求完美, 简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDK开发过程的一些问题总结">
+<meta property="og:url" content="http://blog.23lab.com/2014/07/05/how-to-design-better-sdk-interface/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="过去的一年多时间里都在做SDK, 这一年从Web开发转到Android开发也算是成功的转型了, 被坑了很多次, 也坑了很多人很多次, 在各种互坑的过程中学到了些东西. 写在这里也算是对过去一年坑别人的一次反省(阿弥陀佛~~). 
+SDK有一个很大的特点, 它的用户是程序猿(这是我大学时代梦寐以求的呢); 而App的用户则通常是普通用户. 我们知道, 有的程序猿很懒, 有的程序猿又喜欢追求完美, 简">
+<meta property="og:updated_time" content="2015-09-09T16:14:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDK开发过程的一些问题总结">
+<meta name="twitter:description" content="过去的一年多时间里都在做SDK, 这一年从Web开发转到Android开发也算是成功的转型了, 被坑了很多次, 也坑了很多人很多次, 在各种互坑的过程中学到了些东西. 写在这里也算是对过去一年坑别人的一次反省(阿弥陀佛~~). 
+SDK有一个很大的特点, 它的用户是程序猿(这是我大学时代梦寐以求的呢); 而App的用户则通常是普通用户. 我们知道, 有的程序猿很懒, 有的程序猿又喜欢追求完美, 简">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://img3.douban.com/icon/ul24992232-3.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://img3.douban.com/icon/ul24992232-3.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-how-to-design-better-sdk-interface" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/07/05/how-to-design-better-sdk-interface/" class="article-date">
+  	<time datetime="2014-07-05T11:27:00.000Z" itemprop="datePublished">2014-07-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SDK开发过程的一些问题总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Andoird-SDK-Design/">Andoird, SDK, Design</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>过去的一年多时间里都在做SDK, 这一年从Web开发转到Android开发也算是成功的转型了, 被坑了很多次, 也坑了很多人很多次, 在各种互坑的过程中学到了些东西. 写在这里也算是对过去一年坑别人的一次反省(阿弥陀佛~~). </p>
+<p>SDK有一个很大的特点, 它的用户是程序猿(这是我大学时代梦寐以求的呢); 而App的用户则通常是普通用户. 我们知道, 有的程序猿很懒, 有的程序猿又喜欢追求完美, 简单来说吧, 就是程序猿太tm难伺候了. 这就直接导致了SDK开发的一些特殊性. 下面简单谈谈过去在项目中遇到的觉得应该注意的一些点, 大部分可能不只是SDK开发才会遇到的, 即使是App开发, 如果你写出来的接口别人用起来比较爽, 那也是不错的事呢.</p>
+<p>我们的SDK是给游戏用的, 所以后面我会习惯性称SDK的使用者为游戏. 另外说明一点是我们的SDK封装了很多其他外部SDK. </p>
+<a id="more"></a>
+<h2 id="错误码/错误信息_设计">错误码/错误信息 设计</h2><p>我们当初的错误码设计可以简单分为三个阶段: </p>
+<ol>
+<li><strong>直接透传外部SDK的错误码</strong> : 这样有几个问题, 外部各个平台错误码可能会重复, 而且错误码层次不一致, 游戏需要理解大量的错误码.</li>
+<li><strong>简单转换归类外部平台错误码</strong>: 将外部平台错误码做归类整合变为我们自己的错误码. 这个阶段按我们内部逻辑区分错误码(我不会告诉你们, 其实就是拍脑袋想的分类). </li>
+</ol>
+<p>上面两个阶段是已经完成了, 也就是说我们的现状是第二个阶段, 其实这种方式的问题现在已经开始逐渐显现出来, 目前出现的主要问题在于游戏收到这些错误码以后自己还是需要归类, 例如某些错误码游戏需要重新登录, 有的错误码游戏可以尝试重试, 有的错误码则游戏可以忽略. 也就是说从我们的错误码到游戏逻辑之间是需要一次转换的, 而这次转换交给了游戏, 不同的游戏的这个转换关系不同最终导致了一些使用上的混乱. </p>
+<p>说到这里就到了我目前的一个想法了, 错误码按业务逻辑来区分, 直接通过错误码告诉游戏下一步应该做什么, 而不是上一步发生了什么, 了解上一步发生什么问题的目的就是要知道下一步需要做什么. 但是如果错误码这样简化以后必然还会出问题, 如果游戏想要处理得很精细怎么办? 我对这个问题给出的答案是二级错误码, 第一级错误码是简化错误码, 偏向业务逻辑, 供很懒的程序猿用, 他不用理解中间任何事情, 第二级错误码是详细错误码, 偏内部实现, 供最求完美的程序猿使用, 两者互不干扰. </p>
+<p>除了上述错误码的问题外, 伴随着错误码的还有错误信息, 错误信息要在前期定位好的他们的作用, 是用于开发内部定位问题OR提示用户, 如果是用于提示用户, 最好是做成可配置的, 因为可能涉及到国际化之类的问题, 另外如果是用于开发内部定位问题, 则应该注意里面应该包含足够的错误信息. 例如之前给一个同事聊天了解到他们的错误信息设计方法是, 首先错误码分段: 10000, 20000, 30000 …, 然后某个模块如果发生错误, 则将错误码返回到下游模块, 下游模块将上游的错误码加到错误信息中, 并将错误码转换成本模块错误码, 继续返回给调用者, 依次类推, 这样可以保证任何一层调用者, 只要收到了错误信息, 可以迅速看出来是哪个模块出现了问题. </p>
+<p>上面说的略多, 总结一下:<br><strong>错误码</strong>: 分级, 一层简化错误码引导用户做后续流程, 一层详细错误码详细告诉用户发生了什么(不需要的用户可以完全忽略这个错误码).<br><strong>错误信息</strong>: 基于错误码分段, 可将错误码整合到错误信息中, 一次请求经过的所有模块错误码全都包含在内, 方便定位问题.</p>
+<h2 id="同步接口设计">同步接口设计</h2><p>在设计一个对外接口之前肯定要考虑的几件事: </p>
+<ol>
+<li>接口名称</li>
+<li>接口输入</li>
+<li>接口输出</li>
+</ol>
+<p><strong>关于接口名称</strong>, 我们之前将自己的接口全都带了统一的前缀, 现在想起来, 这种做饭真是傻的可爱~, 不过之前接口名称上也有做的还不错的, 我们每个接口名称都很长, 基本上说了这个接口在干什么, 这点对于SDK 接口来说真的太重要的了, 一个好得接口名称可以让你少些好几页的文档. </p>
+<p><strong>接口输入</strong>主要指接口参数, 为什么说主要呢, 因为我个人觉得如果某个接口用到了全局的某些值, 应该将其看作本接口的输入, 这些全局的值是会影响接口输出的. 而且明确的意识到自己写的接口里面用到那些外部全局的东西绝对不是一件坏事. </p>
+<p>下面简单说说我自己在参数设计上遇到的几个坑:<br>第一个是我在某接口里面加入了大部分游戏不使用, 这个设计最后造成的问题是大部分游戏会来咨询那个参数填写什么, 即使我告诉他们填空, 他们对于那个接口还是会较为谨慎. 第二次遇到类似的需求, 我没有继续这样做, 我的做法是保持接口参数为大部分游戏使用的参数, 增加一个接口让特殊需要的游戏传入他们特殊需要的, 如此保证大部分游戏不会对参数产生疑惑. 这种方式效果好坏还需要实际使用场景验证.</p>
+<p>第二个参数相关的是我在一个接口里面放了6个String的参数, 结果自己代码里面参数顺序弄乱了, 因此也导致了多个B(内)U(牛)G(满)单(面). 出现这种问题很重要的一个愿意在于, 在接口参数很多的情况下, 我还是按Eclipse的格式去格式化代码了, 格式化出来的样子差不多如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">(String aaa, String dweqr, String qewrsfa, String werjopiu, </span><br><span class="line">        String ewqoruqwe, String ewrqwer, String werjopi)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>随手敲的代码~~, 如果是上面一段, 让我去看参数顺序我肯定会晕的, 特别是调用变多的时候. 所以这样些是很容易出错的, 我自己经历了上面几个bug, 目前想到的一个最简单的办法(不根治此问题)是超过3个参数每个参数折行, 不论是方法申明还是调用, 代码如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">(</span><br><span class="line">        String aaa, </span><br><span class="line">        String dweqr, </span><br><span class="line">        String qewrsfa, </span><br><span class="line">        String werjopiu, </span><br><span class="line">        String ewqoruqwe, </span><br><span class="line">        String ewrqwer, </span><br><span class="line">        String werjopi)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样看起来可能没那么漂亮, 甚至有的人可能会觉得我在凑代码行, 但是这样确实能让我更清楚的看出来参数顺序.  但是… 其实这样也还是很容易出错好吧. 有别的方法吗? 目前我想到仍为在项目中使用的方法就是, 用一个简单对象封装参数, 例如上面例子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法定义</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">methodA</span><span class="params">(SimpleBean data)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 参数封装为对象</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleBean</span></span>&#123;</span><br><span class="line">    String aaae;</span><br><span class="line">    String dweqr;</span><br><span class="line">    String qewrsfa; </span><br><span class="line">    String werjopiue;</span><br><span class="line">    String ewqoruqwe;</span><br><span class="line">    String ewrqwer;</span><br><span class="line">    String werjopi;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">SimpleBean bean = <span class="keyword">new</span> SimpleBean();</span><br><span class="line">bean.aaae = aaae;</span><br><span class="line">bean.dweqr = dweqr;</span><br><span class="line">…</span><br><span class="line">bean.werjopi = werjopi;</span><br><span class="line">methodA(bean);</span><br></pre></td></tr></table></figure></p>
+<p>经过这样一次封装, 可以让给接口传值变为为参数对象的属性赋值, 这样赋值出错的可能应该是远小于直接传参的.</p>
+<p>总结一下上面说的两个参数相关的问题: </p>
+<ol>
+<li>如果一个接口的参数使用频度较为固定且差异较大, 可以考虑按使用频度拆分参数, 保证让绝大多数人使用上简洁易用的接口.</li>
+<li>参数较多时, 可以考虑调整代码风格, 或者用对象封装参数来避免参数顺序错乱的BUG.</li>
+</ol>
+<p><strong>最后关于输出呢</strong>, 函数的输出可以是返回值或者回调, 对于同步接口, 通常是直接将输出放入返回值中. 如果是异步接口则可能同时具有返回值和回调. 异步接口的返回值将在下面继续探讨. </p>
+<h2 id="异步接口设计">异步接口设计</h2><p>在设计异步接口之前一定要想清楚确实需要异步接口吗? 因为如果你提供一个阻塞的同步接口, 使用者可以自己开一个线程自己将其变为异步接口使用, 但是如果你提供的异步接口, 使用者像将其改为同步就比较麻烦, 回调太多也会导致代码较为混乱, 所以我认为非必要不提供异步接口, 或者说为了方便, 同一个接口提供异步和同步两种. </p>
+<h3 id="异步接口返回值设计">异步接口返回值设计</h3><p>通常情况下异步接口的返回值会用来标识参数是否合法, 如果参数不合法直接返回false并且不会有回调. 我觉得这里最重要的一点是: 规则统一, 一定要在实现前确定规则, 例如参数错误是给错误回调 OR 直接返回false不回调, 出错如何回调, 错误码如何定义(见前面错误码部分), 成功如何回调, 并且保证如果参数正确一定要有回调(如果此调用有外部依赖最好是在SDK内部做定时器处理超时, 超时后给调用者回调), 因为很有可能游戏调用以后不做超时处理等SDK回调, 一旦出现SDK没有回调的情况, 则将造成玩家无限等待. </p>
+<h3 id="异步接口回调设计">异步接口回调设计</h3><p>在回调设计这一块我们也是踩尽了坑….</p>
+<p>回调第一坑: 没有请求标识<br>在设计之处由于没有考虑到游戏连续调用多次接口的情况, 回调里面没有任何内容标识请求, 导致游戏一旦多次调用异步接口, 将无法对应请求和返回, 这很傻, 但是我们确实犯了这个错. 其实这里的问题和上面提到的各个模块错误码要跟随错误信息的道理是一样的, 一定要让你的错误/调用有据可行, 清楚的知道它从哪里来, 到哪里去. </p>
+<p>回调第二坑: 使用公用回调对象<br>可能有人在看到上面请求标识的时候可能会像, 如果我本身就是ObjA调用, 那回调回到ObjA, 这样即使没有请求标识我也能区分所有请求啊, 这就不得不说第二个坑了, 由于我们开发过程中, 所有调用和回调都需要用jni封装, 所以为了方便, 我们会让游戏设置一个全局回调对象, 所有回调都通过这个回调对象发起调用, 也正式因为如此, 本段之前说的那种通过不同对象来识别不同请求的方法在我们SDK再一次行不通. </p>
+<p>上面两个问题继续在困扰着我们, 目前想来有几个方式优化上面两个问题: </p>
+<ol>
+<li>每个异步接口传入各自的回调对象, 以此来保证一个请求清晰对应一个回调. </li>
+<li>如果还是需要使用公共回调对象, 增加字段来标识请求, 例如调用时同步返回一个请求ID, 回调时候时候将ID此ID带回来(startActivityForResult中的requestCode就是这样的). 其实通常情况如果可以把所有请求的数据带回来是更好的方式. </li>
+</ol>
+<h2 id="环境规划和管理">环境规划和管理</h2><p>除了代码层面的一些问题, 各种环境的管理也是必不可少的, 例如我们的环境变化过程如下(下面会细说如此变化的原因): </p>
+<ol>
+<li>正式环境</li>
+<li>正式环境+联调环境</li>
+<li>正式环境+联调环境+开发环境</li>
+<li>正式环境+联调环境+开发环境+测试环境</li>
+</ol>
+<p>开始阶段, 项目最开始只有一个环境, 后来遇到游戏自己测试数据和正式的数据会相互影响, 于是增加联调环境给游戏联调使用, 相当于游戏的测试环境.<br>后来, 由于SDK内部开发节奏较快, 经常更新联调环境代码, 多次出现联调环境不可用, 造成大量的联调咨询, 于是想到需要保持游戏联调环境的稳定, 新增开发环境用于内部开发使用.<br>再后来, 有专业测试人员接入, 为了保证联调环境的稳定, 没经过测试的版本肯定是不能放到联调/正式环境上的, 也就是说测试肯定不能到联调或者正式环境上测试, 那如果到开发环境测试同样还是会遇到问题(开发环境经常变), 这样就必须要再增加一个环境给测试使用. </p>
+<p>最后各种环境使用的流程如下: </p>
+<ol>
+<li>开发在开发环境完成开发</li>
+<li>将开发环境版本部署到测试环境</li>
+<li>测试在测试环境测试版本(此时开发可以在开发环境继续开发, 互不影响)</li>
+<li>测试环境版本测试通过以后发布(当然是灰度的)到联调环境和正式环境</li>
+</ol>
+<p>具体需要那些环境需要的根据各自的业务场景确定, 首先必须要确定有哪几类人会使用这些环境, 做好归类, 然后再梳理清楚他们之前是否不能相互影响, 那些是互斥的, 那些可以公用环境, 这样来最终确定需要那些环境. 在项目前期做好这些规划能省很多事, 我们在整个环境变更的过程中也吃了不少的亏.</p>
+<h2 id="版本开发/发布策略管理">版本开发/发布策略管理</h2><p>关于版本管理, 我想说的就只有一句: <strong>一定要灰度</strong>…</p>
+<p>最开始我们每次出版本都是发给全部游戏, 然后… 一(必)旦(然)有BUG, 无穷无尽的咨询, 无穷无尽的吐槽, 压力非常大. 这样的压力也导致了经常在赶紧急版本, 这就必然会打乱版本的节奏, 最终的结果只有一个, 开发加班到吐血. </p>
+<p>后来我们讨论每次发布版本灰度以后, 其实吧, 就是每次先找少量游戏让我们坑一下, 坑完我们填一遍坑, 然后我们在全量, 这样发出去的版本一半不会出现很大的BUG或者说不会出现大量的BUG. 这应该算是我们做的比较成功的一点. </p>
+<h2 id="开发规范/流程">开发规范/流程</h2><p>越早定义规范越好, 规范中不明确的点团队内及时沟通, 保持团队内对规范的理解一致. 出现问题尝试梳理规范(这里不是指那些条条框框, 规范一定要实用), 但是规范如果让人执行, 那肯定是不可能完全靠谱的, 所以…..  能用代码做的一定交给代码做, 例如我们的SDK打包过程, 可以定义一个规范说明要放那些文件, 文件夹如何命名等等, 我们前期确实这样做了, 结果是基本上每次都会有一点遗漏, 后来用了一个脚本打包, 从那以后生活美好了许多. 故能用代码做的就用代码做, 代码比人更可信. </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/09/20/ImageView-scaleType/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          ImageView的scaleType介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/06/21/something-about-android-signature/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android签名(Signature)漫谈(一)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="how-to-design-better-sdk-interface" data-title="SDK开发过程的一些问题总结" data-url="http://blog.23lab.com/2014/07/05/how-to-design-better-sdk-interface/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
