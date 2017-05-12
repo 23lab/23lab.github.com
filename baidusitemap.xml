@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
+    <lastmod>2017-05-12T12:49:41.000Z</lastmod>
+    <data>
+        <display>
+        <title>App发布上线时候容易被忽略的准备工作</title>
+        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
     <lastmod>2017-05-12T12:40:48.000Z</lastmod>
     <data>
@@ -45,23 +62,6 @@
         <title>配置NGINX反向代理到Node Server</title>
         <pubTime>2016-11-09T14:52:08.000Z</pubTime>
         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
-    <lastmod>2017-05-12T05:25:31.000Z</lastmod>
-    <data>
-        <display>
-        <title>App发布上线时候容易被忽略的准备工作</title>
-        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
          
            
         </display>
