@@ -4,14 +4,16 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
-    <lastmod>2017-05-12T12:49:41.000Z</lastmod>
+    <loc>http://blog.23lab.com/2017/05/23/%E8%BD%BB%E9%87%8F%E9%9A%8F%E6%9C%BAJS%E5%AF%B9%E8%B1%A1%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7-Mocker/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>App发布上线时候容易被忽略的准备工作</title>
-        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
+        <title>轻量JS mock对象生成工具-Mocker</title>
+        <pubTime>2017-05-23T11:50:43.000Z</pubTime>
         
-        <tag>Android</tag>
+        <tag>js</tag>
+         
+        <tag>mock</tag>
          
          
            
@@ -21,14 +23,18 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
-    <lastmod>2017-05-12T12:40:48.000Z</lastmod>
+    <loc>http://blog.23lab.com/2016/12/31/Android-Things-Try-adb-error/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>桌上足球进攻防守打法经验分享</title>
-        <pubTime>2017-05-11T01:27:07.000Z</pubTime>
+        <title>Android Things 尝鲜及免坑指南</title>
+        <pubTime>2016-12-31T12:24:54.000Z</pubTime>
         
-        <tag>foosball, 桌上足球</tag>
+        <tag>AndroidThings</tag>
+         
+        <tag>IoT</tag>
+         
+        <tag>树莓派</tag>
          
          
            
@@ -39,7 +45,7 @@
     
   <url>
     <loc>http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/</loc>
-    <lastmod>2017-05-12T05:25:31.000Z</lastmod>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
         <title>AngularJS 无限Digest循环导致的错误(infdig)</title>
@@ -56,12 +62,35 @@
     
   <url>
     <loc>http://blog.23lab.com/2016/11/09/nginx-Reverse-Proxy/</loc>
-    <lastmod>2017-05-12T05:25:31.000Z</lastmod>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
         <title>配置NGINX反向代理到Node Server</title>
         <pubTime>2016-11-09T14:52:08.000Z</pubTime>
         
+        <tag>Deploy</tag>
+         
+        <tag>NGINX</tag>
+         
+        <tag>Node</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
+    <data>
+        <display>
+        <title>App发布上线时候容易被忽略的准备工作</title>
+        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
          
            
         </display>
@@ -71,13 +100,13 @@
     
   <url>
     <loc>http://blog.23lab.com/2015/09/20/ImageView-scaleType/</loc>
-    <lastmod>2017-05-12T05:25:31.000Z</lastmod>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
         <title>ImageView的scaleType介绍</title>
         <pubTime>2015-09-19T17:56:50.000Z</pubTime>
         
-        <tag>android</tag>
+        <tag>Android</tag>
          
          
            
@@ -87,14 +116,33 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2016/12/31/Android-Things-Try-adb-error/</loc>
-    <lastmod>2017-05-12T05:25:31.000Z</lastmod>
+    <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>Android Things 尝鲜及免坑指南</title>
-        <pubTime>2016-12-31T12:24:54.000Z</pubTime>
+        <title>桌上足球进攻防守打法经验分享</title>
+        <pubTime>2017-05-11T01:27:07.000Z</pubTime>
         
-        <tag>AndroidThings, IoT, 树莓派</tag>
+        <tag>Foosball</tag>
+         
+        <tag>桌上足球</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2017/05/28/Vim-for-front-end-developer/</loc>
+    <lastmod>2017-05-28T06:02:47.000Z</lastmod>
+    <data>
+        <display>
+        <title>Vim入门高频功能分享</title>
+        <pubTime>2017-05-28T05:46:54.000Z</pubTime>
+        
+        <tag>Vim</tag>
          
          
            
@@ -130,24 +178,6 @@
            
              
               <breadCrumb title="Andoird, SDK, Design" url="http://blog.23lab.com/categories/Andoird-SDK-Design/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.23lab.com/2014/06/21/something-about-android-signature/</loc>
-    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android签名(Signature)漫谈(一)</title>
-        <pubTime>2014-06-21T08:02:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="Android,Signature" url="http://blog.23lab.com/categories/Android-Signature/"/>
           
         </display>
     </data>
@@ -206,17 +236,17 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2013/04/22/solved-android-edittext-auto-focus-and-popup-keyboard/</loc>
+    <loc>http://blog.23lab.com/2014/06/21/something-about-android-signature/</loc>
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     <data>
         <display>
-        <title>避免Android开发中EditText自动获取交点弹出键盘</title>
-        <pubTime>2013-04-21T16:57:00.000Z</pubTime>
+        <title>Android签名(Signature)漫谈(一)</title>
+        <pubTime>2014-06-21T08:02:00.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="Android" url="http://blog.23lab.com/categories/Android/"/>
+              <breadCrumb title="Android,Signature" url="http://blog.23lab.com/categories/Android-Signature/"/>
           
         </display>
     </data>
@@ -278,6 +308,24 @@
         
          
            
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2013/04/22/solved-android-edittext-auto-focus-and-popup-keyboard/</loc>
+    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>避免Android开发中EditText自动获取交点弹出键盘</title>
+        <pubTime>2013-04-21T16:57:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="Android" url="http://blog.23lab.com/categories/Android/"/>
+          
         </display>
     </data>
     </url>

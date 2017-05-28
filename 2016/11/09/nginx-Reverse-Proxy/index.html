@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="23Lab">
 <meta property="og:description" content="背景平时工作中偶尔需要在服务器上放个NodeJS的Server, 但是每次都迫于80端口被占用只能转而使用3000, 4000等其他端口, 今天决定整理一下这一块, 放一个Nginx在前面, 由它来转发, 这样就可以实现80端口的共用, 如此则可应对一些只能支持80端口的场景, 例如微信公众帐号的开发, 目前微信小程序出来以后众多人追捧, 其中小程序有一条限制, 就是能访问的域名不能超过三个, 通">
 <meta property="og:image" content="http://blog.23lab.com/2016/11/09/nginx-Reverse-Proxy/reverse-proxy.png">
-<meta property="og:updated_time" content="2017-05-12T05:25:31.000Z">
+<meta property="og:updated_time" content="2017-05-28T06:04:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置NGINX反向代理到Node Server">
 <meta name="twitter:description" content="背景平时工作中偶尔需要在服务器上放个NodeJS的Server, 但是每次都迫于80端口被占用只能转而使用3000, 4000等其他端口, 今天决定整理一下这一块, 放一个Nginx在前面, 由它来转发, 这样就可以实现80端口的共用, 如此则可应对一些只能支持80端口的场景, 例如微信公众帐号的开发, 目前微信小程序出来以后众多人追捧, 其中小程序有一条限制, 就是能访问的域名不能超过三个, 通">
@@ -105,7 +105,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a>
 					</div>
 				</section>
 				
@@ -188,6 +188,10 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deploy/">Deploy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -200,12 +204,12 @@
 <h2 id="目标">目标</h2><p>目标很简单, 就是要实现下面的这个简单得不能再简单的架构.<br><img src="/2016/11/09/nginx-Reverse-Proxy/reverse-proxy.png" alt="reverse-proxy.png" title=""></p>
 <a id="more"></a>
 <h2 id="第一步_安装NGINX">第一步  安装NGINX</h2><p>直接参照 <code>https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</code> 安装即可. </p>
-<h2 id="第二步_配置NGINX">第二步  配置NGINX</h2><p>默认配置中有两个关键配置文件需要关注, 一个是/etc/nginx/nginx.conf, 其中最后一句:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="regexp">/etc/</span>nginx<span class="regexp">/conf.d/</span>*.conf;</span><br></pre></td></tr></table></figure></p>
-<p>所以我选择将不同站点的配置文件放到/etc/nginx/conf.d/ 下面, 例如我需要配置 www.23lab.com, 则直接防止一个同名文件在www.23lab.com中, 其中内容为:<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">server</span> &#123;</span><br><span class="line">    <span class="title">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="title">server_name</span> www.23lab.com;</span><br><span class="line">    <span class="title">location</span> / &#123;</span><br><span class="line">        <span class="title">proxy_pass</span> <span class="url">http://127.0.0.1:8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="第二步_配置NGINX">第二步  配置NGINX</h2><p>默认配置中有两个关键配置文件需要关注, 一个是/etc/nginx/nginx.conf, 其中最后一句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include /etc/nginx/conf.d/*.conf;</span><br></pre></td></tr></table></figure></p>
+<p>所以我选择将不同站点的配置文件放到/etc/nginx/conf.d/ 下面, 例如我需要配置 www.23lab.com, 则直接防止一个同名文件在www.23lab.com中, 其中内容为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server &#123;&#10;    listen 80;&#10;    server_name www.23lab.com;&#10;    location / &#123;&#10;        proxy_pass http://127.0.0.1:8080;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这应该是最简单的配置, 将到www.23lab.com的请求转发到 本机8000端口, 我们的Node Server监听8080端口即可接收到请求. </p>
 <p>同理, 在conf.d下面新建文件, 修改上面配置文件中的server_name和端口号, 则可以添加其他域名的转发规则. </p>
-<p>每次修改完成配置以后记得重启NGINX.<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">service</span> nginx restart</span><br></pre></td></tr></table></figure></p>
-<h2 id="第三步_启动Node_Server验证配置">第三步 启动Node Server验证配置</h2><p>为了方便, 我直接使用http-server这个npm模块来启动验证前面的配置.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> -<span class="keyword">g</span> <span class="keyword">http</span>-<span class="keyword">server</span></span></span><br></pre></td></tr></table></figure></p>
+<p>每次修改完成配置以后记得重启NGINX.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service nginx restart</span><br></pre></td></tr></table></figure></p>
+<h2 id="第三步_启动Node_Server验证配置">第三步 启动Node Server验证配置</h2><p>为了方便, 我直接使用http-server这个npm模块来启动验证前面的配置.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g http-server</span><br></pre></td></tr></table></figure></p>
 <p>任意选一个目录运行一下 <code>http-server</code>, 则会默认启动监听8080端口的server. 正常情况这时候访问www.23lab.com, 就能看到http-server有对应了访问日志了. </p>
 <p>配置完成.</p>
 <h2 id="最后">最后</h2><p>这里配置的核心就是要让NGINX做前置, 负责请求的转发, 至于后面是Java Server, Node Server, PHP Server都不重要.</p>

@@ -8,7 +8,7 @@
   <meta name="description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
 1SELECT id FROM tbl WHERE id IN(1, 5, 3);
 此SQL出来的内容肯定是
-123135
+11&amp;#10;3&amp;#10;5
 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL中结果集按IN子句中id顺序排序">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
 1SELECT id FROM tbl WHERE id IN(1, 5, 3);
 此SQL出来的内容肯定是
-123135
+11&amp;#10;3&amp;#10;5
 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
 <meta property="og:updated_time" content="2015-09-09T14:42:12.000Z">
 <meta name="twitter:card" content="summary">
@@ -25,7 +25,7 @@
 <meta name="twitter:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
 1SELECT id FROM tbl WHERE id IN(1, 5, 3);
 此SQL出来的内容肯定是
-123135
+11&amp;#10;3&amp;#10;5
 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
@@ -116,7 +116,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a>
 					</div>
 				</section>
 				
@@ -210,7 +210,7 @@
         <p>今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>);</span></span><br></pre></td></tr></table></figure>
 <p>此SQL出来的内容肯定是</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">5</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#10;3&#10;5</span><br></pre></td></tr></table></figure>
 <p>那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？<br><a id="more"></a><br>这里涉及到排序的问题，问同事也说没遇到过此类问题，于是自己想了想给出了一个天下最丑的方法（比完全没有好点）。先用UNION构造出一个按自定义ｉｄ序列排序的结果集，将此结果集作为子表LEFT JOIN上要查询的表. 代码如下:</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> a <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">AS</span> a</span><br><span class="line">    <span class="keyword">UNION</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">5</span> <span class="keyword">AS</span> a</span><br><span class="line">    <span class="keyword">UNION</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">3</span> <span class="keyword">AS</span> a</span><br><span class="line">) <span class="keyword">AS</span> tb1</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> tbl tb2</span><br><span class="line"><span class="keyword">ON</span> tb2 .<span class="keyword">id</span> =  tb1 .a </span><br><span class="line"><span class="keyword">WHERE</span> tb2.<span class="keyword">id</span> <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>) ;</span></span><br></pre></td></tr></table></figure>
 <p>这个方案可行, 但让人看起来就相当恶心, 后来有搜索到可以用FIELD函数来实现此功能, 官方对FIELD的说明为:</p>

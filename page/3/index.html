@@ -103,7 +103,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a>
 					</div>
 				</section>
 				
@@ -162,6 +162,124 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-jni-memory-leak-local-reference-table-overflow" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/" class="article-date">
+  	<time datetime="2013-12-28T03:28:00.000Z" itemprop="datePublished">2013-12-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/">记一次JNI内存泄露的排查和解决</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12-08 12:00:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)&#10;12-08 12:00:03.844: W/dalvikvm(767): Last 10 entries in JNI local reference table:&#10;12-08 12:00:03.844: W/dalvikvm(767):   502: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   503: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   504: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   505: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   506: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   507: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   508: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   509: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   510: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767):   511: 0x4000e878 cls=Ljava/lang/Class; &#39;Ljava/lang/String;&#39; (284 bytes)&#10;12-08 12:00:03.844: W/dalvikvm(767): JNI local reference table summary (512 entries):&#10;12-08 12:00:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class; 236B&#10;12-08 12:00:03.844: W/dalvikvm(767):   507 of Ljava/lang/Class; 284B (1 unique)&#10;12-08 12:00:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class; 572B&#10;12-08 12:00:03.844: W/dalvikvm(767):     2 of Ljava/lang/String; 28B (2 unique)&#10;12-08 12:00:03.844: W/dalvikvm(767):     1 of [Ljava/lang/String; 28B</span><br></pre></td></tr></table></figure>
+<p>于是决定研究一下这个ReferenceTable overflow，首先看到需要查询什么是JNI的 Local References，下面是官网解释: </p>
+<blockquote>
+<p>Local References<br>Local references are valid for the duration of a native method call. They are freed automatically after the native method returns. Each local reference costs some amount of Java Virtual Machine resource. Programmers need to make sure that native methods do not excessively allocate local references. Although local references are automatically freed after the native method returns to Java, excessive allocation of local references may cause the VM to run out of memory during the execution of a native method.</p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-merge-multiple-jar-package-into-one" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/11/07/merge-multiple-jar-package-into-one/" class="article-date">
+  	<time datetime="2013-11-07T15:20:00.000Z" itemprop="datePublished">2013-11-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/11/07/merge-multiple-jar-package-into-one/">合并多个jar包的两种方法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在项目过程中, 使用到了很多外部的jar包, 但是由于要做sdk对外提供, 多个jar包放出去肯定不太友好, 于是需要对这些jar包合并成一个, jar包的本质其实就是zip包. 所以其实合并的难度并不大, 但是这个问题也被几个人问到, 就在此分享一下. </p>
+<p>####第一种方法, 使用Eclipse插件(Eclipse本省的export不能合并)<br>我使用的插件是 fatjar, 链接如下<a href="http://fjep.sourceforge.net/">fatjar</a>, 使用fatjar的具体细节再次不再细说, 需要提两点:　<br>我们开始用fatjar打包, 一切ok, 但是某次引入了一个混淆过的jar包以后, 在用fatjar打包, 发现有部分类fatjar并没有打到结果jar包中, 具体原因不明, 经常看确实有class在fatjar合并jar过程中丢失, 导致NoClassFoundExcption.<br>另外, 如果jar包里面有其他资源, fatjar并不能将它们直接打入合并后的jar包, 例如jar包中带了assets目录. 这部分需要手动引入, 这样就实现不了完全自动化了.</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/java，ant，android/">java，ant，android</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2013/11/07/merge-multiple-jar-package-into-one/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-cong-hashcodetan-qi" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -327,123 +445,6 @@
       
         <p class="article-more-link">
           <a  href="/2013/04/22/solved-android-edittext-auto-focus-and-popup-keyboard/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-capturer-a-whole-web-page-in-chrome-with-chrome-extension" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/" class="article-date">
-  	<time datetime="2013-03-11T14:39:00.000Z" itemprop="datePublished">2013-03-11</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/">开发Chrome插件实现在Chrome中截取网页</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前一直在考虑一个在浏览器上实现截屏的问题，搜索了一下了解了些情况。</p>
-<p>在初期想到的是如何通过JS把网页变为图片，网上有相应的开源项目，例如<a href="https://github.com/niklasvh/html2canvas">https://github.com/niklasvh/html2canvas</a>. 这个组件试了一下在本机上还是有些问题。</p>
-<p>除了这个以外，还有一个东西是<a href="http://phantomjs.org/">PhantomJS</a></p>
-<blockquote>
-<p>PhantomJS is a headless WebKit with JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG.</p>
-</blockquote>
-<p>它本生就能用来做<a href="https://github.com/ariya/phantomjs/wiki/Screen-Capture">Screen Capture</a></p>
-<p>使用phantomjs存在两个问题，一是它需要服务器的支持，而是经我测试中文有问题（我是用它提供的DEMO来测试的，没有自己装环境试），而我们想做的事在浏览器上实现截图，这些方案都和预先想的有所偏离，关于截屏这个问题也就搁置了一段时间。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-allow-tab-in-your-testarea-with-allowtab" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/02/24/allow-tab-in-your-testarea-with-allowtab/" class="article-date">
-  	<time datetime="2013-02-24T08:02:00.000Z" itemprop="datePublished">2013-02-24</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/02/24/allow-tab-in-your-testarea-with-allowtab/">使用allowtab插件实现在textarea中输入制表符</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀.</p>
-<p>于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不支持IE.</p>
-<p>最后决定自己写一个(按照tabIndent的思路), 主要是加入对IE的支持. </p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2013/02/24/allow-tab-in-your-testarea-with-allowtab/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

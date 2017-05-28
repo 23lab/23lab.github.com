@@ -103,7 +103,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/AndroidThings-IoT-树莓派/" style="font-size: 10px;">AndroidThings, IoT, 树莓派</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/foosball-桌上足球/" style="font-size: 10px;">foosball, 桌上足球</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a>
 					</div>
 				</section>
 				
@@ -163,6 +163,142 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-nginx-Reverse-Proxy" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/09/nginx-Reverse-Proxy/" class="article-date">
+  	<time datetime="2016-11-09T14:52:08.000Z" itemprop="datePublished">2016-11-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/09/nginx-Reverse-Proxy/">配置NGINX反向代理到Node Server</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景">背景</h2><p>平时工作中偶尔需要在服务器上放个NodeJS的Server, 但是每次都迫于80端口被占用只能转而使用3000, 4000等其他端口, 今天决定整理一下这一块, 放一个Nginx在前面, 由它来转发, 这样就可以实现80端口的共用, 如此则可应对一些只能支持80端口的场景, 例如微信公众帐号的开发, 目前微信小程序出来以后众多人追捧, 其中小程序有一条限制, 就是能访问的域名不能超过三个, 通过类似的设置, 用一台服务器做一下转发, 也可以破解此限制.</p>
+<h2 id="目标">目标</h2><p>目标很简单, 就是要实现下面的这个简单得不能再简单的架构.<br><img src="/2016/11/09/nginx-Reverse-Proxy/reverse-proxy.png" alt="reverse-proxy.png" title=""></p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deploy/">Deploy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NGINX/">NGINX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/11/09/nginx-Reverse-Proxy/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
+    <article id="post-what-to-do-befor-release-app" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/09/20/what-to-do-befor-release-app/" class="article-date">
+  	<time datetime="2015-09-20T09:43:31.000Z" itemprop="datePublished">2015-09-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/20/what-to-do-befor-release-app/">App发布上线时候容易被忽略的准备工作</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间公司发布了App, 虽然没有直接参与发布, 但是在发布后看到了一些问题, 根据自己当时观察到的一些混乱情况, 大概梳理了一些App上线前容易被忽略掉的准备工作. </p>
+<h2 id="准备介绍的文案">准备介绍的文案</h2><p>记得当时有一个比较乌龙的事件, App发布以后公司同事们都很积极的推广, 由于没有官方的介绍文章, 有同事开始转发外面某人写的一篇介绍文章, 当朋友圈被刷屏的时候, 我点开文章认真读完, 发现里面有不少内容竟是吐槽的, 如此文章被内部人员大量转发, 实在太尴尬. 究其原因: </p>
+<ol>
+<li><p>没有官方介绍文章. </p>
+</li>
+<li><p>大家宣传热情高 &amp;&amp; 长期养成的看标题直接转发的习惯. </p>
+</li>
+</ol>
+<p>第二点可能不是App发布者可以控制的, 而第一点就非常值得重视, 准备一篇官方介绍文章即可以避免此类乌龙事件, 也可以在宣传产品的同时为自己的公共帐号拉粉丝, 为以后产品宣传铺路. </p>
+<h2 id="根据目标用户定义合适的社交平台做宣传">根据目标用户定义合适的社交平台做宣传</h2><p>同样是那次发布, 当时App发布以后, 朋友圈被刷屏刷爆, 但是自己刷了一下微博, 也搜索了一下, 竟然没有相关新闻和消息. 自认为这也是一个相对容易被忽略的问题, 在看到朋友圈的相关内容非常多的时候觉得宣传很给力了, 但是实际上是因为圈子问题, 一个公司的人大多圈子比较相近.<br>故在宣传时候需要根据根据自己的目标用户定义好需要投入宣传资源的平台, 并做好宣传规划. </p>
+<h2 id="准备更好用的二维码">准备更好用的二维码</h2><p>现在发布App通常都通过二维码下载, 当时我们遇到的更二维码相关的问题主要有两个: </p>
+<ol>
+<li>使用了两个二维码, Android和iOS的二维码不容易区分</li>
+<li>有新版以后出现多个二维码, 系统一维, 版本一维, 出现了非常多的二维码, 更加难以选择且容易错误下到旧版本App.</li>
+</ol>
+<p>当时我就发了一条朋友圈提到两个平台分别要区分扫不同的二维码不是好的体验, 这是程序可以判断的, 不应该丢给用户去判断. 后来运营的同学确实改用了平台通用的二维码. </p>
+<p>那还剩下一个版本更新问题, 我们都知道二维码生成以后对应固定的链接, 如果直接是吧文件下载url做成二维码, 那升级版本以后二维码必然要生成新的. 针这个点我认为更好的方式是二维码指向一个中间页面, 中间页面根据User-Agent跳转不同平台, 因为中间页面的引入, 也可以做到动态的替换实际的下载链接, 如此可以解决上面遇到的两个问题, 增加了灵活性, 如果要添加下载统计也更方便. </p>
+<h2 id="定义清晰的反馈流程">定义清晰的反馈流程</h2><p>这个可能大部分人都会注意到, 当时看到的问题是: 公司内的反馈都通过IM工具在群里反馈, 出现非常多重复反馈, 导致运营人员大量的解答重复的问题, 另外有的人找开发反馈, 有的人找产品或者运营人员反馈, 也导致了不少的混乱和人力的浪费. 针对这些问题自己觉得如下几个措施可能改善这些问题. </p>
+<ol>
+<li>分别建立内部和外部反馈群, 分人负责, 遇到反馈的人都拉进群统一反馈. </li>
+<li>定期整理汇总反馈频度高的问题和解决方案或统一答复为文档, 供被重复反馈时使用(策略允许也可以发布到一些论坛)</li>
+<li>大招: 尽快修复反馈非常多的问题.</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+  
     <article id="post-ImageView-scaleType" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -203,7 +339,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
 	</div>
 
       
@@ -343,124 +479,6 @@
 	</div>
 
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-jni-memory-leak-local-reference-table-overflow" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/" class="article-date">
-  	<time datetime="2013-12-28T03:28:00.000Z" itemprop="datePublished">2013-12-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/">记一次JNI内存泄露的排查和解决</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近的项目需要把一部分Java接口封装成native接口的需求，封装完以后发现经常偶现crash，抛出如下异常： </p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): ReferenceTable overflow (max=512)</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): Last 10 entries in JNI local reference table:</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   502: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   503: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   504: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   505: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   506: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   507: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   508: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   509: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   510: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   511: <span class="number">0x4000e87</span>8 cls=Ljava/lang/Class<span class="comment">; 'Ljava/lang/String;' (284 bytes)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767): JNI local reference table summary (512 entries):</span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class<span class="comment">; 236B</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):   507 of Ljava/lang/Class<span class="comment">; 284B (1 unique)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of Ljava/lang/Class<span class="comment">; 572B</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     2 of Ljava/lang/String<span class="comment">; 28B (2 unique)</span></span><br><span class="line"><span class="number">12-08 12:00</span>:03.844: W/dalvikvm(767):     1 of [Ljava/lang/String<span class="comment">; 28B</span></span><br></pre></td></tr></table></figure>
-<p>于是决定研究一下这个ReferenceTable overflow，首先看到需要查询什么是JNI的 Local References，下面是官网解释: </p>
-<blockquote>
-<p>Local References<br>Local references are valid for the duration of a native method call. They are freed automatically after the native method returns. Each local reference costs some amount of Java Virtual Machine resource. Programmers need to make sure that native methods do not excessively allocate local references. Although local references are automatically freed after the native method returns to Java, excessive allocation of local references may cause the VM to run out of memory during the execution of a native method.</p>
-</blockquote>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2013/12/28/jni-memory-leak-local-reference-table-overflow/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-merge-multiple-jar-package-into-one" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/11/07/merge-multiple-jar-package-into-one/" class="article-date">
-  	<time datetime="2013-11-07T15:20:00.000Z" itemprop="datePublished">2013-11-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/11/07/merge-multiple-jar-package-into-one/">合并多个jar包的两种方法</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在项目过程中, 使用到了很多外部的jar包, 但是由于要做sdk对外提供, 多个jar包放出去肯定不太友好, 于是需要对这些jar包合并成一个, jar包的本质其实就是zip包. 所以其实合并的难度并不大, 但是这个问题也被几个人问到, 就在此分享一下. </p>
-<p>####第一种方法, 使用Eclipse插件(Eclipse本省的export不能合并)<br>我使用的插件是 fatjar, 链接如下<a href="http://fjep.sourceforge.net/">fatjar</a>, 使用fatjar的具体细节再次不再细说, 需要提两点:　<br>我们开始用fatjar打包, 一切ok, 但是某次引入了一个混淆过的jar包以后, 在用fatjar打包, 发现有部分类fatjar并没有打到结果jar包中, 具体原因不明, 经常看确实有class在fatjar合并jar过程中丢失, 导致NoClassFoundExcption.<br>另外, 如果jar包里面有其他资源, fatjar并不能将它们直接打入合并后的jar包, 例如jar包中带了assets目录. 这部分需要手动引入, 这样就实现不了完全自动化了.</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/java，ant，android/">java，ant，android</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2013/11/07/merge-multiple-jar-package-into-one/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
