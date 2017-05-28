@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Zend Framework中的Singleton | 23Lab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在我看来Singleton应该算比较简单的一个，单例模式要来保证这个类在运行区间只会被创建一个实例，另外，单例模式还提供一个全局唯一的这个类的实例访问点（这点在待会儿的源码里面可以清楚的看到）。一般情况这个全局唯一的访问点都会叫做getInstance()。
+至于在Zend Framework 里面的Singleton，同样也很多，随便翻看源码就可以看到Zend_Loader_Autoloader">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zend Framework中的Singleton">
+<meta property="og:url" content="http://blog.23lab.com/2011/06/03/Zend-Framework中的Singleton/index.html">
+<meta property="og:site_name" content="23Lab">
+<meta property="og:description" content="在我看来Singleton应该算比较简单的一个，单例模式要来保证这个类在运行区间只会被创建一个实例，另外，单例模式还提供一个全局唯一的这个类的实例访问点（这点在待会儿的源码里面可以清楚的看到）。一般情况这个全局唯一的访问点都会叫做getInstance()。
+至于在Zend Framework 里面的Singleton，同样也很多，随便翻看源码就可以看到Zend_Loader_Autoloader">
+<meta property="og:updated_time" content="2017-05-28T06:28:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zend Framework中的Singleton">
+<meta name="twitter:description" content="在我看来Singleton应该算比较简单的一个，单例模式要来保证这个类在运行区间只会被创建一个实例，另外，单例模式还提供一个全局唯一的这个类的实例访问点（这点在待会儿的源码里面可以清楚的看到）。一般情况这个全局唯一的访问点都会叫做getInstance()。
+至于在Zend Framework 里面的Singleton，同样也很多，随便翻看源码就可以看到Zend_Loader_Autoloader">
+  
+    <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://blog.23lab.com/images/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">EricHua23</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/tools">工具</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">现在微众银行主要负责微众银行App开发, 工作范围在于React Native，Web前端，Android&amp;iOS开发, 同时对各种非工作范围的技术和工具也有浓烈的兴趣.</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">EricHua23</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://blog.23lab.com/images/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">EricHua23</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/tools">工具</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/erichua23" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/javoft" title="weibo">weibo</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Zend-Framework中的Singleton" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2011/06/03/Zend-Framework中的Singleton/" class="article-date">
+  	<time datetime="2011-06-03T02:20:00.000Z" itemprop="datePublished">2011-06-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Zend Framework中的Singleton
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Zend-Framework/">Zend Framework</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在我看来Singleton应该算比较简单的一个，单例模式要来保证这个类在运行区间只会被创建一个实例，另外，单例模式还提供一个全局唯一的这个类的实例访问点（这点在待会儿的源码里面可以清楚的看到）。一般情况这个全局唯一的访问点都会叫做getInstance()。</p>
+<p>至于在Zend Framework 里面的Singleton，同样也很多，随便翻看源码就可以看到Zend_Loader_Autoloader（用来根据namespace自动加载类）, Zend_Controller_Front，Zend_Auth（用来作身份认证）这几个常用的类都有用到Singleton。上述的三个中Zend_Auth中与单例模式不相关的代码最少，故用Zend_Auth类来看看Zend Framework中单例模式的实现。</p>
+<p>去除与单例模式不相关的代码之后得到的代码片段如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zend_Auth</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Singleton instance</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@var</span> Zend_Auth</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="variable">$_instance</span> = <span class="keyword">null</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//...Some other code ...</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Singleton pattern implementation makes "new" unavailable</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span><br><span class="line">    </span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Singleton pattern implementation makes "clone" unavailable</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> void</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">__clone</span><span class="params">()</span></span><br><span class="line">    </span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns an instance of Zend_Auth</span><br><span class="line">     *</span><br><span class="line">     * Singleton pattern implementation</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@return</span> Zend_Auth Provides a fluent interface</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> === <span class="keyword">self</span>::<span class="variable">$_instance</span>) &#123;</span><br><span class="line">            <span class="keyword">self</span>::<span class="variable">$_instance</span> = <span class="keyword">new</span> <span class="keyword">self</span>();</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span>::<span class="variable">$_instance</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//...Some other code ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到上面的 <strong>construct()和</strong>clone()都是空的，并且标记为protected这就保证了上面说的 “一个全局唯一的这个类的实例访问点” 它就是：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> === <span class="keyword">self</span>::<span class="variable">$_instance</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>::<span class="variable">$_instance</span> = <span class="keyword">new</span> <span class="keyword">self</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>::<span class="variable">$_instance</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比较敏感的人可能会发现这里没用像平时看到的 Singleton那样使用synchronized，可能在高并发的情况下生成多个实例。首先是因为PHP里面没有synchronized，但是PHP里面可以用sem_acquire 和 sem_release 两个semaphore操作来实现类似synchronized的功能，不知道为什么这里不用同步，唯一想到的就是可以提高并发。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/07/04/011-07-04-杭州实习第一天/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          杭州淘宝实习第一天
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/08/14/zend-framework中对mysql数据库的多表联查问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">zend framework中对mysql数据库的多表联查问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Zend-Framework中的Singleton" data-title="Zend Framework中的Singleton" data-url="http://blog.23lab.com/2011/06/03/Zend-Framework中的Singleton/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"23lab"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 EricHua23
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-19006243-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
