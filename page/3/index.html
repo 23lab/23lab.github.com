@@ -108,7 +108,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -118,6 +118,8 @@
 					<div id="js-friends">
 					
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.bihe0832.com">子勰的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.niceday.me">Nice Day</a>
 			        
 			        </div>
 				</section>
@@ -173,6 +175,65 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-Why-no-unit-test" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012/03/04/Why-no-unit-test/" class="article-date">
+  	<time datetime="2012-03-04T06:20:52.000Z" itemprop="datePublished">2012-03-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/03/04/Why-no-unit-test/">大学四年为什么没养成先写测试的习惯</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在看一些代码规范的书籍，例如 《高效程序员45个习惯》，《代码整洁之道》，这两本书中都提到要先写测试，曾经也在无数个地方看到测试驱动开发的好处，Martin Fowler的《重构》里面也一直在强调测试的重要性和测试的好处，写测试是顺利重构的基础。于是再想想，第一次听说要先写测试，是大一的时候上软件工程时候，邵老师说的先写测试，当时一直觉得这种做法太多余。后来虽然开始慢慢了解测试，但是一直没有养成先写测试在写代码的习惯。这就引出了一个问题，为什么从大一到大四，我或者周边的大部分同学都没有先写测试的习惯（其实目前没有看到有人先写测试的，自己没见识）？思考了一下，从自己角度出发，大概有几个原因：<br><strong>1. 盲目赶进度</strong>：当听到老师说，很多项目里面测试代码和产品代码数量相当的时候，已经被吓到了，我一个作业原本需要做一天的，那现在岂不是要做两天。相当然的把写测试代码需要的时间和写产品代码需要的时间等同起来，完全没有看到些测试对项目进度的贡献。</p>
+<p><strong>2. 项目规模小</strong>：项目小表现在这几个方面：代码复杂度不够，参与人数不多，代码量小。正是因为代码复杂度不够高，很多时候自己print一下结果在查看一下输出，也就能看出来写的代码是否正确。参与人数不多，项目内部交流的难度相对较小，测试即文档不太能体现出来，项目成员之间的交流几乎都通过口头或者IM来完成了。当然这样的项目里面通常也不会有文档的。总的来说，项目规模小，复杂度不够，项目的“混乱”程度在可接受的范围内，测试的好处无法体现得那么明显。</p>
+<p><strong>3. 不会正确使用测试</strong>：一个项目中尝试TDD，但是只有单元测试，没有持续集成，没有自动部署，每次跑单元测试，都要手动去跑，如果这样，在项目不复杂的情况下，与直接print结果出来查看，先写测试没多少优势。没有自动化的测试是比较浪费时间的，然而，如果说要去搭建一个持续集成环境，做到自动测试，自动部署，那这样一个环境的配置还是需要时间，再想想和整个项目的花费的时间比起来，去把这一套环境弄清楚的时间都可以完成作业项目的一半了，这样的情况下，谁还愿意使用TDD呢。</p>
+<p><strong>4. 代码功底差</strong>：这点对于老鸟来说，肯定不成为理由，但是记得当时暑假实训那次尝试使用TDD，当时也是第一次用PHP进行开发，开始时光写一个测试用例，都能出很多BUG，甚至测试用例里面出现的问题比真正代码里面的问题还多。这又让测试驱动如何进行呢？<br>项目设计不够完善：先写测试的一个好处就是，你知道你要完成什么，有目的的写代码，但是实际上在学校的项目里面很多都没有真正认真的设计过，很多时候的设计只是用来交作业的，而且为了设计文档足够长（只有那样才能得高分），一起开会设计的时候更多的时候是在讨论如何让文档更长。加上本来对很多系统设计没有经验，导致设计出来的东西几乎是不可用的，写代码的时候可以完全忘了设计文档长什么样子。写代码更多的是去尝试，没有明确的目标，想写出测试用例是不可能的。</p>
+<p>总的来说，在校期间接触的项目复杂度不够，几乎都没有涉及到后期维护什么的，也就不会想到重构，不会因为重构想到测试；再没有上线运行，也就不会发现很多运行的bug，也就不会因此意识到需要TDD，没有上线运行，没有部署到“生产”环境，也就不会想到自动化测试自动化部署。突然想到某年某南京大学某讲师写的谋篇叫《实践是检验正理的唯一标准》了。<br>大学四年没有养成先写测试这习惯也是一个遗憾，如果要怪也只能怪自己太懒没有去尝试，没有逼自己，以后刻意的去尝试一下吧！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unit-Test/">Unit Test</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-大学最后一天课程" class="article article-type-post" itemscope itemprop="blogPost">
   

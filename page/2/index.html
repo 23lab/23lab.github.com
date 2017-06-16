@@ -108,7 +108,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -118,6 +118,8 @@
 					<div id="js-friends">
 					
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.bihe0832.com">子勰的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.niceday.me">Nice Day</a>
 			        
 			        </div>
 				</section>
@@ -173,6 +175,81 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-something-about-android-signature" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/21/something-about-android-signature/" class="article-date">
+  	<time datetime="2014-06-21T08:02:00.000Z" itemprop="datePublished">2014-06-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/21/something-about-android-signature/">Android签名(Signature)漫谈(一)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. </p>
+<p>首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:<br><img src="http://developer.android.com/images/build.png" alt="general process for a typical build"></p>
+<p>其中有一个步骤是Jarsigner, 它的输出结果是 signed.apk, 由此可见它应该是签名的过程, jarsigner右边的一项是Debug or Release Keystore, 说明签名可以分为debug和release的. 这是我们看到图的一个猜想, 下面看文档里面怎么说. </p>
+<blockquote>
+<p>Once the .apk is built, it <em>must</em> be signed with either a debug or release key before it can be installed to a device.</p>
+<p>Finally, if the application is being signed in release mode, you must align the .apk with the zipalign tool. Aligning the final .apk decreases memory usage when the application is running on a device.</p>
+</blockquote>
+<p>注意, 文档中提到 “must be signed with a debug or release key”, 这里可能有人会问两个问题: 1. 我不签名会怎么样? 2. 我 ADT 开发Android 项目的时候我没做过签名这一步也没出什么问题呀? </p>
+<h3 id="不签名会怎么样?">不签名会怎么样?</h3><p>针对上面两个问题我们分别来看, 首先第一个问题, 我们尝试去安装一个未签名的应用到 Android 设备上. 在 Eclipse 中找一个项目, 右键=&gt;Android Tools=&gt;Export Unsigned Application Package, 确定导出以后, ADT 弹出如下提示:<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png" alt="image"></p>
+<p>关注一下, 它再次提示我们发布前要签名, 还需要用zipalign优化, 但是我们偏要试一下用一个未签名的包会怎么样. 继续尝试安装刚刚打出来的未签名的包, 结果安装失败.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png" alt="image"></p>
+<p><code>INSTALL_PARSE_FAILED_NO_CERTIFICATES</code> 因为没有证书解析失败从而安装失败, 这就说明了Android 系统本身是不接受没有签名的包的. 此时我们再去翻翻官方文档, 找到<a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank" rel="external">Signing Your Applications</a>, 其中提到: </p>
+<blockquote>
+<p>The Android system requires that all installed applications be digitally signed with a certificate whose private key is held by the application’s developer.</p>
+</blockquote>
+<p><code>signed with a certificate whose private key is held by the application&#39;s developer</code> 这里明确说明了证书是开发者的, 是用开发者的一个证书去给开发者的应用签名, 至此我们可以这样理解, 一个可运行apk文件的package name 用于标识应用, 而签名这个应用的证书则唯一的标识了应用的开发者. 系统只信任确定归属关系的应用. </p>
+<blockquote>
+<p>Android system uses the certificate as a means of identifying the author of an application and establishing trust relationships between applications.</p>
+</blockquote>
+<p>这一句中两个关键点, 一个是用于辨认开发者, 另外一个就是建立应用间的信任关系, 这个主要是用于自定义权限的, 有兴趣的可以直接查看<a href="http://developer.android.com/training/articles/security-tips.html#Permissions" target="_blank" rel="external">Using Permissions</a>. </p>
+<p>到现在我们刚刚的第一个疑问已经解决: Android 系统不允许安装未签名的应用, 因为未签名也就意味着这个应用没有明确的标明开发者是谁, 只有通过在 apk 上签名, 申明了apk 是你的, 系统才会让他运行. </p>
+<h3 id="ADT_开发Android项目的时候没做过签名为什么不出问题?">ADT 开发Android项目的时候没做过签名为什么不出问题?</h3><p>第一个问题清楚以后第二个问题也有眉目了, 既然ADT build 出来的包是可以安装的, 根据第一个问题的结论, 说明ADT 里面肯定有签名的过程. 回想一下上面Apk 构建过程的图, jarsigner 接收的是debug 或者 release 的keystore. 实际上ADT 是使用了默认的debug keystore, 在 ADT 中打开Preferences =&gt; Android =&gt; Build 则可见到ADT 中debug keystore 的配置.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png" alt="image"></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Android/">Android</a><a class="article-category-link" href="/categories/Android/CodeSignature/">CodeSignature</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-jni-memory-leak-local-reference-table-overflow" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -686,65 +763,6 @@
         <p class="article-more-link">
           <a  href="/2012/12/24/sql-sort-in-in-clauses/#more">more >></a>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-Why-no-unit-test" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2012/03/04/Why-no-unit-test/" class="article-date">
-  	<time datetime="2012-03-04T06:20:52.000Z" itemprop="datePublished">2012-03-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2012/03/04/Why-no-unit-test/">大学四年为什么没养成先写测试的习惯</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在看一些代码规范的书籍，例如 《高效程序员45个习惯》，《代码整洁之道》，这两本书中都提到要先写测试，曾经也在无数个地方看到测试驱动开发的好处，Martin Fowler的《重构》里面也一直在强调测试的重要性和测试的好处，写测试是顺利重构的基础。于是再想想，第一次听说要先写测试，是大一的时候上软件工程时候，邵老师说的先写测试，当时一直觉得这种做法太多余。后来虽然开始慢慢了解测试，但是一直没有养成先写测试在写代码的习惯。这就引出了一个问题，为什么从大一到大四，我或者周边的大部分同学都没有先写测试的习惯（其实目前没有看到有人先写测试的，自己没见识）？思考了一下，从自己角度出发，大概有几个原因：<br><strong>1. 盲目赶进度</strong>：当听到老师说，很多项目里面测试代码和产品代码数量相当的时候，已经被吓到了，我一个作业原本需要做一天的，那现在岂不是要做两天。相当然的把写测试代码需要的时间和写产品代码需要的时间等同起来，完全没有看到些测试对项目进度的贡献。</p>
-<p><strong>2. 项目规模小</strong>：项目小表现在这几个方面：代码复杂度不够，参与人数不多，代码量小。正是因为代码复杂度不够高，很多时候自己print一下结果在查看一下输出，也就能看出来写的代码是否正确。参与人数不多，项目内部交流的难度相对较小，测试即文档不太能体现出来，项目成员之间的交流几乎都通过口头或者IM来完成了。当然这样的项目里面通常也不会有文档的。总的来说，项目规模小，复杂度不够，项目的“混乱”程度在可接受的范围内，测试的好处无法体现得那么明显。</p>
-<p><strong>3. 不会正确使用测试</strong>：一个项目中尝试TDD，但是只有单元测试，没有持续集成，没有自动部署，每次跑单元测试，都要手动去跑，如果这样，在项目不复杂的情况下，与直接print结果出来查看，先写测试没多少优势。没有自动化的测试是比较浪费时间的，然而，如果说要去搭建一个持续集成环境，做到自动测试，自动部署，那这样一个环境的配置还是需要时间，再想想和整个项目的花费的时间比起来，去把这一套环境弄清楚的时间都可以完成作业项目的一半了，这样的情况下，谁还愿意使用TDD呢。</p>
-<p><strong>4. 代码功底差</strong>：这点对于老鸟来说，肯定不成为理由，但是记得当时暑假实训那次尝试使用TDD，当时也是第一次用PHP进行开发，开始时光写一个测试用例，都能出很多BUG，甚至测试用例里面出现的问题比真正代码里面的问题还多。这又让测试驱动如何进行呢？<br>项目设计不够完善：先写测试的一个好处就是，你知道你要完成什么，有目的的写代码，但是实际上在学校的项目里面很多都没有真正认真的设计过，很多时候的设计只是用来交作业的，而且为了设计文档足够长（只有那样才能得高分），一起开会设计的时候更多的时候是在讨论如何让文档更长。加上本来对很多系统设计没有经验，导致设计出来的东西几乎是不可用的，写代码的时候可以完全忘了设计文档长什么样子。写代码更多的是去尝试，没有明确的目标，想写出测试用例是不可能的。</p>
-<p>总的来说，在校期间接触的项目复杂度不够，几乎都没有涉及到后期维护什么的，也就不会想到重构，不会因为重构想到测试；再没有上线运行，也就不会发现很多运行的bug，也就不会因此意识到需要TDD，没有上线运行，没有部署到“生产”环境，也就不会想到自动化测试自动化部署。突然想到某年某南京大学某讲师写的谋篇叫《实践是检验正理的唯一标准》了。<br>大学四年没有养成先写测试这习惯也是一个遗憾，如果要怪也只能怪自己太懒没有去尝试，没有逼自己，以后刻意的去尝试一下吧！</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unit-Test/">Unit Test</a></li></ul>
-	</div>
-
-      
-
       
       <div class="clearfix"></div>
     </div>

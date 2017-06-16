@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="23Lab">
 <meta property="og:description" content="背景平时工作中偶尔需要在服务器上放个NodeJS的Server, 但是每次都迫于80端口被占用只能转而使用3000, 4000等其他端口, 今天决定整理一下这一块, 放一个Nginx在前面, 由它来转发, 这样就可以实现80端口的共用, 如此则可应对一些只能支持80端口的场景, 例如微信公众帐号的开发, 目前微信小程序出来以后众多人追捧, 其中小程序有一条限制, 就是能访问的域名不能超过三个, 通">
 <meta property="og:image" content="http://blog.23lab.com/2016/11/09/nginx-Reverse-Proxy/reverse-proxy.png">
-<meta property="og:updated_time" content="2017-05-28T06:04:51.000Z">
+<meta property="og:updated_time" content="2017-06-16T05:30:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置NGINX反向代理到Node Server">
 <meta name="twitter:description" content="背景平时工作中偶尔需要在服务器上放个NodeJS的Server, 但是每次都迫于80端口被占用只能转而使用3000, 4000等其他端口, 今天决定整理一下这一块, 放一个Nginx在前面, 由它来转发, 这样就可以实现80端口的共用, 如此则可应对一些只能支持80端口的场景, 例如微信公众帐号的开发, 目前微信小程序出来以后众多人追捧, 其中小程序有一条限制, 就是能访问的域名不能超过三个, 通">
@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -120,6 +120,8 @@
 					<div id="js-friends">
 					
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.bihe0832.com">子勰的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.niceday.me">Nice Day</a>
 			        
 			        </div>
 				</section>
@@ -215,8 +217,8 @@
 <h2 id="目标">目标</h2><p>目标很简单, 就是要实现下面的这个简单得不能再简单的架构.<br><img src="/2016/11/09/nginx-Reverse-Proxy/reverse-proxy.png" alt="reverse-proxy.png" title=""></p>
 <a id="more"></a>
 <h2 id="第一步_安装NGINX">第一步  安装NGINX</h2><p>直接参照 <code>https://www.nginx.com/resources/wiki/start/topics/tutorials/install/</code> 安装即可. </p>
-<h2 id="第二步_配置NGINX">第二步  配置NGINX</h2><p>默认配置中有两个关键配置文件需要关注, 一个是/etc/nginx/nginx.conf, 其中最后一句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include /etc/nginx/conf.d/*.conf;</span><br></pre></td></tr></table></figure></p>
-<p>所以我选择将不同站点的配置文件放到/etc/nginx/conf.d/ 下面, 例如我需要配置 www.23lab.com, 则直接防止一个同名文件在www.23lab.com中, 其中内容为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server &#123;&#10;    listen 80;&#10;    server_name www.23lab.com;&#10;    location / &#123;&#10;        proxy_pass http://127.0.0.1:8080;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="第二步_配置NGINX">第二步  配置NGINX</h2><p>默认配置中有两个关键配置文件需要关注, 一个是/etc/nginx/nginx.conf, 其中有一行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include /etc/nginx/conf.d/*.conf;</span><br></pre></td></tr></table></figure></p>
+<p>所以我选择将不同站点的配置文件放到/etc/nginx/conf.d/ 下面, 例如我需要配置 www.23lab.com, 则直接在其中放置一个对应的文件www.23lab.com.conf, 其内容为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server &#123;&#10;    listen 80;&#10;    server_name www.23lab.com;&#10;    location / &#123;&#10;        proxy_pass http://127.0.0.1:8080;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这应该是最简单的配置, 将到www.23lab.com的请求转发到 本机8000端口, 我们的Node Server监听8080端口即可接收到请求. </p>
 <p>同理, 在conf.d下面新建文件, 修改上面配置文件中的server_name和端口号, 则可以添加其他域名的转发规则. </p>
 <p>每次修改完成配置以后记得重启NGINX.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service nginx restart</span><br></pre></td></tr></table></figure></p>

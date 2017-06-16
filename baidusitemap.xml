@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://blog.23lab.com/2017/06/06/how-to-setup-team-code-style/</loc>
+    <lastmod>2017-06-16T05:32:58.000Z</lastmod>
+    <data>
+        <display>
+        <title>创业团队如何制定可执行的代码规范</title>
+        <pubTime>2017-06-05T20:46:47.000Z</pubTime>
+        
+        <tag>Code Style</tag>
+         
+        <tag>StandardJS</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2016/11/09/nginx-Reverse-Proxy/</loc>
+    <lastmod>2017-06-16T05:30:58.000Z</lastmod>
+    <data>
+        <display>
+        <title>配置NGINX反向代理到Node Server</title>
+        <pubTime>2016-11-09T14:52:08.000Z</pubTime>
+        
+        <tag>Deploy</tag>
+         
+        <tag>NGINX</tag>
+         
+        <tag>Node</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.23lab.com/2011/11/14/%E5%A4%A7%E5%AD%A6%E6%9C%80%E5%90%8E%E4%B8%80%E5%A4%A9%E8%AF%BE%E7%A8%8B/</loc>
     <lastmod>2017-05-28T06:58:03.000Z</lastmod>
     <data>
@@ -255,42 +295,6 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/</loc>
-    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
-    <data>
-        <display>
-        <title>AngularJS 无限Digest循环导致的错误(infdig)</title>
-        <pubTime>2016-11-11T17:37:43.000Z</pubTime>
-        
-        <tag>Angular</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
-    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
-    <data>
-        <display>
-        <title>桌上足球进攻防守打法经验分享</title>
-        <pubTime>2017-05-11T01:27:07.000Z</pubTime>
-        
-        <tag>Foosball</tag>
-         
-        <tag>桌上足球</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
     <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
@@ -308,14 +312,14 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2015/09/20/ImageView-scaleType/</loc>
+    <loc>http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/</loc>
     <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>ImageView的scaleType介绍</title>
-        <pubTime>2015-09-19T17:56:50.000Z</pubTime>
+        <title>AngularJS 无限Digest循环导致的错误(infdig)</title>
+        <pubTime>2016-11-11T17:37:43.000Z</pubTime>
         
-        <tag>Android</tag>
+        <tag>Angular</tag>
          
          
            
@@ -346,18 +350,33 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2016/11/09/nginx-Reverse-Proxy/</loc>
+    <loc>http://blog.23lab.com/2015/09/20/ImageView-scaleType/</loc>
     <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>配置NGINX反向代理到Node Server</title>
-        <pubTime>2016-11-09T14:52:08.000Z</pubTime>
+        <title>ImageView的scaleType介绍</title>
+        <pubTime>2015-09-19T17:56:50.000Z</pubTime>
         
-        <tag>Deploy</tag>
+        <tag>Android</tag>
          
-        <tag>NGINX</tag>
          
-        <tag>Node</tag>
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
+    <data>
+        <display>
+        <title>桌上足球进攻防守打法经验分享</title>
+        <pubTime>2017-05-11T01:27:07.000Z</pubTime>
+        
+        <tag>Foosball</tag>
+         
+        <tag>桌上足球</tag>
          
          
            
@@ -382,21 +401,6 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2013/02/24/allow-tab-in-your-testarea-with-allowtab/</loc>
-    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>使用allowtab插件实现在textarea中输入制表符</title>
-        <pubTime>2013-02-24T08:02:00.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.23lab.com/2012/12/24/sql-sort-in-in-clauses/</loc>
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     <data>
@@ -412,12 +416,12 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
+    <loc>http://blog.23lab.com/2013/02/24/allow-tab-in-your-testarea-with-allowtab/</loc>
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     <data>
         <display>
-        <title>Android起步遇到的两个问题</title>
-        <pubTime>2013-02-24T07:13:00.000Z</pubTime>
+        <title>使用allowtab插件实现在textarea中输入制表符</title>
+        <pubTime>2013-02-24T08:02:00.000Z</pubTime>
         
          
            
@@ -448,6 +452,21 @@
         <display>
         <title>让Android的Log更好用(动态TAG)</title>
         <pubTime>2013-10-25T11:47:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
+    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>Android起步遇到的两个问题</title>
+        <pubTime>2013-02-24T07:13:00.000Z</pubTime>
         
          
            

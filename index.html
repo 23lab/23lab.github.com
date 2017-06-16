@@ -108,7 +108,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -118,6 +118,8 @@
 					<div id="js-friends">
 					
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.bihe0832.com">子勰的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.niceday.me">Nice Day</a>
 			        
 			        </div>
 				</section>
@@ -173,6 +175,64 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-how-to-setup-team-code-style" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/06/how-to-setup-team-code-style/" class="article-date">
+  	<time datetime="2017-06-05T20:46:47.000Z" itemprop="datePublished">2017-06-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/06/how-to-setup-team-code-style/">创业团队如何制定可执行的代码规范</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>回想起来自己工作这么些年，也经历了不少团队，经历的项目更不算少了， 但是要说到代码规范， 问我我经历的这些代码规范是不是满意，我不得不如实回答：不是很满意。当然我自己的代码规范和风格也没有完全固化下来，近一年左右也开始关注到这个问题，为了让自己的代码风格能逐渐固化，我会专门用一个笔记来记录一些可能自己会纠结的写法，这样做了以后明显能感觉到自己代码风格的飘忽程度有所收敛。恰巧公司负责的项目也需要整理代码规范，正因如此我开始思考<strong>如何制定可执行的代码规范</strong>这个问题。<br>提到团队的代码规范，不止我经历过的，我和一些朋友也有聊过， 有微软那个级别的，也有BAT这种级别的，项目大的也有，小的亦很多。其中不乏规范的做的比较好的，有规范、有工具、还会有Code Review来保证。但是大公司规范和流程真的适合所有团队吗？我所看到的是大部分团队参照某某公司的规范和流程，定义了一个非常严格的标准，然而实际上并没有严格实施下去或者没有持续实施下去。最后都会甩锅给“历史包袱太重”、“开发人员太多太杂难以推广”这样的理由。<br>近半年到一年在代码规范这一块我主要思考如何在中小团队没有代码规范的基础上制定代码规范。根据自己的思考也正在组内逐步实践，从目前实践情况来看我是比较满意的，所以把自己观点写出来，希望能对跟我有同样困惑的人有些帮助。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Code-Style/">Code Style</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/StandardJS/">StandardJS</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/06/06/how-to-setup-team-code-style/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-Vim-for-front-end-developer" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -730,81 +790,6 @@ Infinite $digest Loop</code> 的错误信息, 这问题涉及到两个点, 一�
         <p class="article-more-link">
           <a  href="/2014/07/05/how-to-design-better-sdk-interface/#more">more >></a>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-  
-    <article id="post-something-about-android-signature" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/06/21/something-about-android-signature/" class="article-date">
-  	<time datetime="2014-06-21T08:02:00.000Z" itemprop="datePublished">2014-06-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/21/something-about-android-signature/">Android签名(Signature)漫谈(一)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. </p>
-<p>首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:<br><img src="http://developer.android.com/images/build.png" alt="general process for a typical build"></p>
-<p>其中有一个步骤是Jarsigner, 它的输出结果是 signed.apk, 由此可见它应该是签名的过程, jarsigner右边的一项是Debug or Release Keystore, 说明签名可以分为debug和release的. 这是我们看到图的一个猜想, 下面看文档里面怎么说. </p>
-<blockquote>
-<p>Once the .apk is built, it <em>must</em> be signed with either a debug or release key before it can be installed to a device.</p>
-<p>Finally, if the application is being signed in release mode, you must align the .apk with the zipalign tool. Aligning the final .apk decreases memory usage when the application is running on a device.</p>
-</blockquote>
-<p>注意, 文档中提到 “must be signed with a debug or release key”, 这里可能有人会问两个问题: 1. 我不签名会怎么样? 2. 我 ADT 开发Android 项目的时候我没做过签名这一步也没出什么问题呀? </p>
-<h3 id="不签名会怎么样?">不签名会怎么样?</h3><p>针对上面两个问题我们分别来看, 首先第一个问题, 我们尝试去安装一个未签名的应用到 Android 设备上. 在 Eclipse 中找一个项目, 右键=&gt;Android Tools=&gt;Export Unsigned Application Package, 确定导出以后, ADT 弹出如下提示:<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png" alt="image"></p>
-<p>关注一下, 它再次提示我们发布前要签名, 还需要用zipalign优化, 但是我们偏要试一下用一个未签名的包会怎么样. 继续尝试安装刚刚打出来的未签名的包, 结果安装失败.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png" alt="image"></p>
-<p><code>INSTALL_PARSE_FAILED_NO_CERTIFICATES</code> 因为没有证书解析失败从而安装失败, 这就说明了Android 系统本身是不接受没有签名的包的. 此时我们再去翻翻官方文档, 找到<a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank" rel="external">Signing Your Applications</a>, 其中提到: </p>
-<blockquote>
-<p>The Android system requires that all installed applications be digitally signed with a certificate whose private key is held by the application’s developer.</p>
-</blockquote>
-<p><code>signed with a certificate whose private key is held by the application&#39;s developer</code> 这里明确说明了证书是开发者的, 是用开发者的一个证书去给开发者的应用签名, 至此我们可以这样理解, 一个可运行apk文件的package name 用于标识应用, 而签名这个应用的证书则唯一的标识了应用的开发者. 系统只信任确定归属关系的应用. </p>
-<blockquote>
-<p>Android system uses the certificate as a means of identifying the author of an application and establishing trust relationships between applications.</p>
-</blockquote>
-<p>这一句中两个关键点, 一个是用于辨认开发者, 另外一个就是建立应用间的信任关系, 这个主要是用于自定义权限的, 有兴趣的可以直接查看<a href="http://developer.android.com/training/articles/security-tips.html#Permissions" target="_blank" rel="external">Using Permissions</a>. </p>
-<p>到现在我们刚刚的第一个疑问已经解决: Android 系统不允许安装未签名的应用, 因为未签名也就意味着这个应用没有明确的标明开发者是谁, 只有通过在 apk 上签名, 申明了apk 是你的, 系统才会让他运行. </p>
-<h3 id="ADT_开发Android项目的时候没做过签名为什么不出问题?">ADT 开发Android项目的时候没做过签名为什么不出问题?</h3><p>第一个问题清楚以后第二个问题也有眉目了, 既然ADT build 出来的包是可以安装的, 根据第一个问题的结论, 说明ADT 里面肯定有签名的过程. 回想一下上面Apk 构建过程的图, jarsigner 接收的是debug 或者 release 的keystore. 实际上ADT 是使用了默认的debug keystore, 在 ADT 中打开Preferences =&gt; Android =&gt; Build 则可见到ADT 中debug keystore 的配置.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png" alt="image"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Android/">Android</a><a class="article-category-link" href="/categories/Android/CodeSignature/">CodeSignature</a>
-	</div>
-
-
       
       <div class="clearfix"></div>
     </div>
