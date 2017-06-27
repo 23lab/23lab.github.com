@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://blog.23lab.com/2017/06/27/why-should-you-write-a-open-source-library/</loc>
+    <lastmod>2017-06-27T05:20:32.000Z</lastmod>
+    <data>
+        <display>
+        <title>你为什么也应该写一个开源库？</title>
+        <pubTime>2017-06-27T05:19:24.000Z</pubTime>
+        
+        <tag>Open Source</tag>
+         
+        <tag>SDK</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://blog.23lab.com/2017/05/11/foosball/</loc>
     <lastmod>2017-06-16T05:35:29.000Z</lastmod>
     <data>
@@ -314,14 +333,18 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
+    <loc>http://blog.23lab.com/2016/12/31/Android-Things-Try-adb-error/</loc>
     <lastmod>2017-05-28T06:04:51.000Z</lastmod>
     <data>
         <display>
-        <title>App发布上线时候容易被忽略的准备工作</title>
-        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
+        <title>Android Things 尝鲜及免坑指南</title>
+        <pubTime>2016-12-31T12:24:54.000Z</pubTime>
         
-        <tag>Android</tag>
+        <tag>AndroidThings</tag>
+         
+        <tag>IoT</tag>
+         
+        <tag>树莓派</tag>
          
          
            
@@ -337,6 +360,23 @@
         <display>
         <title>ImageView的scaleType介绍</title>
         <pubTime>2015-09-19T17:56:50.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2015/09/20/what-to-do-befor-release-app/</loc>
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
+    <data>
+        <display>
+        <title>App发布上线时候容易被忽略的准备工作</title>
+        <pubTime>2015-09-20T09:43:31.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -365,19 +405,13 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2016/12/31/Android-Things-Try-adb-error/</loc>
-    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
+    <loc>http://blog.23lab.com/2013/12/28/jni-memory-leak-local-reference-table-overflow/</loc>
+    <lastmod>2015-09-09T16:18:11.000Z</lastmod>
     <data>
         <display>
-        <title>Android Things 尝鲜及免坑指南</title>
-        <pubTime>2016-12-31T12:24:54.000Z</pubTime>
+        <title>记一次JNI内存泄露的排查和解决</title>
+        <pubTime>2013-12-28T03:28:00.000Z</pubTime>
         
-        <tag>AndroidThings</tag>
-         
-        <tag>IoT</tag>
-         
-        <tag>树莓派</tag>
-         
          
            
         </display>
@@ -386,12 +420,27 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2013/12/28/jni-memory-leak-local-reference-table-overflow/</loc>
-    <lastmod>2015-09-09T16:18:11.000Z</lastmod>
+    <loc>http://blog.23lab.com/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/</loc>
+    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     <data>
         <display>
-        <title>记一次JNI内存泄露的排查和解决</title>
-        <pubTime>2013-12-28T03:28:00.000Z</pubTime>
+        <title>开发Chrome插件实现在Chrome中截取网页</title>
+        <pubTime>2013-03-11T14:39:00.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
+    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>Android起步遇到的两个问题</title>
+        <pubTime>2013-02-24T07:13:00.000Z</pubTime>
         
          
            
@@ -431,42 +480,12 @@
 
     
   <url>
-    <loc>http://blog.23lab.com/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/</loc>
-    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>开发Chrome插件实现在Chrome中截取网页</title>
-        <pubTime>2013-03-11T14:39:00.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://blog.23lab.com/2013/10/25/rang-androidde-loggeng-hao-yong-,dong-tai-tag/</loc>
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     <data>
         <display>
         <title>让Android的Log更好用(动态TAG)</title>
         <pubTime>2013-10-25T11:47:00.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
-    <lastmod>2015-09-09T14:42:12.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android起步遇到的两个问题</title>
-        <pubTime>2013-02-24T07:13:00.000Z</pubTime>
         
          
            
