@@ -5,26 +5,24 @@
   
   <title>使用allowtab插件实现在textarea中输入制表符 | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀.
-于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
+  <meta name="description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀. 于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用allowtab插件实现在textarea中输入制表符">
 <meta property="og:url" content="http://blog.23lab.com/2013/02/24/allow-tab-in-your-testarea-with-allowtab/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀.
-于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
+<meta property="og:description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀. 于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
+<meta property="og:locale" content="zh">
 <meta property="og:updated_time" content="2015-09-09T14:42:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用allowtab插件实现在textarea中输入制表符">
-<meta name="twitter:description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀.
-于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
+<meta name="twitter:description" content="在项目中需要在textarea中输入tab来分隔列的数据, 要实现这个功能, 当然可以直接引入一个富文本编辑器, 或者说用一个代码编辑器插件, 但是为了这功能就直接引入一个富文本编辑器, 标准的杀机用牛刀. 于是考虑用一个轻量一点的插件, 找到一个叫tabIndent的插件, 最后没用他, 他能支持多行缩进, 但是其实自己的需求就只需要一个单行的即可, 但是不用他的原因在于他有一个天大的缺陷, 不">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
   
     <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -112,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/develop-api/" style="font-size: 10px;">develop, api</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -216,10 +214,10 @@
 <p>最后决定自己写一个(按照tabIndent的思路), 主要是加入对IE的支持. </p>
 <a id="more"></a>
 <p>开发过程也主要在于和IE斗争, 因为这插件里面一个必须的点就是获取当前光标在文本中的位置, 在支持HTML5的浏览器上可以直接使用selectionStart, selectionEnd来获取, 在IE下则要通过TextRange获取, 代码如下:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先获取所有内容的长度</span></span><br><span class="line"><span class="keyword">var</span> inpTxtLen = inputBox.value.length; </span><br><span class="line"><span class="comment">// 建立一个TextRange对象</span></span><br><span class="line"><span class="keyword">var</span> inpRange = inputBox.createTextRange(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 把新建的TextRange和选中的文本关联起来</span></span><br><span class="line"><span class="keyword">var</span> bm = <span class="built_in">document</span>.selection.createRange().getBookmark();</span><br><span class="line">inpRange.moveToBookmark(bm); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 向前选择文本总长度个字符, moveStart返回实际移动过的字符数的相反数</span></span><br><span class="line">start = -<span class="number">1</span> * inpRange.moveStart(<span class="string">'character'</span>, -<span class="number">1</span> * inpTxtLen); </span><br><span class="line"><span class="comment">// 类似moveStart, 返回正数, 即selectionEnd后面的字符数量</span></span><br><span class="line">end = inpTxtLen - inpRange.moveEnd(<span class="string">'character'</span>, inpTxtLen);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 先获取所有内容的长度</span></div><div class="line"><span class="keyword">var</span> inpTxtLen = inputBox.value.length; </div><div class="line"><span class="comment">// 建立一个TextRange对象</span></div><div class="line"><span class="keyword">var</span> inpRange = inputBox.createTextRange(); </div><div class="line"></div><div class="line"><span class="comment">// 把新建的TextRange和选中的文本关联起来</span></div><div class="line"><span class="keyword">var</span> bm = <span class="built_in">document</span>.selection.createRange().getBookmark();</div><div class="line">inpRange.moveToBookmark(bm); </div><div class="line"></div><div class="line"><span class="comment">// 向前选择文本总长度个字符, moveStart返回实际移动过的字符数的相反数</span></div><div class="line">start = <span class="number">-1</span> * inpRange.moveStart(<span class="string">'character'</span>, <span class="number">-1</span> * inpTxtLen); </div><div class="line"><span class="comment">// 类似moveStart, 返回正数, 即selectionEnd后面的字符数量</span></div><div class="line">end = inpTxtLen - inpRange.moveEnd(<span class="string">'character'</span>, inpTxtLen);  </div><div class="line"></div></pre></td></tr></table></figure>
 <p>上面说了实现方式, 完以后使用非常简单:</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">id</span>=<span class="value">"allowtab"</span>&gt;</span><span class="tag">&lt;/<span class="title">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'#allowtab'</span>).allowtab();</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">"allowtab"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span> </div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#allowtab'</span>).allowtab();</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -304,7 +302,7 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -320,8 +318,8 @@
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 

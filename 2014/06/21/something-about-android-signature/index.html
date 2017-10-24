@@ -5,16 +5,13 @@
   
   <title>Android签名(Signature)漫谈(一) | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
-首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
-其中有一个步">
+  <meta name="description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来.  首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图: 其中有一个步">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android签名(Signature)漫谈(一)">
 <meta property="og:url" content="http://blog.23lab.com/2014/06/21/something-about-android-signature/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
-首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
-其中有一个步">
+<meta property="og:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来.  首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图: 其中有一个步">
+<meta property="og:locale" content="zh">
 <meta property="og:image" content="http://developer.android.com/images/build.png">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png">
@@ -22,16 +19,15 @@
 <meta property="og:updated_time" content="2017-05-28T06:12:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android签名(Signature)漫谈(一)">
-<meta name="twitter:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来. 
-首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图:
-其中有一个步">
+<meta name="twitter:description" content="在工作过程中接触到很多Android开发, 当然大部分是游戏开发, 我发现好像很多人都不是特别理解Android签名到底是什么一回事, 甚至别人问自己的时候, 自己要解释也不能很容易的解释清楚, 于是想到了深入理解一下并将其记录下来.  首先我们来看一下Android整个打包过程, 再从打包过程中看一下签名是在那个阶段? 然后再去看为什么要签名以及如何签名等等问题. 借用官网一张图: 其中有一个步">
+<meta name="twitter:image" content="http://developer.android.com/images/build.png">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
   
     <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -119,7 +115,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/develop-api/" style="font-size: 10px;">develop, api</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -230,7 +226,7 @@
 <p>Finally, if the application is being signed in release mode, you must align the .apk with the zipalign tool. Aligning the final .apk decreases memory usage when the application is running on a device.</p>
 </blockquote>
 <p>注意, 文档中提到 “must be signed with a debug or release key”, 这里可能有人会问两个问题: 1. 我不签名会怎么样? 2. 我 ADT 开发Android 项目的时候我没做过签名这一步也没出什么问题呀? </p>
-<h3 id="不签名会怎么样?">不签名会怎么样?</h3><p>针对上面两个问题我们分别来看, 首先第一个问题, 我们尝试去安装一个未签名的应用到 Android 设备上. 在 Eclipse 中找一个项目, 右键=&gt;Android Tools=&gt;Export Unsigned Application Package, 确定导出以后, ADT 弹出如下提示:<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png" alt="image"></p>
+<h3 id="不签名会怎么样"><a href="#不签名会怎么样" class="headerlink" title="不签名会怎么样?"></a>不签名会怎么样?</h3><p>针对上面两个问题我们分别来看, 首先第一个问题, 我们尝试去安装一个未签名的应用到 Android 设备上. 在 Eclipse 中找一个项目, 右键=&gt;Android Tools=&gt;Export Unsigned Application Package, 确定导出以后, ADT 弹出如下提示:<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347860/23242e52-f8ff-11e3-8848-e763de6a4146.png" alt="image"></p>
 <p>关注一下, 它再次提示我们发布前要签名, 还需要用zipalign优化, 但是我们偏要试一下用一个未签名的包会怎么样. 继续尝试安装刚刚打出来的未签名的包, 结果安装失败.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347867/d9699d0a-f8ff-11e3-87f4-c5b3505f328d.png" alt="image"></p>
 <p><code>INSTALL_PARSE_FAILED_NO_CERTIFICATES</code> 因为没有证书解析失败从而安装失败, 这就说明了Android 系统本身是不接受没有签名的包的. 此时我们再去翻翻官方文档, 找到<a href="http://developer.android.com/tools/publishing/app-signing.html" target="_blank" rel="external">Signing Your Applications</a>, 其中提到: </p>
 <blockquote>
@@ -242,7 +238,7 @@
 </blockquote>
 <p>这一句中两个关键点, 一个是用于辨认开发者, 另外一个就是建立应用间的信任关系, 这个主要是用于自定义权限的, 有兴趣的可以直接查看<a href="http://developer.android.com/training/articles/security-tips.html#Permissions" target="_blank" rel="external">Using Permissions</a>. </p>
 <p>到现在我们刚刚的第一个疑问已经解决: Android 系统不允许安装未签名的应用, 因为未签名也就意味着这个应用没有明确的标明开发者是谁, 只有通过在 apk 上签名, 申明了apk 是你的, 系统才会让他运行. </p>
-<h3 id="ADT_开发Android项目的时候没做过签名为什么不出问题?">ADT 开发Android项目的时候没做过签名为什么不出问题?</h3><p>第一个问题清楚以后第二个问题也有眉目了, 既然ADT build 出来的包是可以安装的, 根据第一个问题的结论, 说明ADT 里面肯定有签名的过程. 回想一下上面Apk 构建过程的图, jarsigner 接收的是debug 或者 release 的keystore. 实际上ADT 是使用了默认的debug keystore, 在 ADT 中打开Preferences =&gt; Android =&gt; Build 则可见到ADT 中debug keystore 的配置.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png" alt="image"></p>
+<h3 id="ADT-开发Android项目的时候没做过签名为什么不出问题"><a href="#ADT-开发Android项目的时候没做过签名为什么不出问题" class="headerlink" title="ADT 开发Android项目的时候没做过签名为什么不出问题?"></a>ADT 开发Android项目的时候没做过签名为什么不出问题?</h3><p>第一个问题清楚以后第二个问题也有眉目了, 既然ADT build 出来的包是可以安装的, 根据第一个问题的结论, 说明ADT 里面肯定有签名的过程. 回想一下上面Apk 构建过程的图, jarsigner 接收的是debug 或者 release 的keystore. 实际上ADT 是使用了默认的debug keystore, 在 ADT 中打开Preferences =&gt; Android =&gt; Build 则可见到ADT 中debug keystore 的配置.<br><img src="https://cloud.githubusercontent.com/assets/1309744/3347911/fb7f5c64-f903-11e3-9ca1-3206a0cd895a.png" alt="image"></p>
 
       
     </div>
@@ -327,7 +323,7 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -343,8 +339,8 @@
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 

@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>杭州淘宝实习第一天 | 23Lab</title>
+  <title>容易被忽视的不容忽视的默认值设计 | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一天完了，说是开始工作了，但是貌似还是没有工作的感觉，毕竟还是很多乱七八糟的东西，报道认人神马的。这次来杭州不是也不是第一次自己出门吧，但是还是有它的特别之处，也有一点点的感触。 1、 生活没那么简单上大学的时候，虽然也算是自己一个人出门，但是还是老爸送来的，出门的时候还是老妈不停的罗嗦要带xxx东西，罗嗦得直到烦，这次出来，身份证没带，才知道，原来我以前说的那么多“我自己知道”是多么的屁话，这里">
-<meta name="keywords" content="实习,淘宝,杭州">
+  <meta name="description" content="提到默认值肯定很多人觉得这根本不值一提，非常简单，如果是这样那我觉得你可以继续往下阅读了。默认值的设置应该是所有开发人员都会遇到的一个问题，首先我们想一下默认值是什么？为什么需要默认值？字面意思也比较容易理解到，就是你设计的接口或者组件，在别人不做特殊干涉的时候你的行为。很多开发可能已经形成了自己的模式，但是我相信很多开发人员没有形成，最近的工作中遇到几次默认值的问题，根据这些经验梳理了自己思考的">
+<meta name="keywords" content="develop, api">
 <meta property="og:type" content="article">
-<meta property="og:title" content="杭州淘宝实习第一天">
-<meta property="og:url" content="http://blog.23lab.com/2011/07/04/011-07-04-杭州实习第一天/index.html">
+<meta property="og:title" content="容易被忽视的不容忽视的默认值设计">
+<meta property="og:url" content="http://blog.23lab.com/2017/10/24/default-value-for-interface-and-components/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="一天完了，说是开始工作了，但是貌似还是没有工作的感觉，毕竟还是很多乱七八糟的东西，报道认人神马的。这次来杭州不是也不是第一次自己出门吧，但是还是有它的特别之处，也有一点点的感触。 1、 生活没那么简单上大学的时候，虽然也算是自己一个人出门，但是还是老爸送来的，出门的时候还是老妈不停的罗嗦要带xxx东西，罗嗦得直到烦，这次出来，身份证没带，才知道，原来我以前说的那么多“我自己知道”是多么的屁话，这里">
+<meta property="og:description" content="提到默认值肯定很多人觉得这根本不值一提，非常简单，如果是这样那我觉得你可以继续往下阅读了。默认值的设置应该是所有开发人员都会遇到的一个问题，首先我们想一下默认值是什么？为什么需要默认值？字面意思也比较容易理解到，就是你设计的接口或者组件，在别人不做特殊干涉的时候你的行为。很多开发可能已经形成了自己的模式，但是我相信很多开发人员没有形成，最近的工作中遇到几次默认值的问题，根据这些经验梳理了自己思考的">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2017-05-28T06:48:21.000Z">
+<meta property="og:updated_time" content="2017-10-24T03:31:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="杭州淘宝实习第一天">
-<meta name="twitter:description" content="一天完了，说是开始工作了，但是貌似还是没有工作的感觉，毕竟还是很多乱七八糟的东西，报道认人神马的。这次来杭州不是也不是第一次自己出门吧，但是还是有它的特别之处，也有一点点的感触。 1、 生活没那么简单上大学的时候，虽然也算是自己一个人出门，但是还是老爸送来的，出门的时候还是老妈不停的罗嗦要带xxx东西，罗嗦得直到烦，这次出来，身份证没带，才知道，原来我以前说的那么多“我自己知道”是多么的屁话，这里">
+<meta name="twitter:title" content="容易被忽视的不容忽视的默认值设计">
+<meta name="twitter:description" content="提到默认值肯定很多人觉得这根本不值一提，非常简单，如果是这样那我觉得你可以继续往下阅读了。默认值的设置应该是所有开发人员都会遇到的一个问题，首先我们想一下默认值是什么？为什么需要默认值？字面意思也比较容易理解到，就是你设计的接口或者组件，在别人不做特殊干涉的时候你的行为。很多开发可能已经形成了自己的模式，但是我相信很多开发人员没有形成，最近的工作中遇到几次默认值的问题，根据这些经验梳理了自己思考的">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
@@ -177,11 +177,11 @@
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-011-07-04-杭州实习第一天" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-default-value-for-interface-and-components" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2011/07/04/011-07-04-杭州实习第一天/" class="article-date">
-  	<time datetime="2011-07-04T13:35:07.000Z" itemprop="datePublished">2011-07-04</time>
+      <a href="/2017/10/24/default-value-for-interface-and-components/" class="article-date">
+  	<time datetime="2017-10-24T03:29:27.000Z" itemprop="datePublished">2017-10-24</time>
 </a>
     </div>
   
@@ -194,7 +194,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      杭州淘宝实习第一天
+      容易被忽视的不容忽视的默认值设计
     </h1>
   
 
@@ -203,7 +203,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/实习/">实习</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杭州/">杭州</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/淘宝/">淘宝</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/develop-api/">develop, api</a></li></ul>
 	</div>
 
         
@@ -214,12 +214,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一天完了，说是开始工作了，但是貌似还是没有工作的感觉，毕竟还是很多乱七八糟的东西，报道认人神马的。这次来杭州不是也不是第一次自己出门吧，但是还是有它的特别之处，也有一点点的感触。</p>
-<p>1、 生活没那么简单<br>上大学的时候，虽然也算是自己一个人出门，但是还是老爸送来的，出门的时候还是老妈不停的罗嗦要带xxx东西，罗嗦得直到烦，这次出来，身份证没带，才知道，原来我以前说的那么多“我自己知道”是多么的屁话，这里感谢先 候晓坤 这几天帮我来回复印身份证传真身份证，还有崔的帮忙了。一并谢过了，真的很感谢。总之，这事件还是告诉我，其实很多东西我还没有注意到，生活没那么简单。</p>
-<p>生活没那么简单，今天晚上出去买点东西，我突然想到为什么有的在学校的情侣，真正开始生活以后，会很快分开，因为生活不简单。以前在学校的时候，要什么东西，从宿舍到楼下不过几分钟，到食堂，同样不过几分钟，这些看起来都很简单，都算不上什么。大部分东西其实学校已经为我们安排好了，我们感觉的独立是假象。住在这酒店，离超市不是很近，去买东西还是要走不少的路，这才发觉，原来这些事情真的没那么简单，至少没有当时想象的简单。所以这众多不简单的事情加在一起.</p>
-<p>2、 第一天的工作<br>不知道今天能不能算做工作吧，毕竟还是没有正式开始，公司环境还可以，只是酒店到公司的路程不算近，路线不算畅通，导致我觉得挺远的（上午堵车那个严重），师兄们都很好，暂时还没有看到所谓的xxx文化，或者是因为我对xxx文化过于期待？等待下星期的迎新吧，那时候应该能看到我期待的xxx文化。<br>工作环境挺不错的，主管也很好，让我自己选择要在的组，稍微的犹豫了一下，还是选择了不擅长但是比较喜欢的数据开发组（主要hadoop和hive方面的），觉得要是直接上手工作的话，还是压力蛮大的，嗯嗯，还得快速修炼。<br>上班还有一感觉，不想学校里面一样，知道上课啦，下课啦。。。</p>
-<p>3、忘了。。。。刚才在路上还想到3点的。。。不写了<br>。。。</p>
-<p>4、 要做的还很多，要学的也不少。据说天秤下半年事业上很不顺，应不应该相信呢？还是不信了把，因为据说天秤上半年很走桃花运，但是还是不准，所以都不信吧。。。。谁让上半年也没准呢！！</p>
+        <p>提到默认值肯定很多人觉得这根本不值一提，非常简单，如果是这样那我觉得你可以继续往下阅读了。<br>默认值的设置应该是所有开发人员都会遇到的一个问题，首先我们想一下默认值是什么？为什么需要默认值？字面意思也比较容易理解到，就是你设计的接口或者组件，在别人不做特殊干涉的时候你的行为。很多开发可能已经形成了自己的模式，但是我相信很多开发人员没有形成，最近的工作中遇到几次默认值的问题，根据这些经验梳理了自己思考的默认值规则，希望与您一起探讨，也希望能让读者在思考如何设置默认值的时候少一些纠结，少一点随意而为，避免一些类似文中提到的错误。</p>
+<h2 id="1-Don’t-make-me-think"><a href="#1-Don’t-make-me-think" class="headerlink" title="1. Don’t make me think"></a>1. Don’t make me think</h2><p>《Don’t make me think》是一本讲设计的书，非常推荐，我自己一直认为接口的设计也应该做到“Don’t make me think”</p>
+<p>我们写任何一个接口或者组件，这个接口一定是给别人用或者自己用的，那要想让调用者用得舒服，首先，接口参数肯定是越少越好，你也不想去用一个有十几个参数说明的接口，对吧？但是这里会出现一个矛盾，易用性和扩展性的折中，接收的参数少，外部的控制能力下降，接口的扩展性降低。接收的参数多，接口非常难用，在确定你的接口好用之前，谁愿意去读你那长篇的文档呢。<br>这种情况下，默认值的设置就至关重要了，首先保证接口易用性，我们先要分析我们的接口哪些参数是80%（强行2 8原则）的场景会用到的，这些值直接强制要求传入，而剩下的20%的场景，可以用可选参数来提供外部定制的能力，如此保证了扩展性，既然是可选，那就涉及到了默认值，因为已经要求调用者传入了必填参数，这些可选参数的默认值应该是保证必填参数填了以后80%的场景下能正常运行的，因为只有这样，别人才可能有兴趣阅读你可选参数的文档，先用简单的接口吸引住使用者，让他对你的接口的第一印象是：简单易用，之后深入了解再让他知道你的接口不止简单易用，还很容易扩展，能力很丰富。接口的设计最好做到“一行代码运行”<br>想象一下为什么iMac用得爽，还有现在各种软件上的“一键清理”、“一键卸载”、“一键登录”，这不都是因为减少了用户的思考成本吗？</p>
+<h2 id="2-兼容！兼容！还是兼容！！"><a href="#2-兼容！兼容！还是兼容！！" class="headerlink" title="2. 兼容！兼容！还是兼容！！"></a>2. 兼容！兼容！还是兼容！！</h2><p>前面一段提到了写新接口的时候的原则，最重要的是通过科学的设置默认值，保持扩展性的同时保证了易用性，那如果遇到老接口改造呢？带上了历史包袱，事情会变得不太一样。<br>新接口的设计，我们会重点关注这个接口的设计是否优雅，但是面对老接口的时候，我们不得不优先保证正确性，因为此接口可能已经被非常多地方用到，大的改动可能引入铺天盖地的bug。所以只能退而求其次，先正确再优雅。<br>为了扩展老接口能力，我们可以为接口新增参数，把某些以前没暴露的内部细节暴露出来，这种情况下的默认值设计，几乎没有选择，只能将参数的默认值设成以前内部写死的值，如此才可能保持内部行为不变，即使那个默认值看上去非常不优雅，像坨shi一样，还是必须得这样，因为先正确，再优雅。当然在这种改动的时候如果检查以后调用方不是特别多，可控可改，那最好的还是根据新的接口设计，重构调用方的代码，正确和优雅同时拿下，这是最理想的状态，不能完美的时候先保正确。</p>
+<h2 id="3-不要让事情变更坏"><a href="#3-不要让事情变更坏" class="headerlink" title="3. 不要让事情变更坏"></a>3. 不要让事情变更坏</h2><p>以前的一个项目有个表单页面，下一步按钮为了更好的体验，在用户填写的内容不符合规则时，按钮不能点击，直到引导用户按规则输入了内容。听起来功能非常简单，人畜无害对吧，结果出现了一个线上的生产问题，为什么？ 因为判断规则的代码出错了，用了默认值，默认值是不能点。就因为这，发了紧急版本，WTF。</p>
+<p>这里更多的可能不是接口设计，而是默认业务逻辑的设计，例如上面的场景，只要把默认值改成按钮可以点击，明确检测到不能点击了再限制，那虽然是bug，但是并不会变得这么紧急。所以我们需要思考，我们的业务代码是要做什么？在前端，很多体验优化的点，这些点默认值应该是更宽松（其实很多人是很随意的设计这些默认值的），最坏情况是这个优化点无效，不要因为体验优化的点影响业务流程，偷鸡不成蚀把米，业务流程的默认值设计也千万大意不得。然而我们也不是所有地方都应该宽松，特别是在后台系统涉及到安全方面的逻辑时，应该是要默认严格，有任何差错也不要去用默认值容错，例如密码校验的地方默认值是返回true，这样的产品你敢用？所以总结起来，主要两点，体验优化从宽，安全控制从严。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>敲黑板！！！  </p>
+<ol>
+<li>新接口必填参数能少则少，默认值保证80%场景正确</li>
+<li>老接口改造，先保证正确，再考虑优雅</li>
+<li>前端体验优化，默认值从宽，后段安全控制默认值从严。</li>
+</ol>
 
       
     </div>
@@ -229,18 +235,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2011/11/12/nju-in-memory/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          NJU记忆碎片
-        
-      </div>
-    </a>
   
-  
-    <a href="/2011/06/03/Zend-Framework中的Singleton/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Zend Framework中的Singleton</div>
+    <a href="/2017/06/27/why-should-you-write-a-open-source-library/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">你为什么也应该写一个开源库？</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -269,7 +266,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="011-07-04-杭州实习第一天" data-title="杭州淘宝实习第一天" data-url="http://blog.23lab.com/2011/07/04/011-07-04-杭州实习第一天/"></div>
+	<div class="ds-thread" data-thread-key="default-value-for-interface-and-components" data-title="容易被忽视的不容忽视的默认值设计" data-url="http://blog.23lab.com/2017/10/24/default-value-for-interface-and-components/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

@@ -5,34 +5,28 @@
   
   <title>ImageView的scaleType介绍 | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象. 
-ImageView的scaleType有如下几类: 
-
-下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+  <meta name="description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象.  ImageView的scaleType有如下几类:   下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ImageView的scaleType介绍">
 <meta property="og:url" content="http://blog.23lab.com/2015/09/20/ImageView-scaleType/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象. 
-ImageView的scaleType有如下几类: 
-
-下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+<meta property="og:description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象.  ImageView的scaleType有如下几类:   下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+<meta property="og:locale" content="zh">
 <meta property="og:image" content="http://blog.23lab.com/2015/09/20/ImageView-scaleType/all_types.png">
 <meta property="og:image" content="http://blog.23lab.com/2015/09/20/ImageView-scaleType/scaleTypeCompare.jpg">
 <meta property="og:updated_time" content="2017-05-28T06:04:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ImageView的scaleType介绍">
-<meta name="twitter:description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象. 
-ImageView的scaleType有如下几类: 
-
-下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+<meta name="twitter:description" content="使用ImageView的时候难以避免的就要去确定图片缩放的方式也就是scaleType, 之前多次使用ImageView的时候需要设置scaleType, 今天再次用到还是记不清几种scaleType的区别, 这里整理一下方便自己加深印象.  ImageView的scaleType有如下几类:   下面我们分别来尝试并理解上面的各种ScaleType, 主要分为三种情况来实验, View的长宽分别">
+<meta name="twitter:image" content="http://blog.23lab.com/2015/09/20/ImageView-scaleType/all_types.png">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
   
     <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -120,7 +114,7 @@ ImageView的scaleType有如下几类:
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/develop-api/" style="font-size: 10px;">develop, api</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -313,7 +307,7 @@ ImageView的scaleType有如下几类:
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -329,8 +323,8 @@ ImageView的scaleType有如下几类:
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 

@@ -5,35 +5,24 @@
   
   <title>SQL中结果集按IN子句中id顺序排序 | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
-1SELECT id FROM tbl WHERE id IN(1, 5, 3);
-此SQL出来的内容肯定是
-11&amp;#10;3&amp;#10;5
-那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
+  <meta name="description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为. 1SELECT id FROM tbl WHERE id IN(1, 5, 3); 此SQL出来的内容肯定是 123135 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQL中结果集按IN子句中id顺序排序">
 <meta property="og:url" content="http://blog.23lab.com/2012/12/24/sql-sort-in-in-clauses/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
-1SELECT id FROM tbl WHERE id IN(1, 5, 3);
-此SQL出来的内容肯定是
-11&amp;#10;3&amp;#10;5
-那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
+<meta property="og:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为. 1SELECT id FROM tbl WHERE id IN(1, 5, 3); 此SQL出来的内容肯定是 123135 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
+<meta property="og:locale" content="zh">
 <meta property="og:updated_time" content="2015-09-09T14:42:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL中结果集按IN子句中id顺序排序">
-<meta name="twitter:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.
-1SELECT id FROM tbl WHERE id IN(1, 5, 3);
-此SQL出来的内容肯定是
-11&amp;#10;3&amp;#10;5
-那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
+<meta name="twitter:description" content="今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为. 1SELECT id FROM tbl WHERE id IN(1, 5, 3); 此SQL出来的内容肯定是 123135 那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
   
     <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -121,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/develop-api/" style="font-size: 10px;">develop, api</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -221,15 +210,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>今天突然想到一个问题, 如果我在MySQL数据库表中数据id有, 1, 2, 3, 4, 5, 其中使用了IN子句进行查询, 查询语句为.</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>);</div></pre></td></tr></table></figure>
 <p>此SQL出来的内容肯定是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#10;3&#10;5</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">3</div><div class="line">5</div></pre></td></tr></table></figure>
 <p>那如果我想要出来的顺序和IN子句中顺序一样怎么办呢？<br><a id="more"></a><br>这里涉及到排序的问题，问同事也说没遇到过此类问题，于是自己想了想给出了一个天下最丑的方法（比完全没有好点）。先用UNION构造出一个按自定义ｉｄ序列排序的结果集，将此结果集作为子表LEFT JOIN上要查询的表. 代码如下:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> a <span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">AS</span> a</span><br><span class="line">    <span class="keyword">UNION</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">5</span> <span class="keyword">AS</span> a</span><br><span class="line">    <span class="keyword">UNION</span></span><br><span class="line">    <span class="keyword">SELECT</span> <span class="number">3</span> <span class="keyword">AS</span> a</span><br><span class="line">) <span class="keyword">AS</span> tb1</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> tbl tb2</span><br><span class="line"><span class="keyword">ON</span> tb2 .<span class="keyword">id</span> =  tb1 .a </span><br><span class="line"><span class="keyword">WHERE</span> tb2.<span class="keyword">id</span> <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>) ;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> a <span class="keyword">FROM</span> (</div><div class="line">    <span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">AS</span> a</div><div class="line">    <span class="keyword">UNION</span></div><div class="line">    <span class="keyword">SELECT</span> <span class="number">5</span> <span class="keyword">AS</span> a</div><div class="line">    <span class="keyword">UNION</span></div><div class="line">    <span class="keyword">SELECT</span> <span class="number">3</span> <span class="keyword">AS</span> a</div><div class="line">) <span class="keyword">AS</span> tb1</div><div class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> tbl tb2</div><div class="line"><span class="keyword">ON</span> tb2 .id =  tb1 .a </div><div class="line"><span class="keyword">WHERE</span> tb2.id <span class="keyword">IN</span>(<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>) ;</div></pre></td></tr></table></figure>
 <p>这个方案可行, 但让人看起来就相当恶心, 后来有搜索到可以用FIELD函数来实现此功能, 官方对FIELD的说明为:</p>
-<pre><code>Return <span class="operator">the</span> index (position) <span class="operator">of</span> <span class="operator">the</span> <span class="keyword">first</span> argument <span class="operator">in</span> <span class="operator">the</span> subsequent arguments
+<pre><code>Return the index (position) of the first argument in the subsequent arguments
 </code></pre><p>在SQL Server数据库中, 同样功能的函数名称叫CHARINDEX. 使用FIELD来实现自定义排序功能的SQL如下:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span> (<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">FIELD</span>(<span class="keyword">id</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> tbl <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span> (<span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>) <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">FIELD</span>(<span class="keyword">id</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">3</span>)</div></pre></td></tr></table></figure>
 <p>其实开始用那个UNION的方法也是因为完全不知道有FIELD这个东西, 用那么恶心的方法, 只是就是力量啊~~~</p>
 
       
@@ -315,7 +304,7 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -331,8 +320,8 @@
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 

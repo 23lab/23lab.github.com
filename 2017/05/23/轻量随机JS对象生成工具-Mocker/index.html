@@ -5,29 +5,25 @@
   
   <title>轻量JS mock对象生成工具-Mocker | 23Lab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路: 
-
-直接生成mock的后端服务,  根据指定的协议(例如swa">
+  <meta name="description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路:   直接生成mock的后端服务,  根据指定的协议(例如swa">
+<meta name="keywords" content="JavaScript,mock,Swagger">
 <meta property="og:type" content="article">
 <meta property="og:title" content="轻量JS mock对象生成工具-Mocker">
 <meta property="og:url" content="http://blog.23lab.com/2017/05/23/轻量随机JS对象生成工具-Mocker/index.html">
 <meta property="og:site_name" content="23Lab">
-<meta property="og:description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路: 
-
-直接生成mock的后端服务,  根据指定的协议(例如swa">
+<meta property="og:description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路:   直接生成mock的后端服务,  根据指定的协议(例如swa">
+<meta property="og:locale" content="zh">
 <meta property="og:updated_time" content="2017-05-28T06:14:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="轻量JS mock对象生成工具-Mocker">
-<meta name="twitter:description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路: 
-
-直接生成mock的后端服务,  根据指定的协议(例如swa">
+<meta name="twitter:description" content="背景前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路:   直接生成mock的后端服务,  根据指定的协议(例如swa">
   
     <link rel="alternative" href="/atom.xml" title="23Lab" type="application/atom+xml">
   
   
     <link rel="icon" href="http://blog.23lab.com/images/avatar.jpg">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="container">
@@ -115,7 +111,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/AndroidThings/" style="font-size: 10px;">AndroidThings</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/Code-Style/" style="font-size: 10px;">Code Style</a> <a href="/tags/Deploy/" style="font-size: 10px;">Deploy</a> <a href="/tags/Foosball/" style="font-size: 10px;">Foosball</a> <a href="/tags/IoT/" style="font-size: 10px;">IoT</a> <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/NGINX/" style="font-size: 10px;">NGINX</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/Open-Source/" style="font-size: 10px;">Open Source</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/SDK/" style="font-size: 10px;">SDK</a> <a href="/tags/StandardJS/" style="font-size: 10px;">StandardJS</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/Unit-Test/" style="font-size: 10px;">Unit Test</a> <a href="/tags/Vim/" style="font-size: 10px;">Vim</a> <a href="/tags/Zend-Framework/" style="font-size: 10px;">Zend Framework</a> <a href="/tags/develop-api/" style="font-size: 10px;">develop, api</a> <a href="/tags/mock/" style="font-size: 10px;">mock</a> <a href="/tags/南京/" style="font-size: 20px;">南京</a> <a href="/tags/南京大学/" style="font-size: 10px;">南京大学</a> <a href="/tags/实习/" style="font-size: 10px;">实习</a> <a href="/tags/杭州/" style="font-size: 10px;">杭州</a> <a href="/tags/树莓派/" style="font-size: 10px;">树莓派</a> <a href="/tags/桌上足球/" style="font-size: 10px;">桌上足球</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -218,7 +214,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景">背景</h2><p>前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路: </p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>前端开发过程中, 通常的开发流是, 前后端定义协议, 再分别开发.  然而此开发流必然存在前后端并行的阶段, 通常情况此阶段前端不得不自己手写假数据先开发界面和交互逻辑, 等到和后台联调, 再把假数据替换成真实的后台数据.  这整个过程造假数据的过程非常重复, 开发体验糟糕. 我尝试搜索解决此问题的反感, 总结下来基本是两个思路: </p>
 <ol>
 <li>直接生成mock的后端服务,  根据指定的协议(例如swagger)自动生成后端mocker, 例如 <a href="swaggerhub.com">swaggerhub</a></li>
 <li>前端生成mock数据直接返回, 例如 <a href="https://github.com/marak/Faker.js/" target="_blank" rel="external">Facker.js</a>和<a href="http://mockjs.com/" target="_blank" rel="external">MockJS</a></li>
@@ -228,17 +224,17 @@
 <p>因为第一种方式遇到的问题, 我也更偏向于使用第二种方案, Faker.js可以说是大而全, 能满足所有需求, 但是也正是因为大而全, 我抛弃了他, 因为我理解这种Mock的需求, 虽然是开发前期的刚需, 但是频率通常不会很高, 算是低频刚需. 如果用一个大而全的, 因为API复杂, 会导致我用一次, 下次再使用的时候已经忘记了一些配置的说明, 每次用起来都要重新查, 这是比较痛苦的, 所以我希望能有一个简单一点的解决方案.</p>
 <p>mock.js的API就明显简单很多, 然而我没有使用mock.js的原因是:  它需要mock的对象的key和值的格式说明放到一起, 例如, <code>stringValue|1-10</code>, 因为我需要在其他也需要公用配置, 而且我自己认为这是对Key的一种污染,  所以我更偏向于保持stringValue这个key的纯净.</p>
 <p>正因为上述遇到的问题我才考虑自己实现一个更简单满足自己需求的Mock工具, 简单命名其为Mocker.</p>
-<h2 id="Mocker的目标">Mocker的目标</h2><p>上面已经说了目前一些解决方案不是很满足我自己需求, 所以我准备自己开发一个, 开发之前大概思考了一下自己的需求, 主要有下面几点: </p>
+<h2 id="Mocker的目标"><a href="#Mocker的目标" class="headerlink" title="Mocker的目标"></a>Mocker的目标</h2><p>上面已经说了目前一些解决方案不是很满足我自己需求, 所以我准备自己开发一个, 开发之前大概思考了一下自己的需求, 主要有下面几点: </p>
 <ol>
 <li>只支持前端mock数据, 使用时直接在前端模拟返回</li>
 <li>足够简单, 类型不能太多, 只需要支持String, Number, Enum, Boolean. 并且几种类型上也只添加最基本的限制规则, 例如长度和格式.</li>
 <li>支持Array和Object</li>
 </ol>
 <p>根据上述目标, 最终完成了Mocker的开发并在真实项目中使用. 具体项目地址: <a href="https://github.com/UnPourTous/mocker" target="_blank" rel="external">https://github.com/UnPourTous/mocker</a></p>
-<h2 id="使用方式展示">使用方式展示</h2><p>下面是我的API配置, 其中配置了path, method, 等必要信息, 以及request/response信息, 其中response的配置遵循Mocker的规范. 例如:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Mocker, Types &#125; <span class="keyword">from</span> <span class="string">'@unpourtous/mocker'</span></span><br><span class="line"></span><br><span class="line">const API = &#123;</span><br><span class="line">  aGreatAPI: &#123;</span><br><span class="line">    mockable: true,</span><br><span class="line">    path: <span class="string">'greate/api/path'</span>,</span><br><span class="line">    method: <span class="string">'GET'</span>,</span><br><span class="line">    request: &#123;&#125;,</span><br><span class="line">    response: &#123;</span><br><span class="line">      stringDate: Types.string(<span class="string">'date'</span>),</span><br><span class="line">      stringRange: Types.string().range(10, 100),</span><br><span class="line">      numberRange: Types.number().range(0, 100),</span><br><span class="line">      enum: Types.enum([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在访问此请求的时候, 通过判断mockable的设置确定是否需要返回mock数据:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> </span>&#123;</span><br><span class="line">  static get (cgi, params = &#123;&#125;, headers = &#123;&#125;, option = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">if</span> (cgi.mockable === <span class="literal">true</span> &amp;&amp; cgi.response) &#123;</span><br><span class="line">      <span class="comment">// 生成mock数据</span></span><br><span class="line">      <span class="keyword">const</span> mockResponse = Mocker.mockObject(cgi.response)</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(mockResponse)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">APIClient.get(API.aGreatAPI).then(response =&gt; &#123;</span><br><span class="line">  <span class="comment">// 这里就可以拿到mock数据了</span></span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用方式展示"><a href="#使用方式展示" class="headerlink" title="使用方式展示"></a>使用方式展示</h2><p>下面是我的API配置, 其中配置了path, method, 等必要信息, 以及request/response信息, 其中response的配置遵循Mocker的规范. 例如:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; Mocker, Types &#125; <span class="keyword">from</span> <span class="string">'@unpourtous/mocker'</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> API = &#123;</div><div class="line">  aGreatAPI: &#123;</div><div class="line">    mockable: <span class="literal">true</span>,</div><div class="line">    path: <span class="string">'greate/api/path'</span>,</div><div class="line">    method: <span class="string">'GET'</span>,</div><div class="line">    request: &#123;&#125;,</div><div class="line">    response: &#123;</div><div class="line">      stringDate: Types.string(<span class="string">'date'</span>),</div><div class="line">      stringRange: Types.string().range(<span class="number">10</span>, <span class="number">100</span>),</div><div class="line">      numberRange: Types.number().range(<span class="number">0</span>, <span class="number">100</span>),</div><div class="line">      enum: Types.enum([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>])</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在访问此请求的时候, 通过判断mockable的设置确定是否需要返回mock数据:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> </span>&#123;</div><div class="line">  <span class="keyword">static</span> get (cgi, params = &#123;&#125;, headers = &#123;&#125;, option = &#123;&#125;) &#123;</div><div class="line">    <span class="keyword">if</span> (cgi.mockable === <span class="literal">true</span> &amp;&amp; cgi.response) &#123;</div><div class="line">      <span class="comment">// 生成mock数据</span></div><div class="line">      <span class="keyword">const</span> mockResponse = Mocker.mockObject(cgi.response)</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(mockResponse)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 调用</span></div><div class="line">APIClient.get(API.aGreatAPI).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// 这里就可以拿到mock数据了</span></div><div class="line">&#125;, error =&gt; &#123;</div><div class="line"></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
 <p>可以看到上面以非常简单的结构, 就可以实现前端数据的mock, 目前String支持长度限制和正则. 数字支持范围和格式. 具体API说明可以参考 <a href="https://github.com/UnPourTous/mocker" target="_blank" rel="external">https://github.com/UnPourTous/mocker</a></p>
-<h2 id="总结">总结</h2><p>Mocker因为一个低频刚需而生, 故确定他的主要特点是简单, 设计之初就希望即使允许它不能解决10%的可能场景, 也要保持简单. 所以最终API也只有10个左右, 而且非常易于理解. 当然如果您有什么建议也欢迎提PR或者联系我. </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Mocker因为一个低频刚需而生, 故确定他的主要特点是简单, 设计之初就希望即使允许它不能解决10%的可能场景, 也要保持简单. 所以最终API也只有10个左右, 而且非常易于理解. 当然如果您有什么建议也欢迎提PR或者联系我. </p>
 
       
     </div>
@@ -323,7 +319,7 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -339,8 +335,8 @@
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="/js/main.js" type="text/javascript"></script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 
