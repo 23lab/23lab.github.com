@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.23lab.com/2017/10/24/default-value-for-interface-and-components/</loc>
+    <loc>http://blog.23lab.com/2017/06/27/why-should-you-write-a-open-source-library/</loc>
     
-    <lastmod>2017-10-24T03:31:22.000Z</lastmod>
+    <lastmod>2017-10-24T03:59:15.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2017/06/27/why-should-you-write-a-open-source-library/</loc>
+    <loc>http://blog.23lab.com/2017/10/24/default-value-for-interface-and-components/</loc>
     
-    <lastmod>2017-06-27T06:57:33.000Z</lastmod>
+    <lastmod>2017-10-24T03:31:22.000Z</lastmod>
     
   </url>
   
@@ -135,13 +135,6 @@
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2015/09/20/ImageView-scaleType/</loc>
-    
-    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.23lab.com/2016/11/12/angular-infdig-Infinite-digest-loop/</loc>
     
     <lastmod>2017-05-28T06:04:51.000Z</lastmod>
@@ -156,6 +149,13 @@
   </url>
   
   <url>
+    <loc>http://blog.23lab.com/2015/09/20/ImageView-scaleType/</loc>
+    
+    <lastmod>2017-05-28T06:04:51.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.23lab.com/2013/12/28/jni-memory-leak-local-reference-table-overflow/</loc>
     
     <lastmod>2015-09-09T16:18:11.000Z</lastmod>
@@ -163,14 +163,14 @@
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
+    <loc>http://blog.23lab.com/2013/02/24/allow-tab-in-your-testarea-with-allowtab/</loc>
     
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/</loc>
+    <loc>http://blog.23lab.com/2013/02/24/two-android-problem/</loc>
     
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     
@@ -184,14 +184,14 @@
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2012/12/24/sql-sort-in-in-clauses/</loc>
+    <loc>http://blog.23lab.com/2013/03/11/capturer-a-whole-web-page-in-chrome-with-chrome-extension/</loc>
     
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.23lab.com/2013/02/24/allow-tab-in-your-testarea-with-allowtab/</loc>
+    <loc>http://blog.23lab.com/2012/12/24/sql-sort-in-in-clauses/</loc>
     
     <lastmod>2015-09-09T14:42:12.000Z</lastmod>
     
