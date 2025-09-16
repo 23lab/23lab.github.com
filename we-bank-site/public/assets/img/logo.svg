@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Demo Bank Logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="#0b1020" stroke="#1e263f" stroke-width="8"/>
+  <path d="M64 168c0-40 32-72 72-72h56" fill="none" stroke="url(#g)" stroke-width="20" stroke-linecap="round"/>
+  <path d="M64 128h56c40 0 72 32 72 72" fill="none" stroke="url(#g)" stroke-width="20" stroke-linecap="round"/>
+  <circle cx="88" cy="88" r="12" fill="#22c55e"/>
+  <circle cx="168" cy="88" r="12" fill="#3b82f6"/>
+</svg>
+

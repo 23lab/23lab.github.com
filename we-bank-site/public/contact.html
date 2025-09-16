@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>联系我们 · 演示模板</title>
+    <link rel="icon" href="/assets/img/logo.svg" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/">
+          <img src="/assets/img/logo.svg" alt="演示银行 Logo" width="28" height="28" />
+          <span>微众银行（演示）</span>
+        </a>
+        <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">☰</button>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="/about.html">关于我们</a>
+          <a href="/products.html">产品与服务</a>
+          <a href="/news.html">新闻资讯</a>
+          <a href="/careers.html">加入我们</a>
+          <a href="/contact.html" aria-current="page" class="btn btn-primary">联系我们</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding:32px 0;">
+      <h1 style="margin-top:0">联系我们（示例）</h1>
+      <div class="card">
+        <p>本页面为演示用途。请勿填写真实敏感信息。</p>
+        <form onsubmit="event.preventDefault(); alert('演示表单，无实际提交。');">
+          <div style="display:grid;gap:8px;max-width:520px;">
+            <input required placeholder="姓名" style="padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e1429;color:var(--text)" />
+            <input type="email" required placeholder="邮箱" style="padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e1429;color:var(--text)" />
+            <textarea rows="5" required placeholder="留言" style="padding:10px;border-radius:10px;border:1px solid var(--border);background:#0e1429;color:var(--text)"></textarea>
+            <button class="btn btn-primary" type="submit">提交</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>免责声明：本网站仅为示例模板。</div>
+        <div>© 2025 Demo Bank Template</div>
+      </div>
+    </footer>
+
+    <script src="/assets/js/main.js" defer></script>
+  </body>
+  </html>
+
