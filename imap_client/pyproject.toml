@@ -1,0 +1,18 @@
+[project]
+name = "imap-client-cli"
+version = "0.1.0"
+description = "Simple IMAP mail client CLI using Python stdlib"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Your Name" }
+]
+dependencies = []
+
+[project.scripts]
+imap-client = "imap_client.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
