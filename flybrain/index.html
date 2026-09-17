@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>果蝇全脑模拟</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%AA%B0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="在浏览器里刺激果蝇的感觉神经元，看 13.9 万个神经元的真实接线图如何把信号传到运动神经元。">
+<style>
+:root{
+  --bg:#0b0d12;--panel:#141821;--panel2:#1b2030;--line:#262c3a;--fg:#e6e9ef;--muted:#8b93a7;
+  --accent:#ffb347;--accent2:#5ad1ff;--bad:#ff6b6b;--good:#7ee787;
+  --c0:#3a7bd5;--c1:#ffb347;--c2:#e6e9ef;--c3:#f4a261;--c4:#c77dff;--c5:#4cc9f0;--c6:#ff6b6b;--c7:#90e0ef;--c8:#b5e48c;--c9:#7ee787;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 -apple-system,"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif}
+a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+header{padding:20px 16px 8px;max-width:1100px;margin:0 auto}
+h1{margin:0 0 4px;font-size:22px;letter-spacing:.5px}
+h1 small{font-size:13px;color:var(--muted);font-weight:400;margin-left:8px}
+@media(max-width:600px){h1 small{display:block;margin:2px 0 0}}
+.sub{color:var(--muted);font-size:13px;margin:0}
+main{max-width:1100px;margin:0 auto;padding:8px 16px 40px;display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:900px){main{grid-template-columns:340px 1fr}.span{grid-column:1/-1}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.panel h2{margin:0 0 10px;font-size:14px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--panel2);color:var(--fg);border-radius:20px;padding:5px 11px;font-size:13px;cursor:pointer;user-select:none;transition:.15s}
+.chip small{color:var(--muted);margin-left:4px}
+.chip.on{border-color:var(--accent);background:rgba(255,179,71,.15);color:var(--accent)}
+.chip:disabled{opacity:.4;cursor:default}
+.row{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+label.f{font-size:13px;color:var(--muted)}
+select,input[type=range]{accent-color:var(--accent)}
+select{background:var(--panel2);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:13px}
+button.run{width:100%;margin-top:12px;padding:11px;border:0;border-radius:8px;background:var(--accent);color:#1a1200;font-size:15px;font-weight:700;cursor:pointer}
+button.run:disabled{background:#4a4030;color:#9a8a60;cursor:wait}
+#status{font-size:12px;color:var(--muted);margin-top:8px;min-height:18px}
+.bar{height:6px;background:var(--panel2);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--accent2);transition:width .1s}
+canvas{display:block;width:100%;background:#07080c;border-radius:8px}
+#map{aspect-ratio:2/1}
+#timeline{height:150px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted);margin-top:8px}
+.legend b{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.card{background:var(--panel2);border-radius:8px;padding:10px}
+.card .v{font-size:22px;font-weight:700;color:var(--accent)}
+.card .v span{font-size:12px;color:var(--muted);font-weight:400;margin-left:3px}
+.card .k{font-size:12px;color:var(--muted)}
+.card .d{font-size:11px;color:var(--muted);margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:12px}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+.note{font-size:13px;color:var(--muted);line-height:1.7}
+.note b{color:var(--fg)}
+.pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;background:var(--panel2);color:var(--muted)}
+.mn9{color:var(--good)}
+</style>
+</head>
+<body>
+<header>
+  <h1>果蝇全脑模拟 <small>FlyWire v783 · 139,248 个神经元 · 270 万条连接</small></h1>
+  <p class="sub">选一组感觉神经元，给它们持续刺激 1 秒，看真实接线图把信号传到哪里。全部计算在你的浏览器里完成。</p>
+</header>
+<main>
+  <section class="panel">
+    <h2>刺激哪些神经元</h2>
+    <div class="chips" id="presets"></div>
+    <div class="row">
+      <label class="f">刺激频率 <b id="rateV">150</b> Hz</label>
+      <input type="range" id="rate" min="10" max="200" step="10" value="150" style="flex:1">
+    </div>
+    <div class="row">
+      <label class="f">时长</label>
+      <select id="dur"><option value="300">0.3 秒</option><option value="500">0.5 秒</option><option value="1000" selected>1 秒</option></select>
+      <label class="f" style="margin-left:auto"><input type="checkbox" id="silence"> 切断苦味通路 (实验)</label>
+    </div>
+    <button class="run" id="run" disabled>加载数据中…</button>
+    <div id="status"></div>
+    <div class="bar"><i id="prog"></i></div>
+  </section>
+
+  <section class="panel">
+    <h2>脑图 · 正面视角，每个点是一个神经元</h2>
+    <canvas id="map"></canvas>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel span">
+    <h2>每 10 ms 各类神经元的放电数</h2>
+    <canvas id="timeline"></canvas>
+  </section>
+
+  <section class="panel span">
+    <h2>读出 · 运行结束后更新</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="panel span">
+    <h2>放电最活跃的下游神经元</h2>
+    <div class="tbl"><table><thead><tr><th class="r">Hz</th><th>类型</th><th>大类</th><th>侧</th><th>递质</th><th>FlyWire</th></tr></thead><tbody id="top"></tbody></table></div>
+  </section>
+
+  <section class="panel span note">
+    <b>这是什么。</b> 数据是 FlyWire 联盟发布的成年雌性果蝇全脑连接组（v783，Dorkenwald 等、Schlegel 等，Nature 2024，CC BY 4.0），只保留 5 个突触以上的连接。
+    每个神经元是一个漏电积分放电（LIF）单元，参数照搬 Shiu 等 2024 年 Nature 论文：静息 -52 mV，阈值 -45 mV，膜时间常数 20 ms，每个突触 0.275 mV，延迟 1.8 ms；
+    GABA 和谷氨酸能神经元的输出为抑制，其余为兴奋。模型里没有任何关于“进食”“逃跑”的编码，你看到的一切都是接线图本身推出来的。<br>
+    <b>试试这个。</b> 只刺激“糖/水”，伸喙运动神经元 MN9 会被驱动到 150 Hz 左右；只刺激“苦味”，MN9 不动；两者一起，MN9 被压到十几 Hz。这是论文的核心结果，在这里能复现。<br>
+    <b>它不是什么。</b> 没有突触权重、没有神经调质、没有身体和环境。网上“果蝇打 DOOM”的项目在此之上另外训练了一层读出，和真实果蝇的关系不大。
+    源码与数据导出脚本见 <a href="https://github.com/23lab/23lab.github.com/tree/master/flybrain">仓库</a>。
+  </section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s);
+const COLORS=['#3a7bd5','#f4a261','#a78bfa','#e76f51','#4cc9f0','#90e0ef','#ff6b6b','#48cae4','#b5e48c','#7ee787','#999'];
+const SC_ZH={optic:'视叶',sensory:'感觉',central:'中枢',sensory_ascending:'感觉上行',ascending:'上行',visual_projection:'视觉投射',descending:'下行',visual_centrifugal:'视觉离心',endocrine:'内分泌',motor:'运动',unknown:'未知'};
+let meta,brain,worker,selected=new Set(['sugar']),running=false;
+
+const WORKER_SRC=`
+let N,indptr,indices,w;
+function parse(buf){
+  const dv=new DataView(buf); if(String.fromCharCode(dv.getUint8(0),dv.getUint8(1),dv.getUint8(2),dv.getUint8(3))!=='FLYW') throw new Error('bad file');
+  N=dv.getUint32(4,true); const nnz=dv.getUint32(8,true); let o=12;
+  indptr=new Uint32Array(buf,o,N+1); o+=(N+1)*4;
+  indices=new Uint32Array(buf,o,nnz); o+=nnz*4;
+  w=new Int16Array(buf,o,nnz); o+=nnz*2;
+  const sc=new Uint8Array(buf,o,N); o+=N; const side=new Uint8Array(buf,o,N); o+=N;
+  const ct=new Uint16Array(buf.slice(o,o+N*2)); o+=N*2;
+  const hi=new Uint32Array(buf.slice(o,o+N*4)); o+=N*4; const lo=new Uint32Array(buf.slice(o,o+N*4)); o+=N*4;
+  const px=new Uint16Array(buf.slice(o,o+N*2)); o+=N*2; const py=new Uint16Array(buf.slice(o,o+N*2));
+  const nt=new Int8Array(N); for(let i=0;i<N;i++) nt[i]=indptr[i+1]>indptr[i]?(w[indptr[i]]<0?-1:1):0;
+  return {N,nnz,sc:sc.slice(),side:side.slice(),ct,hi,lo,px,py,nt};
+}
+function run(p){
+  const dt=0.1,vRest=-52,vTh=-45,taum=20,taus=5,tRefr=2.2,delay=1.8,wSyn=0.275;
+  const dm=Math.exp(-dt/taum),ds=Math.exp(-dt/taus),gain=1-dm;
+  const steps=Math.round(p.tRun/dt),delaySteps=Math.round(delay/dt),refrSteps=Math.round(tRefr/dt);
+  const v=new Float32Array(N).fill(vRest),g=new Float32Array(N),refr=new Int32Array(N),counts=new Uint32Array(N);
+  const isStim=new Uint8Array(N); const stim=p.stim; for(const i of stim) isStim[i]=1;
+  const silenced=new Uint8Array(N); for(const i of (p.silence||[])) silenced[i]=1;
+  const pStim=p.rate*dt/1000;
+  const inSet=new Uint8Array(N); let act=new Int32Array(N),nAct=0;
+  const pending=[]; for(let i=0;i<delaySteps;i++) pending.push([]);
+  const nSc=p.nSc; let win=new Uint32Array(nSc),winSpk=[];
+  const winMark=new Uint8Array(N);
+  let spkNow=[];
+  for(let step=0;step<steps;step++){
+    const slot=step%delaySteps; const arriving=pending[slot];
+    for(let a=0;a<arriving.length;a++){ const pre=arriving[a]; if(silenced[pre]) continue;
+      for(let k=indptr[pre],e=indptr[pre+1];k<e;k++){ const post=indices[k]; g[post]+=w[k]*wSyn; if(!inSet[post]){inSet[post]=1;act[nAct++]=post;} } }
+    spkNow=[]; let m=0;
+    for(let a=0;a<nAct;a++){ const i=act[a];
+      if(refr[i]<=step){ v[i]=vRest+(v[i]-vRest)*dm+g[i]*gain; g[i]*=ds;
+        if(v[i]>vTh&&!isStim[i]){ v[i]=vRest; g[i]=0; refr[i]=step+refrSteps; spkNow.push(i); }
+        if(Math.abs(v[i]-vRest)<1e-3&&Math.abs(g[i])<1e-3){ inSet[i]=0; continue; } }
+      else { g[i]*=ds; }
+      act[m++]=i; }
+    nAct=m;
+    for(let s=0;s<stim.length;s++){ if(Math.random()<pStim){ const i=stim[s]; v[i]=vRest; g[i]=0; refr[i]=step+refrSteps; spkNow.push(i); } }
+    for(const i of spkNow){ counts[i]++; win[p.sc[i]]++; if(!winMark[i]){winMark[i]=1;winSpk.push(i);} }
+    pending[slot]=spkNow;
+    if((step+1)%100===0){ for(const i of winSpk) winMark[i]=0;
+      postMessage({type:'win',t:(step+1)*dt,win,spk:new Uint32Array(winSpk)}); win=new Uint32Array(nSc); winSpk=[]; }
+  }
+  const rates=new Float32Array(N); for(let i=0;i<N;i++) rates[i]=counts[i]/(p.tRun/1000);
+  postMessage({type:'done',rates},[rates.buffer]);
+}
+onmessage=e=>{ const d=e.data;
+  if(d.type==='load'){ const b=parse(d.buf); postMessage({type:'ready',b}); }
+  else if(d.type==='run'){ run(d); } };
+`;
+
+async function load(){
+  const st=$('#status'),pg=$('#prog');
+  meta=await (await fetch('meta.json')).json();
+  const res=await fetch('brain.bin.gz',{cache:'force-cache'});
+  const total=+res.headers.get('content-length')||10553927; let got=0;
+  const counted=new TransformStream({transform(c,ctrl){got+=c.length;pg.style.width=Math.min(99,got/total*100)+'%';st.textContent=`下载连接组 ${(got/1048576).toFixed(1)} / ${(total/1048576).toFixed(1)} MB`;ctrl.enqueue(c);}});
+  let stream=res.body.pipeThrough(counted);
+  const enc=res.headers.get('content-encoding');
+  if(!enc||enc==='identity'){ stream=stream.pipeThrough(new DecompressionStream('gzip')); }
+  const buf=await new Response(stream).arrayBuffer();
+  st.textContent='解析中…';
+  worker=new Worker(URL.createObjectURL(new Blob([WORKER_SRC],{type:'text/javascript'})));
+  worker.onmessage=onMsg; worker.postMessage({type:'load',buf},[buf]);
+}
+function onMsg(e){ const d=e.data;
+  if(d.type==='ready'){ brain=d.b; drawBase(); buildUI(); $('#status').textContent=`就绪：${brain.N.toLocaleString()} 个神经元，${brain.nnz.toLocaleString()} 条连接已载入内存`; $('#prog').style.width='100%'; $('#run').disabled=false; $('#run').textContent='开始刺激'; }
+  else if(d.type==='win'){ onWindow(d); }
+  else if(d.type==='done'){ onDone(d.rates); }
+}
+function buildUI(){
+  const box=$('#presets');
+  for(const [k,p] of Object.entries(meta.presets)){ const b=document.createElement('button'); b.className='chip'+(selected.has(k)?' on':''); b.innerHTML=`${p.label}<small>${p.idx.length}</small>`; b.dataset.k=k;
+    b.onclick=()=>{ if(running)return; selected.has(k)?selected.delete(k):selected.add(k); b.classList.toggle('on'); const r=meta.presets[k].rate; if(selected.has(k)&&r){$('#rate').value=r;$('#rateV').textContent=r;} drawBase(); }; box.appendChild(b); }
+  const lg=$('#legend'); meta.super_classes.forEach((s,i)=>{ lg.insertAdjacentHTML('beforeend',`<span><b style="background:${COLORS[i]}"></b>${SC_ZH[s]||s}</span>`); });
+  lg.insertAdjacentHTML('beforeend',`<span><b style="background:#fff;box-shadow:0 0 6px #fff"></b>正在放电</span><span><b style="background:#ffb347;box-shadow:0 0 6px #ffb347"></b>被刺激的神经元</span>`);
+  $('#rate').oninput=e=>$('#rateV').textContent=e.target.value;
+  $('#run').onclick=start;
+}
+// ---------- map ----------
+const map=$('#map'),mctx=map.getContext('2d'); let base,W,H,glow=null;
+function fit(c){ const r=c.getBoundingClientRect(),dpr=devicePixelRatio||1; c.width=r.width*dpr; c.height=r.height*dpr; return [r.width*dpr,r.height*dpr]; }
+function xy(i){ return [brain.px[i]/65535*(W-20)+10, brain.py[i]/65535*(H-20)+10]; }
+function drawBase(){ [W,H]=fit(map); const img=mctx.createImageData(W,H),d=img.data;
+  for(let i=0;i<brain.N;i++){ const [x,y]=xy(i); const o=((y|0)*W+(x|0))*4; const c=hex(COLORS[brain.sc[i]]); d[o]=Math.max(d[o],c[0]*.45);d[o+1]=Math.max(d[o+1],c[1]*.45);d[o+2]=Math.max(d[o+2],c[2]*.45);d[o+3]=255; }
+  mctx.putImageData(img,0,0); base=mctx.getImageData(0,0,W,H);
+  mctx.fillStyle='#ffb347'; for(const k of selected) for(const i of meta.presets[k].idx){ const [x,y]=xy(i); mctx.fillRect(x-1,y-1,2,2); }
+  glow=new Float32Array(brain.N);
+}
+function hex(h){ return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
+let flashQueue=[];
+function drawFrame(){ if(!brain)return; mctx.putImageData(base,0,0);
+  mctx.fillStyle='rgba(255,179,71,.5)'; for(const k of selected) for(const i of meta.presets[k].idx){ const [x,y]=xy(i); mctx.fillRect(x-1,y-1,2,2); }
+  const dpr=devicePixelRatio||1; let any=false;
+  for(let i=0;i<brain.N;i++){ const a=glow[i]; if(a<=0.02) continue; any=true; const [x,y]=xy(i); mctx.fillStyle=`rgba(255,255,255,${Math.min(1,a)})`; mctx.fillRect(x-1.5*dpr,y-1.5*dpr,3*dpr,3*dpr); glow[i]=a*0.8; }
+  if(any||running) requestAnimationFrame(drawFrame);
+}
+// ---------- timeline ----------
+const tl=$('#timeline'),tctx=tl.getContext('2d'); let wins=[],TW,TH,tRun=1000;
+function onWindow(d){ wins.push(d); for(const i of d.spk) glow[i]=1; drawTimeline(); $('#prog').style.width=(d.t/tRun*100)+'%'; $('#status').textContent=`模拟中 ${d.t.toFixed(0)} / ${tRun} ms`; }
+function drawTimeline(){ if(!TW){[TW,TH]=fit(tl);} tctx.clearRect(0,0,TW,TH); const n=Math.round(tRun/10),bw=TW/n; let mx=1; for(const w of wins){let s=0;for(const c of w.win)s+=c;mx=Math.max(mx,s);}
+  wins.forEach((w,j)=>{ let y=TH; w.win.forEach((c,k)=>{ if(!c)return; const h=c/mx*(TH-14); tctx.fillStyle=COLORS[k]; tctx.fillRect(j*bw,y-h,Math.max(1,bw-.5),h); y-=h; }); });
+  tctx.fillStyle='#8b93a7'; tctx.font=`${11*(devicePixelRatio||1)}px sans-serif`; tctx.fillText(`峰值 ${mx} 次/10ms`,6,12*(devicePixelRatio||1));
+}
+// ---------- run ----------
+function start(){ if(running||!brain)return; const stim=[]; for(const k of selected) stim.push(...meta.presets[k].idx);
+  if(!stim.length){ $('#status').textContent='先选至少一组神经元'; return; }
+  running=true; $('#run').disabled=true; $('#run').textContent='模拟中…'; wins=[]; TW=0; glow.fill(0); $('#cards').innerHTML=''; $('#top').innerHTML='';
+  tRun=+$('#dur').value; const silence=$('#silence').checked?meta.presets.bitter.idx:[];
+  worker.postMessage({type:'run',stim:Uint32Array.from(stim),rate:+$('#rate').value,tRun,silence:Uint32Array.from(silence),sc:brain.sc,nSc:meta.super_classes.length});
+  requestAnimationFrame(drawFrame);
+}
+function onDone(rates){ running=false; $('#run').disabled=false; $('#run').textContent='再来一次';
+  const stimSet=new Set(); for(const k of selected) for(const i of meta.presets[k].idx) stimSet.add(i);
+  let nFire=0; for(let i=0;i<brain.N;i++) if(rates[i]>0&&!stimSet.has(i)) nFire++;
+  $('#status').textContent=`完成：刺激 ${stimSet.size} 个神经元，带动了下游 ${nFire.toLocaleString()} 个神经元放电`;
+  const cards=$('#cards'); const mean=idx=>idx.reduce((s,i)=>s+rates[i],0)/idx.length; const nAct=idx=>idx.filter(i=>rates[i]>1).length;
+  cards.insertAdjacentHTML('beforeend',`<div class="card"><div class="v mn9">${rates[meta.mn9[0]].toFixed(0)}<span>Hz</span></div><div class="k">MN9 右 · 伸喙运动神经元</div><div class="d">论文标志性读出</div></div>
+  <div class="card"><div class="v mn9">${rates[meta.mn9[1]].toFixed(0)}<span>Hz</span></div><div class="k">MN9 左</div><div class="d">糖 → 高，苦 → 0，糖+苦 → 低</div></div>`);
+  for(const [k,wg] of Object.entries(meta.watch)) cards.insertAdjacentHTML('beforeend',`<div class="card"><div class="v">${mean(wg.idx).toFixed(1)}<span>Hz 均值</span></div><div class="k">${wg.label}</div><div class="d">${nAct(wg.idx)} / ${wg.idx.length} 个在放电 (>1 Hz)</div></div>`);
+  const order=[]; for(let i=0;i<brain.N;i++) if(rates[i]>0&&!stimSet.has(i)) order.push(i); order.sort((a,b)=>rates[b]-rates[a]);
+  const tb=$('#top'); for(const i of order.slice(0,15)){ const rid=(BigInt(brain.hi[i])<<32n|BigInt(brain.lo[i])).toString(); const sc=meta.super_classes[brain.sc[i]];
+    tb.insertAdjacentHTML('beforeend',`<tr><td class="r">${rates[i].toFixed(0)}</td><td>${meta.cell_types[brain.ct[i]]||'<span class="pill">未命名</span>'}${meta.mn9.includes(i)?' <span class="pill mn9">MN9</span>':''}</td><td><b style="color:${COLORS[brain.sc[i]]}">■</b> ${SC_ZH[sc]||sc}</td><td>${['左','右','中','?'][brain.side[i]]}</td><td>${ntOf(i)}</td><td><a target="_blank" rel="noopener" href="https://codex.flywire.ai/app/cell_details?root_id=${rid}&data_version=783">${rid.slice(-6)}…</a></td></tr>`); }
+}
+function ntOf(i){ const n=brain.nt[i]; return n===0?'—':(n<0?'抑制':'兴奋'); }
+addEventListener('resize',()=>{ if(brain){drawBase();TW=0;drawTimeline();} });
+load().catch(e=>{ $('#status').textContent='加载失败：'+e.message; });
+</script>
+</body>
+</html>
