@@ -174,10 +174,13 @@ onmessage=e=>{ const d=e.data;
   else if(d.type==='run'){ run(d); } };
 `;
 
+// 数据先从页面同目录取；取不到（例如页面被托管在别处）就回退到 GitHub 仓库的 raw 地址。
+const DATA_BASES=['','https://raw.githubusercontent.com/23lab/23lab.github.com/master/flybrain/','https://raw.githubusercontent.com/23lab/23lab.github.com/claude/fruit-fly-brain-mapping-vc42y3/flybrain/'];
+async function fetchData(name,opts){ let err; for(const b of DATA_BASES){ try{ const r=await fetch(b+name,opts); if(r.ok) return r; err=new Error(r.status+' '+b+name);}catch(e){err=e;} } throw err; }
 async function load(){
-  const st=$('#status'),pg=$('#prog');
-  meta=await (await fetch('meta.json')).json();
-  const res=await fetch('brain.bin.gz',{cache:'force-cache'});
+  const st=$('#status'),pg=$('#prog'); st.textContent='正在获取数据…';
+  meta=await (await fetchData('meta.json')).json();
+  const res=await fetchData('brain.bin.gz',{cache:'force-cache'});
   const total=+res.headers.get('content-length')||10553927; let got=0;
   const counted=new TransformStream({transform(c,ctrl){got+=c.length;pg.style.width=Math.min(99,got/total*100)+'%';st.textContent=`下载连接组 ${(got/1048576).toFixed(1)} / ${(total/1048576).toFixed(1)} MB`;ctrl.enqueue(c);}});
   let stream=res.body.pipeThrough(counted);
