@@ -120,76 +120,48 @@ const COLORS=['#3a7bd5','#f4a261','#a78bfa','#e76f51','#4cc9f0','#90e0ef','#ff6b
 const SC_ZH={optic:'视叶',sensory:'感觉',central:'中枢',sensory_ascending:'感觉上行',ascending:'上行',visual_projection:'视觉投射',descending:'下行',visual_centrifugal:'视觉离心',endocrine:'内分泌',motor:'运动',unknown:'未知'};
 let meta,brain,worker,selected=new Set(['sugar']),running=false;
 
-const WORKER_SRC=`
-let N,indptr,indices,w;
-function parse(buf){
-  const dv=new DataView(buf); if(String.fromCharCode(dv.getUint8(0),dv.getUint8(1),dv.getUint8(2),dv.getUint8(3))!=='FLYW') throw new Error('bad file');
-  N=dv.getUint32(4,true); const nnz=dv.getUint32(8,true); let o=12;
-  indptr=new Uint32Array(buf,o,N+1); o+=(N+1)*4;
-  indices=new Uint32Array(buf,o,nnz); o+=nnz*4;
-  w=new Int16Array(buf,o,nnz); o+=nnz*2;
-  const sc=new Uint8Array(buf,o,N); o+=N; const side=new Uint8Array(buf,o,N); o+=N;
-  const ct=new Uint16Array(buf.slice(o,o+N*2)); o+=N*2;
-  const hi=new Uint32Array(buf.slice(o,o+N*4)); o+=N*4; const lo=new Uint32Array(buf.slice(o,o+N*4)); o+=N*4;
-  const px=new Uint16Array(buf.slice(o,o+N*2)); o+=N*2; const py=new Uint16Array(buf.slice(o,o+N*2));
-  const nt=new Int8Array(N); for(let i=0;i<N;i++) nt[i]=indptr[i+1]>indptr[i]?(w[indptr[i]]<0?-1:1):0;
-  return {N,nnz,sc:sc.slice(),side:side.slice(),ct,hi,lo,px,py,nt};
-}
-function run(p){
-  const dt=0.1,vRest=-52,vTh=-45,taum=20,taus=5,tRefr=2.2,delay=1.8,wSyn=0.275;
-  const dm=Math.exp(-dt/taum),ds=Math.exp(-dt/taus),gain=1-dm;
-  const steps=Math.round(p.tRun/dt),delaySteps=Math.round(delay/dt),refrSteps=Math.round(tRefr/dt);
-  const v=new Float32Array(N).fill(vRest),g=new Float32Array(N),refr=new Int32Array(N),counts=new Uint32Array(N);
-  const isStim=new Uint8Array(N); const stim=p.stim; for(const i of stim) isStim[i]=1;
-  const silenced=new Uint8Array(N); for(const i of (p.silence||[])) silenced[i]=1;
-  const pStim=p.rate*dt/1000;
-  const inSet=new Uint8Array(N); let act=new Int32Array(N),nAct=0;
-  const pending=[]; for(let i=0;i<delaySteps;i++) pending.push([]);
-  const nSc=p.nSc; let win=new Uint32Array(nSc),winSpk=[];
-  const winMark=new Uint8Array(N);
-  let spkNow=[];
-  for(let step=0;step<steps;step++){
-    const slot=step%delaySteps; const arriving=pending[slot];
-    for(let a=0;a<arriving.length;a++){ const pre=arriving[a]; if(silenced[pre]) continue;
-      for(let k=indptr[pre],e=indptr[pre+1];k<e;k++){ const post=indices[k]; g[post]+=w[k]*wSyn; if(!inSet[post]){inSet[post]=1;act[nAct++]=post;} } }
-    spkNow=[]; let m=0;
-    for(let a=0;a<nAct;a++){ const i=act[a];
-      if(refr[i]<=step){ v[i]=vRest+(v[i]-vRest)*dm+g[i]*gain; g[i]*=ds;
-        if(v[i]>vTh&&!isStim[i]){ v[i]=vRest; g[i]=0; refr[i]=step+refrSteps; spkNow.push(i); }
-        if(Math.abs(v[i]-vRest)<1e-3&&Math.abs(g[i])<1e-3){ inSet[i]=0; continue; } }
-      else { g[i]*=ds; }
-      act[m++]=i; }
-    nAct=m;
-    for(let s=0;s<stim.length;s++){ if(Math.random()<pStim){ const i=stim[s]; v[i]=vRest; g[i]=0; refr[i]=step+refrSteps; spkNow.push(i); } }
-    for(const i of spkNow){ counts[i]++; win[p.sc[i]]++; if(!winMark[i]){winMark[i]=1;winSpk.push(i);} }
-    pending[slot]=spkNow;
-    if((step+1)%100===0){ for(const i of winSpk) winMark[i]=0;
-      postMessage({type:'win',t:(step+1)*dt,win,spk:new Uint32Array(winSpk)}); win=new Uint32Array(nSc); winSpk=[]; }
-  }
-  const rates=new Float32Array(N); for(let i=0;i<N;i++) rates[i]=counts[i]/(p.tRun/1000);
-  postMessage({type:'done',rates},[rates.buffer]);
-}
-onmessage=e=>{ const d=e.data;
-  if(d.type==='load'){ const b=parse(d.buf); postMessage({type:'ready',b}); }
-  else if(d.type==='run'){ run(d); } };
-`;
 
-// 数据先从页面同目录取；取不到（例如页面被托管在别处）就回退到 GitHub 仓库的 raw 地址。
-const DATA_BASES=['','https://raw.githubusercontent.com/23lab/23lab.github.com/master/flybrain/','https://raw.githubusercontent.com/23lab/23lab.github.com/claude/fruit-fly-brain-mapping-vc42y3/flybrain/'];
-async function fetchData(name,opts){ let err; for(const b of DATA_BASES){ try{ const r=await fetch(b+name,opts); if(r.ok) return r; err=new Error(r.status+' '+b+name);}catch(e){err=e;} } throw err; }
-async function load(){
-  const st=$('#status'),pg=$('#prog'); st.textContent='正在获取数据…';
-  meta=await (await fetchData('meta.json')).json();
-  const res=await fetchData('brain.bin.gz',{cache:'force-cache'});
-  const total=+res.headers.get('content-length')||10553927; let got=0;
-  const counted=new TransformStream({transform(c,ctrl){got+=c.length;pg.style.width=Math.min(99,got/total*100)+'%';st.textContent=`下载连接组 ${(got/1048576).toFixed(1)} / ${(total/1048576).toFixed(1)} MB`;ctrl.enqueue(c);}});
-  let stream=res.body.pipeThrough(counted);
+// 数据来源按顺序尝试：页面同目录的 brain.bin.gz；同目录的 base64 文本（给不能托管二进制的环境用）；GitHub 仓库的 raw 地址。
+const GZ_BASES=['','https://raw.githubusercontent.com/23lab/23lab.github.com/master/flybrain/','https://raw.githubusercontent.com/23lab/23lab.github.com/claude/fruit-fly-brain-mapping-vc42y3/flybrain/'];
+async function fetchFirst(urls,opts){ let err; for(const u of urls){ try{ const r=await fetch(u,opts); if(r.ok) return r; err=new Error(r.status+' '+u);}catch(e){err=e;} } throw err; }
+function progressStream(total,label){ let got=0; const st=$('#status'),pg=$('#prog');
+  return new TransformStream({transform(c,ctrl){got+=c.length;pg.style.width=Math.min(99,got/total*100)+'%';st.textContent=`${label} ${(got/1048576).toFixed(1)} / ${(total/1048576).toFixed(1)} MB`;ctrl.enqueue(c);}}); }
+function b64ToBytes(str){ const bin=atob(str.replace(/\s+/g,'')); const out=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) out[i]=bin.charCodeAt(i); return out; }
+async function loadBrainBuffer(){
+  let res=null;
+  try{ res=await fetchFirst([GZ_BASES[0]+'brain.bin.gz'],{cache:'force-cache'}); }catch(e){}
+  if(!res){ try{ res=await fetchFirst(['brain.b64.txt'],{cache:'force-cache'}); }catch(e){} 
+    if(res){ const total=+res.headers.get('content-length')||14100000;
+      const txt=await new Response(res.body.pipeThrough(progressStream(total,'下载连接组'))).text();
+      $('#status').textContent='解码中…'; const gz=b64ToBytes(txt);
+      return await new Response(new Blob([gz]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer(); } }
+  if(!res) res=await fetchFirst(GZ_BASES.slice(1).map(b=>b+'brain.bin.gz'),{cache:'force-cache'});
+  const total=+res.headers.get('content-length')||10553927;
+  let stream=res.body.pipeThrough(progressStream(total,'下载连接组'));
   const enc=res.headers.get('content-encoding');
   if(!enc||enc==='identity'){ stream=stream.pipeThrough(new DecompressionStream('gzip')); }
-  const buf=await new Response(stream).arrayBuffer();
+  return await new Response(stream).arrayBuffer();
+}
+async function load(){
+  const st=$('#status'); st.textContent='正在获取数据…';
+  meta=await (await fetchFirst(['meta.json',...GZ_BASES.slice(1).map(b=>b+'meta.json')])).json();
+  const buf=await loadBrainBuffer();
   st.textContent='解析中…';
-  worker=new Worker(URL.createObjectURL(new Blob([WORKER_SRC],{type:'text/javascript'})));
-  worker.onmessage=onMsg; worker.postMessage({type:'load',buf},[buf]);
+  worker=await makeWorker(); worker.onmessage=onMsg; worker.postMessage({type:'load',buf},[buf]);
+}
+// 依次尝试：同源 sim.js 作为 Worker；把 sim.js 内容做成 blob Worker；都不行就在主线程内联跑（界面会卡住几秒，但能出结果）。
+function tryWorker(src){ return new Promise((res,rej)=>{ let w; try{ w=new Worker(src); }catch(e){ return rej(e); }
+  const t=setTimeout(()=>{ w.onerror=null; res(w); },1500); w.onerror=e=>{ clearTimeout(t); w.terminate(); rej(new Error(e.message||'worker error')); }; }); }
+async function makeWorker(){
+  try{ return await tryWorker('sim.js'); }catch(e){ console.warn('sim.js worker failed:',e.message); }
+  let code=''; try{ code=await (await fetch('sim.js')).text(); }catch(e){}
+  if(code){ try{ return await tryWorker(URL.createObjectURL(new Blob([code],{type:'text/javascript'}))); }catch(e){ console.warn('blob worker failed:',e.message); } }
+  if(!code) throw new Error('无法加载 sim.js');
+  // 主线程内联：模拟 Worker 的 postMessage / onmessage 接口
+  const shim={ onmessage:null, terminate(){}, postMessage(d){ setTimeout(()=>{ inner.onmessage({data:d}); },0); } };
+  const inner={ onmessage:null }; const post=(d)=>{ if(shim.onmessage) shim.onmessage({data:d}); };
+  new Function('postMessage','self','var onmessage;\n'+code+'\nself.onmessage=onmessage;')(post,inner);
+  return shim;
 }
 function onMsg(e){ const d=e.data;
   if(d.type==='ready'){ brain=d.b; drawBase(); buildUI(); $('#status').textContent=`就绪：${brain.N.toLocaleString()} 个神经元，${brain.nnz.toLocaleString()} 条连接已载入内存`; $('#prog').style.width='100%'; $('#run').disabled=false; $('#run').textContent='开始刺激'; }
