@@ -58,6 +58,9 @@ td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
 .note b{color:var(--fg)}
 .pill{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11px;background:var(--panel2);color:var(--muted)}
 .mn9{color:var(--good)}
+.hint{font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;margin-bottom:8px;background:var(--panel2);color:var(--muted)}
+.tag.shuf{background:rgba(255,107,107,.15);color:var(--bad)}
 </style>
 </head>
 <body>
@@ -78,6 +81,11 @@ td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
       <select id="dur"><option value="300">0.3 秒</option><option value="500">0.5 秒</option><option value="1000" selected>1 秒</option></select>
       <label class="f" style="margin-left:auto"><input type="checkbox" id="silence"> 切断苦味通路 (实验)</label>
     </div>
+    <div class="row">
+      <label class="f">接线</label>
+      <select id="wiring" style="flex:1"><option value="real" selected>真实接线图</option><option value="shuffle">打乱接线（对照组）</option></select>
+    </div>
+    <p class="hint">对照组把 270 万条连接的目标端随机置换：每个神经元连出去的数量、权重、兴奋/抑制符号都保持不变，只是连错了对象。如果某个结果在打乱后消失，它就是接线图本身决定的。</p>
     <button class="run" id="run" disabled>加载数据中…</button>
     <div id="status"></div>
     <div class="bar"><i id="prog"></i></div>
@@ -118,7 +126,7 @@ td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
 const $=s=>document.querySelector(s);
 const COLORS=['#3a7bd5','#f4a261','#a78bfa','#e76f51','#4cc9f0','#90e0ef','#ff6b6b','#48cae4','#b5e48c','#7ee787','#999'];
 const SC_ZH={optic:'视叶',sensory:'感觉',central:'中枢',sensory_ascending:'感觉上行',ascending:'上行',visual_projection:'视觉投射',descending:'下行',visual_centrifugal:'视觉离心',endocrine:'内分泌',motor:'运动',unknown:'未知'};
-let meta,brain,worker,selected=new Set(['sugar']),running=false;
+let meta,brain,worker,selected=new Set(['sugar']),running=false,lastShuffle=false;
 
 
 // 数据来源按顺序尝试：页面同目录的 brain.bin.gz；同目录的 base64 文本（给不能托管二进制的环境用）；GitHub 仓库的 raw 地址。
@@ -207,14 +215,15 @@ function start(){ if(running||!brain)return; const stim=[]; for(const k of selec
   if(!stim.length){ $('#status').textContent='先选至少一组神经元'; return; }
   running=true; $('#run').disabled=true; $('#run').textContent='模拟中…'; wins=[]; TW=0; glow.fill(0); $('#cards').innerHTML=''; $('#top').innerHTML='';
   tRun=+$('#dur').value; const silence=$('#silence').checked?meta.presets.bitter.idx:[];
-  worker.postMessage({type:'run',stim:Uint32Array.from(stim),rate:+$('#rate').value,tRun,silence:Uint32Array.from(silence),sc:brain.sc,nSc:meta.super_classes.length});
+  lastShuffle=$('#wiring').value==='shuffle';
+  worker.postMessage({type:'run',stim:Uint32Array.from(stim),rate:+$('#rate').value,tRun,silence:Uint32Array.from(silence),sc:brain.sc,nSc:meta.super_classes.length,shuffle:lastShuffle});
   requestAnimationFrame(drawFrame);
 }
 function onDone(rates){ running=false; $('#run').disabled=false; $('#run').textContent='再来一次';
   const stimSet=new Set(); for(const k of selected) for(const i of meta.presets[k].idx) stimSet.add(i);
   let nFire=0; for(let i=0;i<brain.N;i++) if(rates[i]>0&&!stimSet.has(i)) nFire++;
-  $('#status').textContent=`完成：刺激 ${stimSet.size} 个神经元，带动了下游 ${nFire.toLocaleString()} 个神经元放电`;
-  const cards=$('#cards'); const mean=idx=>idx.reduce((s,i)=>s+rates[i],0)/idx.length; const nAct=idx=>idx.filter(i=>rates[i]>1).length;
+  $('#status').textContent=`完成（${lastShuffle?'打乱接线':'真实接线'}）：刺激 ${stimSet.size} 个神经元，带动了下游 ${nFire.toLocaleString()} 个神经元放电`;
+  const cards=$('#cards'); cards.insertAdjacentHTML('beforebegin',''); const tag=$('#wtag')||Object.assign(document.createElement('div'),{id:'wtag'}); tag.className='tag'+(lastShuffle?' shuf':''); tag.textContent=lastShuffle?'对照组：打乱接线':'真实接线图'; cards.parentNode.insertBefore(tag,cards); const mean=idx=>idx.reduce((s,i)=>s+rates[i],0)/idx.length; const nAct=idx=>idx.filter(i=>rates[i]>1).length;
   cards.insertAdjacentHTML('beforeend',`<div class="card"><div class="v mn9">${rates[meta.mn9[0]].toFixed(0)}<span>Hz</span></div><div class="k">MN9 右 · 伸喙运动神经元</div><div class="d">论文标志性读出</div></div>
   <div class="card"><div class="v mn9">${rates[meta.mn9[1]].toFixed(0)}<span>Hz</span></div><div class="k">MN9 左</div><div class="d">糖 → 高，苦 → 0，糖+苦 → 低</div></div>`);
   for(const [k,wg] of Object.entries(meta.watch)) cards.insertAdjacentHTML('beforeend',`<div class="card"><div class="v">${mean(wg.idx).toFixed(1)}<span>Hz 均值</span></div><div class="k">${wg.label}</div><div class="d">${nAct(wg.idx)} / ${wg.idx.length} 个在放电 (>1 Hz)</div></div>`);

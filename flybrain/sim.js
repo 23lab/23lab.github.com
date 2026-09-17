@@ -13,7 +13,16 @@ function parse(buf){
   const nt=new Int8Array(N); for(let i=0;i<N;i++) nt[i]=indptr[i+1]>indptr[i]?(w[indptr[i]]<0?-1:1):0;
   return {N,nnz,sc:sc.slice(),side:side.slice(),ct,hi,lo,px,py,nt};
 }
+// 打乱接线：把所有连接的目标端随机置换。每个神经元的输出连接数、突触权重和兴奋/抑制符号都不变，只是连错了对象。固定种子，结果可复现。
+let indicesShuf=null;
+function shuffledIndices(){
+  if(!indicesShuf){ indicesShuf=indices.slice(); let s=20240783;
+    const rnd=()=>{ s=(Math.imul(s,1664525)+1013904223)>>>0; return s/4294967296; };
+    for(let i=indicesShuf.length-1;i>0;i--){ const j=Math.floor(rnd()*(i+1)); const t=indicesShuf[i]; indicesShuf[i]=indicesShuf[j]; indicesShuf[j]=t; } }
+  return indicesShuf;
+}
 function run(p){
+  const idx=p.shuffle?shuffledIndices():indices;
   const dt=0.1,vRest=-52,vTh=-45,taum=20,taus=5,tRefr=2.2,delay=1.8,wSyn=0.275;
   const dm=Math.exp(-dt/taum),ds=Math.exp(-dt/taus),gain=1-dm;
   const steps=Math.round(p.tRun/dt),delaySteps=Math.round(delay/dt),refrSteps=Math.round(tRefr/dt);
@@ -29,7 +38,7 @@ function run(p){
   for(let step=0;step<steps;step++){
     const slot=step%delaySteps; const arriving=pending[slot];
     for(let a=0;a<arriving.length;a++){ const pre=arriving[a]; if(silenced[pre]) continue;
-      for(let k=indptr[pre],e=indptr[pre+1];k<e;k++){ const post=indices[k]; g[post]+=w[k]*wSyn; if(!inSet[post]){inSet[post]=1;act[nAct++]=post;} } }
+      for(let k=indptr[pre],e=indptr[pre+1];k<e;k++){ const post=idx[k]; g[post]+=w[k]*wSyn; if(!inSet[post]){inSet[post]=1;act[nAct++]=post;} } }
     spkNow=[]; let m=0;
     for(let a=0;a<nAct;a++){ const i=act[a];
       if(refr[i]<=step){ v[i]=vRest+(v[i]-vRest)*dm+g[i]*gain; g[i]*=ds;
